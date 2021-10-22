@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_jLkI8DM2Eey8k6NpiMDWwA" name="NewModel">
+  <packagedElement xmi:type="uml:Actor" xmi:id="_E9AqMDM3Eey8k6NpiMDWwA" name="User">
+    <eAnnotations xmi:id="_E9AqMTM3Eey8k6NpiMDWwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details xmi:id="_E9AqMjM3Eey8k6NpiMDWwA" key="Human"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_WHN28DM4Eey8k6NpiMDWwA" memberEnd="_WHN28TM4Eey8k6NpiMDWwA _WHN28jM4Eey8k6NpiMDWwA">
+    <ownedEnd xmi:id="_WHN28TM4Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_WHN28DM4Eey8k6NpiMDWwA"/>
+    <ownedEnd xmi:id="_WHN28jM4Eey8k6NpiMDWwA" association="_WHN28DM4Eey8k6NpiMDWwA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ZCdgEDM4Eey8k6NpiMDWwA" memberEnd="_ZCdgETM4Eey8k6NpiMDWwA _ZCdgEjM4Eey8k6NpiMDWwA">
+    <ownedEnd xmi:id="_ZCdgETM4Eey8k6NpiMDWwA" association="_ZCdgEDM4Eey8k6NpiMDWwA"/>
+    <ownedEnd xmi:id="_ZCdgEjM4Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_ZCdgEDM4Eey8k6NpiMDWwA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_yFoCkDM4Eey8k6NpiMDWwA" memberEnd="_yFoCkTM4Eey8k6NpiMDWwA _yFoCkjM4Eey8k6NpiMDWwA">
+    <ownedEnd xmi:id="_yFoCkTM4Eey8k6NpiMDWwA" association="_yFoCkDM4Eey8k6NpiMDWwA"/>
+    <ownedEnd xmi:id="_yFoCkjM4Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_yFoCkDM4Eey8k6NpiMDWwA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_41GyUDM4Eey8k6NpiMDWwA" memberEnd="_41GyUTM4Eey8k6NpiMDWwA _41GyUjM4Eey8k6NpiMDWwA">
+    <ownedEnd xmi:id="_41GyUTM4Eey8k6NpiMDWwA" association="_41GyUDM4Eey8k6NpiMDWwA"/>
+    <ownedEnd xmi:id="_41GyUjM4Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_41GyUDM4Eey8k6NpiMDWwA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_8NrwUDM7Eey8k6NpiMDWwA" name="Network"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_xY-bIDM8Eey8k6NpiMDWwA" name="ChatAgent">
+    <ownedUseCase xmi:id="_y3C7oDM8Eey8k6NpiMDWwA" name="sendMessage"/>
+    <ownedUseCase xmi:id="_y3GmADM8Eey8k6NpiMDWwA" name="notifyUsers"/>
+    <ownedUseCase xmi:id="_y3GmBzM8Eey8k6NpiMDWwA" name="startChattingSession"/>
+    <ownedUseCase xmi:id="_y3GmDjM8Eey8k6NpiMDWwA" name="connectToDatabase"/>
+    <ownedUseCase xmi:id="_y3QXBjM8Eey8k6NpiMDWwA" name="receiveMessage">
+      <extend xmi:id="_y3QXBzM8Eey8k6NpiMDWwA" extendedCase="_y3GmBzM8Eey8k6NpiMDWwA"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:id="_y3QXDjM8Eey8k6NpiMDWwA" name="joinNetwork">
+      <ownedUseCase xmi:id="_y3QXDzM8Eey8k6NpiMDWwA" name="sendMessage"/>
+      <ownedUseCase xmi:id="_y3QXEDM8Eey8k6NpiMDWwA" name="joinNetwork"/>
+      <include xmi:id="_y3QXETM8Eey8k6NpiMDWwA" addition="_y3GmDjM8Eey8k6NpiMDWwA"/>
+      <include xmi:id="_y3QXEjM8Eey8k6NpiMDWwA" addition="_y3GmADM8Eey8k6NpiMDWwA"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:id="_y3QXFjM8Eey8k6NpiMDWwA" name="leaveNetwork"/>
+    <ownedUseCase xmi:id="_y3QXHTM8Eey8k6NpiMDWwA" name="changeUsername">
+      <ownedUseCase xmi:id="_y3QXHjM8Eey8k6NpiMDWwA" name="sendMessage"/>
+    </ownedUseCase>
+    <nestedClassifier xmi:type="uml:Association" xmi:id="_y3GmBDM8Eey8k6NpiMDWwA" memberEnd="_y3GmBTM8Eey8k6NpiMDWwA _y3GmBjM8Eey8k6NpiMDWwA">
+      <ownedEnd xmi:id="_y3GmBTM8Eey8k6NpiMDWwA" type="_y3QXHTM8Eey8k6NpiMDWwA" association="_y3GmBDM8Eey8k6NpiMDWwA"/>
+      <ownedEnd xmi:id="_y3GmBjM8Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_y3GmBDM8Eey8k6NpiMDWwA"/>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:Association" xmi:id="_y3GmCzM8Eey8k6NpiMDWwA" name="A_startChatting_user" memberEnd="_y3GmDDM8Eey8k6NpiMDWwA _y3GmDTM8Eey8k6NpiMDWwA">
+      <ownedEnd xmi:id="_y3GmDDM8Eey8k6NpiMDWwA" type="_y3GmBzM8Eey8k6NpiMDWwA" association="_y3GmCzM8Eey8k6NpiMDWwA"/>
+      <ownedEnd xmi:id="_y3GmDTM8Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_y3GmCzM8Eey8k6NpiMDWwA"/>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:Association" xmi:id="_y3QXAzM8Eey8k6NpiMDWwA" memberEnd="_y3QXBDM8Eey8k6NpiMDWwA _y3QXBTM8Eey8k6NpiMDWwA">
+      <ownedEnd xmi:id="_y3QXBDM8Eey8k6NpiMDWwA" type="_8NrwUDM7Eey8k6NpiMDWwA" association="_y3QXAzM8Eey8k6NpiMDWwA"/>
+      <ownedEnd xmi:id="_y3QXBTM8Eey8k6NpiMDWwA" type="_y3QXBjM8Eey8k6NpiMDWwA" association="_y3QXAzM8Eey8k6NpiMDWwA"/>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:Association" xmi:id="_y3QXCzM8Eey8k6NpiMDWwA" memberEnd="_y3QXDDM8Eey8k6NpiMDWwA _y3QXDTM8Eey8k6NpiMDWwA">
+      <ownedEnd xmi:id="_y3QXDDM8Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_y3QXCzM8Eey8k6NpiMDWwA"/>
+      <ownedEnd xmi:id="_y3QXDTM8Eey8k6NpiMDWwA" type="_y3QXDjM8Eey8k6NpiMDWwA" association="_y3QXCzM8Eey8k6NpiMDWwA"/>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:Association" xmi:id="_y3QXGjM8Eey8k6NpiMDWwA" memberEnd="_y3QXGzM8Eey8k6NpiMDWwA _y3QXHDM8Eey8k6NpiMDWwA">
+      <ownedEnd xmi:id="_y3QXGzM8Eey8k6NpiMDWwA" type="_y3QXFjM8Eey8k6NpiMDWwA" association="_y3QXGjM8Eey8k6NpiMDWwA"/>
+      <ownedEnd xmi:id="_y3QXHDM8Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_y3QXGjM8Eey8k6NpiMDWwA"/>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:Association" xmi:id="_y3Zg8zM8Eey8k6NpiMDWwA" memberEnd="_y3Zg9DM8Eey8k6NpiMDWwA _y3Zg9TM8Eey8k6NpiMDWwA">
+      <ownedEnd xmi:id="_y3Zg9DM8Eey8k6NpiMDWwA" type="_y3C7oDM8Eey8k6NpiMDWwA" association="_y3Zg8zM8Eey8k6NpiMDWwA"/>
+      <ownedEnd xmi:id="_y3Zg9TM8Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_y3Zg8zM8Eey8k6NpiMDWwA"/>
+    </nestedClassifier>
+  </packagedElement>
+</uml:Model>
