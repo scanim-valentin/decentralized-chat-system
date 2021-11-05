@@ -22,7 +22,7 @@
     <ownedEnd xmi:id="_41GyUjM4Eey8k6NpiMDWwA" type="_E9AqMDM3Eey8k6NpiMDWwA" association="_41GyUDM4Eey8k6NpiMDWwA"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Actor" xmi:id="_8NrwUDM7Eey8k6NpiMDWwA" name="Database"/>
-  <packagedElement xmi:type="uml:Component" xmi:id="_xY-bIDM8Eey8k6NpiMDWwA" name="ChatClient" useCase="_LM4TMDcQEey7l-huLKe7gg _Scf7kDcQEey7l-huLKe7gg">
+  <packagedElement xmi:type="uml:Component" xmi:id="_xY-bIDM8Eey8k6NpiMDWwA" name="ChatAgent" useCase="_LM4TMDcQEey7l-huLKe7gg _Scf7kDcQEey7l-huLKe7gg">
     <ownedUseCase xmi:id="_y3C7oDM8Eey8k6NpiMDWwA" name="sendMessage"/>
     <ownedUseCase xmi:id="_y3GmADM8Eey8k6NpiMDWwA" name="notifyUsers"/>
     <ownedUseCase xmi:id="_y3GmBzM8Eey8k6NpiMDWwA" name="startChattingSession">
@@ -32,13 +32,13 @@
     <ownedUseCase xmi:id="_y3QXBjM8Eey8k6NpiMDWwA" name="receiveMessage">
       <extend xmi:id="_y3QXBzM8Eey8k6NpiMDWwA" extendedCase="_y3GmBzM8Eey8k6NpiMDWwA"/>
     </ownedUseCase>
-    <ownedUseCase xmi:id="_y3QXDjM8Eey8k6NpiMDWwA" name="openClient">
+    <ownedUseCase xmi:id="_y3QXDjM8Eey8k6NpiMDWwA" name="openAgent">
       <ownedUseCase xmi:id="_y3QXDzM8Eey8k6NpiMDWwA" name="sendMessage"/>
       <ownedUseCase xmi:id="_y3QXEDM8Eey8k6NpiMDWwA" name="joinNetwork"/>
       <include xmi:id="_y3QXETM8Eey8k6NpiMDWwA" addition="_y3GmDjM8Eey8k6NpiMDWwA"/>
       <include xmi:id="_y3QXEjM8Eey8k6NpiMDWwA" addition="_y3GmADM8Eey8k6NpiMDWwA"/>
     </ownedUseCase>
-    <ownedUseCase xmi:id="_y3QXFjM8Eey8k6NpiMDWwA" name="closeClient">
+    <ownedUseCase xmi:id="_y3QXFjM8Eey8k6NpiMDWwA" name="closeAgent">
       <include xmi:id="_Qq9M0DcNEey7l-huLKe7gg" addition="_y3GmADM8Eey8k6NpiMDWwA"/>
     </ownedUseCase>
     <ownedUseCase xmi:id="_y3QXHTM8Eey8k6NpiMDWwA" name="changeUsername">
