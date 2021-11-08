@@ -1,0 +1,40 @@
+@startuml
+
+actor User as User
+participant "Chat Agent" as chatAgent
+database Database as Database
+actor "Other Users" as otherUsers
+
+User -> chatAgent ++ : Open Agent
+
+    chatAgent -> Database ++ : getUserList()
+        note over Database: Retrieving the list of user IDs\nassociated to their current username
+    chatAgent <- Database -- : userList
+    chatAgent -> Database ++ : getStatusList()  
+    note over Database: Retrieving the status (online/offline)\nof each user 
+    chatAgent <- Database -- : statusList
+    chatAgent -> Database : updateStatus(User)
+    chatAgent -> otherUsers : notifyStatus(User)
+User <- chatAgent -- : Show Users
+
+User -> chatAgent ++ : Start Chatting with User2
+    chatAgent -> Database ++ : retrieveHistory(User,User2)
+            note over User : Chatting with a\nconnected user
+    chatAgent <- Database -- : history
+User <- chatAgent -- : Show Chat
+
+User -> chatAgent ++ : Send Message M1
+    chatAgent -> otherUsers : sendMessage(M1) 
+    chatAgent -> Database : updateHistory(User,User2, M1)
+User <- chatAgent -- : Show Chat
+
+otherUsers -> chatAgent ++ : receiveMessage(M2)
+chatAgent -> User -- : Show Chat
+
+User -> chatAgent ++ : Change username to newName
+chatAgent -> Database ++ : updateUsername(User,newName)
+note over Database : Returns true if success\nor false if failure (name already taken)
+chatAgent <- Database -- : true / false
+
+
+@enduml
