@@ -1,0 +1,58 @@
+@startuml
+left to right direction
+ :User: as User
+    :Other Users: as otherUsers #text:green
+    database Database as Database #white;line:red;text:red
+rectangle ChatAgent{
+
+   
+
+    (sendMessage)
+    (startChattingSession)
+    (accessDistantData) #text:red
+    (updateDistantData) #text:red
+    (retrieveDistantData) #text:red
+    (updateUsernames) #text:green
+    (receiveMessage) #text:green
+    (openAgent)
+    (closeAgent)
+    (changeUsername)
+    (updateContactList) #text:green
+    (notifyUsers)
+    (updateStatus) #text:green
+
+    User---(sendMessage)
+    User---(startChattingSession)
+    User---(openAgent)
+    User---(closeAgent)
+    User---(changeUsername)
+
+    otherUsers--(receiveMessage) #green
+    otherUsers--(updateContactList) #green
+    otherUsers--(notifyUsers)
+
+    (accessDistantData)--Database #red
+    (retrieveDistantData)<|--(accessDistantData)
+    (updateDistantData)<|--(accessDistantData)
+
+    (updateContactList)<|--(updateStatus) #green
+    (updateContactList)<|--(updateUsernames) #green
+
+    (receiveMessage)..|>(startChattingSession)
+
+    (notifyUsers)<|..(changeUsername)
+    (notifyUsers)<|..(closeAgent)
+    (notifyUsers)<|..(openAgent)
+
+    (openAgent)..|>(updateDistantData)
+    (closeAgent)..|>(updateDistantData)
+    (changeUsername)..|>(updateDistantData)
+    (sendMessage)..|>(updateDistantData)
+
+    (startChattingSession)..|>(retrieveDistantData)
+    (openAgent)..|>(retrieveDistantData)
+    (changeUsername)..|>(retrieveDistantData)
+
+
+}
+@enduml

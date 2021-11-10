@@ -1,40 +1,46 @@
 @startuml
-
-actor User as User
+actor User1 as User
 participant "Chat Agent" as chatAgent
-database Database as Database
-actor "Other Users" as otherUsers
+actor "Network" as Network
+actor "Clock" as Clock
 
-User -> chatAgent ++ : Open Agent
+User -> chatAgent ++ : Opens Agent
+chatAgent -> Network ++ : getConnectedUserList()
+Network -> chatAgent -- : user_list
+chatAgent -> User -- : Shows UI :\nUsername Input
+User -> chatAgent ++ : Logins as "name"
+loop if !isUsernameValid
+alt name available
+chatAgent -> chatAgent : isUsernameValid = True
+User <- chatAgent : Shows Connected User List
+    else name already taken
+User <- chatAgent -- : Shows invalid input message
+    end
+end
 
-    chatAgent -> Database ++ : getUserList()
-        note over Database: Retrieving the list of user IDs\nassociated to their current username
-    chatAgent <- Database -- : userList
-    chatAgent -> Database ++ : getStatusList()  
-    note over Database: Retrieving the status (online/offline)\nof each user 
-    chatAgent <- Database -- : statusList
-    chatAgent -> Database : updateStatus(User)
-    chatAgent -> otherUsers : notifyStatus(User)
-User <- chatAgent -- : Show Users
+User -> chatAgent ++ : Starts Chatting Session\nwith User2
+  chatAgent -> Network ++ : retrieveHistory(User2)
+  Network -> chatAgent -- : history_user2
+chatAgent -> User -- : Shows UI :\nChat window with conversation history
 
-User -> chatAgent ++ : Start Chatting with User2
-    chatAgent -> Database ++ : retrieveHistory(User,User2)
-            note over User : Chatting with a\nconnected user
-    chatAgent <- Database -- : history
-User <- chatAgent -- : Show Chat
+User -> chatAgent ++ : Sends Message M1
+  chatAgent -> Clock ++ : getTime()
+  Clock -> chatAgent -- : current_time
+  chatAgent -> Network : sendMessage(User2,M1)
+  chatAgent -> Network : updateHistory(User2,M1)
+chatAgent -> User -- : Shows UI :\n Updated chat with new message
 
-User -> chatAgent ++ : Send Message M1
-    chatAgent -> otherUsers : sendMessage(M1) 
-    chatAgent -> Database : updateHistory(User,User2, M1)
-User <- chatAgent -- : Show Chat
+Network -> chatAgent ++ : Receive Messsage M2
+chatAgent -> User -- : Shows UI :\n Updated chat with new message
 
-otherUsers -> chatAgent ++ : receiveMessage(M2)
-chatAgent -> User -- : Show Chat
+User -> chatAgent : Closes Chatting Session
 
-User -> chatAgent ++ : Change username to newName
-chatAgent -> Database ++ : updateUsername(User,newName)
-note over Database : Returns true if success\nor false if failure (name already taken)
-chatAgent <- Database -- : true / false
+Network -> chatAgent ++ : Receive Messsage M3 from User3
+  chatAgent -> Network ++ : retrieveHistory(User3) 
+  Network -> chatAgent -- : history_user3
+chatAgent -> User -- : Shows UI :\n Updated chat\nwith history and new message
 
-
+User -> chatAgent ++ : Closes Agent
+  chatAgent -> Network : notifyUsers()
+chatAgent -> User -- : Closes UI
 @enduml

@@ -1,57 +1,33 @@
 @startuml
 left to right direction
+:User: as user
+    :Network: as network #line:red;text:red
+    :Clock: as clock #line:green;text:green
 rectangle ChatAgent{
+ user--(Communicate)
+ user--(Open Agent)
+ user--(Close Agent)
+ user--(Change Username)
+ user--(Start Chatting Session)
 
-    :User: as User
-    :Other Users: as otherUsers #text:green
-    database Database as Database #white;line:red;text:red
+(Notify Agents)---network
+(Update Connected\nUser List)-network
+(Access History Database)--network
+ 
+ (Provide Date & Time) #line:green
+ (Provide Date & Time)---clock #green
 
-    (sendMessage)
-    (startChattingSession)
-    (accessDistantData) #text:red
-    (updateDistantData) #text:red
-    (retrieveDistantData) #text:red
-    (updateUsernames) #text:green
-    (receiveMessage) #text:green
-    (openAgent)
-    (closeAgent)
-    (changeUsername)
-    (updateContactList) #text:green
-    (notifyUsers)
-    (updateStatus) #text:green
+ (Communicate)<|--(Send Message) : <<extends>>
+ (Communicate)<|--(Receive Message) : <<extends>>
 
-    User---(sendMessage)
-    User---(startChattingSession)
-    User---(openAgent)
-    User---(closeAgent)
-    User---(changeUsername)
+ 
+ (Start Chatting Session)<|..(Receive Message) : <<include>>
+ (Close Agent)..|>(Notify Agents) : <<include>>
 
-    otherUsers--(receiveMessage) #green
-    otherUsers--(updateContactList) #green
-    otherUsers--(notifyUsers)
+ (Send Message)..|>(Access History Database) : <<include>>
+ (Send Message)..|>(Provide Date & Time) : <<include>>
 
-    (accessDistantData)--Database #red
-    (retrieveDistantData)<|--(accessDistantData)
-    (updateDistantData)<|--(accessDistantData)
-
-    (updateContactList)<|--(updateStatus) #green
-    (updateContactList)<|--(updateUsernames) #green
-
-    (receiveMessage)..|>(startChattingSession)
-
-    (notifyUsers)<|..(changeUsername)
-    (notifyUsers)<|..(closeAgent)
-    (notifyUsers)<|..(openAgent)
-
-    (openAgent)..|>(updateDistantData)
-    (closeAgent)..|>(updateDistantData)
-    (changeUsername)..|>(updateDistantData)
-    (sendMessage)..|>(updateDistantData)
-
-    (startChattingSession)..|>(retrieveDistantData)
-    (openAgent)..|>(retrieveDistantData)
-    (changeUsername)..|>(retrieveDistantData)
-
-
+ (Open Agent)..|>(Update Connected\nUser List) : <<include>>
+ (Change Username)..|>(Notify Agents) : <<include>>
 }
 @enduml
