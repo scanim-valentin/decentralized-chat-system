@@ -1,4 +1,0 @@
-[User]0..*<->1[Data Base]
-
-[Data Base||void record() ;void update(); void notify()]
-[User|string ID; string Username|void changeUsername(string newName);void startConversation(string otherUsername);void sendMessage(string Msg)]
