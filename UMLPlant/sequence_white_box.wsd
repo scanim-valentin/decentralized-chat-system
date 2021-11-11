@@ -1,8 +1,9 @@
 @startuml ChatAgentWhiteBoxSequence
 actor User1 as User
 box "Chat Agent"
-  participant UI
+  participant  "UI Manager" as UI
   participant "Main Class\n(and other classes)" as chatAgent
+  participant "Distributed\nData\nManager" as distributedManager
   participant "Remote\nDatabase\nManager" as databaseManager
 end box
 
@@ -10,8 +11,14 @@ actor "Network" as Network
 actor "Clock" as Clock
 
 User -> chatAgent ++ : Opens Agent
-  chatAgent -> Network ++ : getConnectedUserList()
-  Network -> chatAgent -- : user_list
+  chatAgent -> distributedManager **
+  chatAgent -> distributedManager ++ : getConnectedUserList()
+    distributedManager -> Network : Request via\nUDP broadcast
+    Network -> distributedManager : User2_ID, ethernet address
+    Network -> distributedManager : . . . 
+    Network -> distributedManager : UserN_ID
+  distributedManager -> chatAgent -- : user_list 
+  
   UI <- chatAgent ** : openUI() :
 chatAgent -> UI -- : inputDialogBox(login)
 
@@ -20,6 +27,8 @@ UI -> chatAgent : login == "name"
 loop if !isUsernameValid
 alt name available
 chatAgent -> chatAgent : isUsernameValid = True
+chatAgent -> distributedManager : notifyNewName(login)
+distributedManager -> Network : Notification\nvia UDP broadcast
 UI <- chatAgent : display(user_list)
     else name already taken
 UI <- chatAgent : errorMessage("Name Already Taken")
@@ -63,7 +72,9 @@ Network -> chatAgent ++ : Receive Messsage M3 from User3
 chatAgent -> UI -- : addMessage(M3)
 
 User -> chatAgent : Closes Agent
-chatAgent -> Network : notifyUsers()
-chatAgent -> UI !! : close()
-chatAgent -> databaseManager !! : close()
+chatAgent -> distributedManager : notifyUsers()
+distributedManager -> Network : Notification\nvia UDP broadcast
+chatAgent -> distributedManager !!
+chatAgent -> UI !!
+chatAgent -> databaseManager !!
 @enduml
