@@ -1,0 +1,69 @@
+@startuml ChatAgentWhiteBoxSequence
+actor User1 as User
+box "Chat Agent"
+  participant UI
+  participant "Main Class\n(and other classes)" as chatAgent
+  participant "Remote\nDatabase\nManager" as databaseManager
+end box
+
+actor "Network" as Network
+actor "Clock" as Clock
+
+User -> chatAgent ++ : Opens Agent
+  chatAgent -> Network ++ : getConnectedUserList()
+  Network -> chatAgent -- : user_list
+  UI <- chatAgent ** : openUI() :
+chatAgent -> UI -- : inputDialogBox(login)
+
+User -> UI : Logins as "name"
+UI -> chatAgent : login == "name"
+loop if !isUsernameValid
+alt name available
+chatAgent -> chatAgent : isUsernameValid = True
+UI <- chatAgent : display(user_list)
+    else name already taken
+UI <- chatAgent : errorMessage("Name Already Taken")
+UI <- chatAgent -- : inputDialogBox(login)
+    end
+end
+
+User -> chatAgent ++ : Starts Chatting Session\nwith User2
+  chatAgent -> databaseManager ** 
+  chatAgent -> databaseManager ++ : retrieveHistory(User2)
+    databaseManager -> Network : SQL request
+    Network -> databaseManager : history_user2
+  databaseManager -> chatAgent -- : history_user2
+
+  chatAgent -> UI : openChattingSession(User2)
+chatAgent -> UI -- : display(history_user2)
+
+User -> chatAgent ++ : Sends Message M1
+  chatAgent -> Clock : getTime()
+  Clock -> chatAgent : current_time
+
+  chatAgent -> Network : sendMessage(User2,M1)
+
+  chatAgent -> databaseManager : updateHistory(User2,M1)
+    databaseManager -> Network : SQL request
+chatAgent -> UI -- : addMessage(M1)
+
+Network -> chatAgent ++ : receiveMessage(User2,M2)
+chatAgent -> UI -- : addMessage(M2)
+
+User -> chatAgent : Closes Chatting Session
+chatAgent -> UI : closeChattingSession(User2)
+
+Network -> chatAgent ++ : Receive Messsage M3 from User3
+  chatAgent -> databaseManager ++ : retrieveHistory(User3)
+    databaseManager -> Network : SQL request
+    Network -> databaseManager : history_user3
+  databaseManager -> chatAgent -- : history_user3
+  chatAgent -> UI : openChattingSession(User3)
+  chatAgent -> UI : display(history_user3)
+chatAgent -> UI -- : addMessage(M3)
+
+User -> chatAgent : Closes Agent
+chatAgent -> Network : notifyUsers()
+chatAgent -> UI !! : close()
+chatAgent -> databaseManager !! : close()
+@enduml
