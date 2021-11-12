@@ -3,6 +3,8 @@ actor User1 as User
 box "Chat Agent"
   participant  "UI Manager" as UI
   participant "Main Class\n(and other classes)" as chatAgent
+  participant "Chatting Session 1" as chat1
+  participant "Chatting Session 2" as chat2
   participant "Distributed\nData\nManager" as distributedManager
   participant "Remote\nDatabase\nManager" as databaseManager
 end box
@@ -22,9 +24,9 @@ User -> chatAgent ++ : Opens Agent
   UI <- chatAgent ** : openUI() :
 chatAgent -> UI -- : inputDialogBox(login)
 
-User -> UI : Logins as "name"
-UI -> chatAgent : login == "name"
 loop if !isUsernameValid
+User -> UI : Logins attempt as "name"
+UI -> chatAgent : eventLogin("name")
 alt name available
 chatAgent -> chatAgent : isUsernameValid = True
 chatAgent -> distributedManager : notifyNewName(login)
@@ -36,45 +38,54 @@ UI <- chatAgent -- : inputDialogBox(login)
     end
 end
 
-User -> chatAgent ++ : Starts Chatting Session\nwith User2
-  chatAgent -> databaseManager ** 
-  chatAgent -> databaseManager ++ : retrieveHistory(User2)
+User -> UI : Starts Chatting Session\nwith User2
+  UI -> chatAgent : eventNewChat(User2)
+  chatAgent -> chat1 ** : create(User2)
+  chat1 -> databaseManager ** 
+  chat1 -> databaseManager ++ : retrieveHistory(User2)
     databaseManager -> Network : SQL request
     Network -> databaseManager : history_user2
-  databaseManager -> chatAgent -- : history_user2
+  databaseManager -> chat1 -- : history_user2
 
-  chatAgent -> UI : openChattingSession(User2)
-chatAgent -> UI -- : display(history_user2)
+  chat1 -> UI : openChattingSession(User2)
+chat1 -> UI -- : display(history_user2)
 
-User -> chatAgent ++ : Sends Message M1
-  chatAgent -> Clock : getTime()
-  Clock -> chatAgent : current_time
+User -> UI : Sends Message M1
+  UI -> chat1 : eventSendMessage(M1)
+  chat1 -> Clock : getTime()
+  Clock -> chat1 : current_time
 
-  chatAgent -> Network : sendMessage(User2,M1)
+  chat1 -> Network : sendMessage(User2,M1)
 
-  chatAgent -> databaseManager : updateHistory(User2,M1)
+  chat1 -> databaseManager : updateHistory(User2,M1)
     databaseManager -> Network : SQL request
-chatAgent -> UI -- : addMessage(M1)
+chat1 -> UI -- : addMessage(M1)
 
-Network -> chatAgent ++ : receiveMessage(User2,M2)
-chatAgent -> UI -- : addMessage(M2)
+Network -> chat1 ++ : receiveMessage(User2,M2)
+chat1 -> UI -- : addMessage(M2)
 
-User -> chatAgent : Closes Chatting Session
+User -> UI : Closes Chatting Session
+UI -> chatAgent : eventClose(chat1)
+chatAgent -> chat1 !! : close()
 chatAgent -> UI : closeChattingSession(User2)
 
-Network -> chatAgent ++ : Receive Messsage M3 from User3
-  chatAgent -> databaseManager ++ : retrieveHistory(User3)
+Network -> chatAgent : Receive Messsage M3 from User3
+  chatAgent -> chat2 ** : create(User3)
+  chat2 -> databaseManager ++ : retrieveHistory(User3)
     databaseManager -> Network : SQL request
     Network -> databaseManager : history_user3
-  databaseManager -> chatAgent -- : history_user3
-  chatAgent -> UI : openChattingSession(User3)
-  chatAgent -> UI : display(history_user3)
-chatAgent -> UI -- : addMessage(M3)
+  databaseManager -> chat2 -- : history_user3
+  chat2 -> UI : openChattingSession(User3)
+  chat2 -> UI : display(history_user3)
+chat2 -> UI -- : addMessage(M3)
 
-User -> chatAgent : Closes Agent
+User -> UI : Closes Agent
+UI -> chatAgent : eventClose()
+chatAgent -> chat2 !! : close()
 chatAgent -> distributedManager : notifyUsers()
 distributedManager -> Network : Notification\nvia UDP broadcast
-chatAgent -> distributedManager !!
-chatAgent -> UI !!
-chatAgent -> databaseManager !!
+chatAgent -> distributedManager !! : close()
+chatAgent -> databaseManager !! : close()
+chatAgent -> UI !! : close()
+chatAgent -> chatAgent !! : close()
 @enduml
