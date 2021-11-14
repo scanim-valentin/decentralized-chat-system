@@ -1,0 +1,23 @@
+@startuml ClassDiagram
+class main {
+
+}
+
+class UIManager {
++void {abstract} openUI()
++void {abstract} inputDialogBox(string login)
+}
+
+class DistributedDataManager {
+
+}
+
+class  RemoteDatabaseManager{
+
+}
+
+class  ChattingSession{
+
+}
+
+@enduml
