@@ -1,23 +1,48 @@
 @startuml ClassDiagram
-class main {
-
+abstract class main {
+    -void main()
 }
 
-class UIManager {
-+void {abstract} openUI()
-+void {abstract} inputDialogBox(string login)
+abstract class UIManager {
+    +void openUI()
+    +void inputDialogBox(string Login)
+    +void openChattingSession(userID User)
+    +void closeChattingSession(userID User)
+    +void addMessage(message Message)
+    +void addHistory(message[] Messages)
 }
 
-class DistributedDataManager {
-
+abstract class DistributedDataManager {
+    +UserList getConnectedUserList()
+    +void notifyUsers()
+    +void notifyNewName(userID User,string Login)
 }
 
-class  RemoteDatabaseManager{
-
+abstract class  RemoteDatabaseManager{
+    +message[] retrieveHistory(userID User)
+    +void updateHistory(userID User, message Message)
 }
 
-class  ChattingSession{
-
+class ChattingSession{
+    -Date getTime()
+    -void sendMessage(message Message)
+    -Message receiveMessage()
 }
+
+class Message{
+    time : Date
+    content : String
+}
+
+class UserList{
+    
+}
+
+UIManager "1" <-- main
+RemoteDatabaseManager "1" <-- main
+DistributedDataManager "1" <-- main
+ChattingSession "0..*" <-- main
+UIManager <-d ChattingSession
+
 
 @enduml
