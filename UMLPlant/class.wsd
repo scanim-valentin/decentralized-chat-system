@@ -35,14 +35,25 @@ class Message{
 }
 
 class UserList{
-    
+    Map<userID, String> : map
 }
 
-UIManager "1" <-- main
-RemoteDatabaseManager "1" <-- main
-DistributedDataManager "1" <-- main
-ChattingSession "0..*" <-- main
-UIManager <-d ChattingSession
+class userID{
+    int : ID
+} 
 
+
+RemoteDatabaseManager "1" <-- main
+DistributedDataManager "1" <- main
+UIManager "1" <- main
+ChattingSession "0..*" <-- main
+UIManager <- ChattingSession
+UserList -> "0..*" userID
+main -> userID
+ChattingSession --> userID
+main --> UserList
+ChattingSession --> UserList
+ChattingSession -> Message
+main -> Message
 
 @enduml

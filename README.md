@@ -6,5 +6,8 @@ Use Case Diagram :
 Black Box Sequence Diagram : 
 ![sequence_black_box](UMLPlant/sequence_black_box.png)
 
-(IN PROGRESS) White Box Sequence Diagram : 
+White Box Sequence Diagram : 
 ![sequence_white_box](UMLPlant/sequence_white_box.png)
+
+(IN PROGRESS) Class Diagram : 
+![class](UMLPlant/class.png)
