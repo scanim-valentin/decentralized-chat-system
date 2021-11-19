@@ -13,6 +13,7 @@ actor "Network" as Network
 actor "Clock" as Clock
 
 User -> chatAgent ++ : Opens Agent
+  UI <- chatAgent ** 
   chatAgent -> distributedManager **
   chatAgent -> distributedManager ++ : getConnectedUserList()
     distributedManager -> Network : Request via\nUDP broadcast
@@ -21,7 +22,6 @@ User -> chatAgent ++ : Opens Agent
     Network -> distributedManager : UserN_ID
   distributedManager -> chatAgent -- : user_list 
   
-  UI <- chatAgent ** : openUI() :
 chatAgent -> UI -- : inputDialogBox(login)
 
 loop if !isUsernameValid
@@ -84,8 +84,8 @@ UI -> chatAgent : eventClose()
 chatAgent -> chat2 !! : close()
 chatAgent -> distributedManager : notifyUsers()
 distributedManager -> Network : Notification\nvia UDP broadcast
-chatAgent -> distributedManager !! : close()
-chatAgent -> databaseManager !! : close()
-chatAgent -> UI !! : close()
 chatAgent -> chatAgent !! : close()
+chatAgent -> distributedManager !!
+chatAgent -> databaseManager !!
+chatAgent -> UI !!
 @enduml

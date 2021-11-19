@@ -1,5 +1,6 @@
 @startuml class
 abstract class main {
+    -boolean isUsernameValid(String name)
     -void main()
 }
 
@@ -35,11 +36,11 @@ class Message{
 }
 
 class UserList{
-    Map<userID, String> : map
+    map : Map<userID, String> 
 }
 
 class userID{
-    int : ID
+    ID : int
 } 
 
 
@@ -49,10 +50,10 @@ UIManager "1" <- main
 ChattingSession "0..*" <-- main
 UIManager <- ChattingSession
 UserList -> "0..*" userID
-main -> userID
-ChattingSession --> userID
+main --> userID
+ChattingSession -> userID
 main --> UserList
-ChattingSession --> UserList
+ChattingSession -> UserList
 ChattingSession -> Message
 main -> Message
 
