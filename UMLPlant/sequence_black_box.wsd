@@ -1,4 +1,4 @@
-@startuml ChatAgentBlackBoxSequence
+@startuml sequence_black_box
 actor User1 as User
 participant "Chat Agent" as chatAgent
 actor "Network" as Network

@@ -1,4 +1,4 @@
-@startuml ChatAgentWhiteBoxSequence
+@startuml sequence_white_box
 actor User1 as User
 box "Chat Agent"
   participant  "UI Manager" as UI

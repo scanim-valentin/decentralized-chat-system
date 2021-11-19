@@ -1,4 +1,4 @@
-@startuml ClassDiagram
+@startuml class
 abstract class main {
     -void main()
 }

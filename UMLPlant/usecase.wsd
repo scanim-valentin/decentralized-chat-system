@@ -1,4 +1,4 @@
-@startuml ChatAgentUseCase
+@startuml usecase
 left to right direction
 :User: as user
     :Network: as network #line:red;text:red
