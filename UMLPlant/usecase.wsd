@@ -14,7 +14,7 @@ rectangle ChatAgent{
 
 (Notify Agents)---network
 (Verify Unicity)---network
-(Update Connected\nUser List)-db
+(Update Connected\nUser List)--network
 (Access History Database)--db
  
  (Provide Date & Time) #line:green
@@ -26,6 +26,7 @@ rectangle ChatAgent{
  (Close Agent)..|>(Notify Agents) : <<include>>
 
  (Start Chatting Session)<|.(Send Message) : <<include>>
+ (Start Chatting Session)..|>(Access History Database) : <<include>>
  (Send Message)..|>(Access History Database) : <<include>>
  (Send Message)..|>(Provide Date & Time) : <<include>>
 
