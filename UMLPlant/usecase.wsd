@@ -2,32 +2,38 @@
 left to right direction
 :User: as user
     :Network: as network #line:red;text:red
+    :Database: as db #line:red;text:red
     :Clock: as clock #line:green;text:green
 rectangle ChatAgent{
- user--(Communicate)
+
  user--(Open Agent)
  user--(Close Agent)
  user--(Change Username)
+ user--(Choose Username)
  user--(Start Chatting Session)
 
 (Notify Agents)---network
-(Update Connected\nUser List)-network
-(Access History Database)--network
+(Verify Unicity)---network
+(Update Connected\nUser List)-db
+(Access History Database)--db
  
  (Provide Date & Time) #line:green
  (Provide Date & Time)---clock #green
 
- (Communicate)<|--(Send Message) : <<extends>>
- (Communicate)<|--(Receive Message) : <<extends>>
-
+ user--(Send Message)
+ user--(Receive Message)
  
- (Start Chatting Session)<|..(Receive Message) : <<include>>
  (Close Agent)..|>(Notify Agents) : <<include>>
 
+ (Start Chatting Session)<|.(Send Message) : <<include>>
  (Send Message)..|>(Access History Database) : <<include>>
  (Send Message)..|>(Provide Date & Time) : <<include>>
 
  (Open Agent)..|>(Update Connected\nUser List) : <<include>>
  (Change Username)..|>(Notify Agents) : <<include>>
+ (Choose Username)..|>(Notify Agents) : <<include>>
+ (Choose Username)..|>(Verify Unicity) : <<include>>
+ (Change Username)..|>(Verify Unicity) : <<include>>
+
 }
 @enduml
