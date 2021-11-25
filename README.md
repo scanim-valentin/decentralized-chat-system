@@ -1,13 +1,13 @@
 # decentralized-chat-system
 
 Use Case Diagram : 
-![usecase](UMLPlant/usecase.svg)
+![usecase](PlantUML/usecase.svg)
 
 Black Box Sequence Diagram : 
-![sequence_black_box](UMLPlant/sequence_black_box.svg)
+![sequence_black_box](PlantUML/sequence_black_box.svg)
 
 White Box Sequence Diagram : 
-![sequence_white_box](UMLPlant/sequence_white_box.svg)
+![sequence_white_box](PlantUML/sequence_white_box.svg)
 
-(IN PROGRESS) Class Diagram : 
-![class](UMLPlant/class.svg)
+Class Diagram : 
+![class](PlantUML/class.svg)

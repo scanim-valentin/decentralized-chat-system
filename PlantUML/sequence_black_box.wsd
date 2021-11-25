@@ -1,0 +1,69 @@
+@startuml sequence_black_box
+actor User1 as User
+participant "Chat Agent" as chatAgent
+actor "Network\n(User2,User3,...,UserN)" as Network
+actor "Remote Database\n(User*User*History)" as db
+actor "Clock" as Clock
+
+== User1 opens the agent ==
+
+User -> chatAgent ++ : Opens Agent
+  chatAgent -> chatAgent : isUsernameValid = False\nuser_list = null
+chatAgent -> User -- : Shows UI :\nUsername Input
+
+== Login phase ==
+
+loop if !isUsernameValid
+User -> chatAgent ++ : Logins as "name"
+
+chatAgent -> Network ++ : (UDP)\nverifyUnicity()
+Network -> chatAgent -- : user_list
+ 
+alt user_list.find("name") == false
+chatAgent -> chatAgent : isUsernameValid = True
+User <- chatAgent : Shows Connected User List
+chatAgent -> Network : (UDP)\nnotifyConnection("name")
+    else user_list.find("name") == true
+User <- chatAgent -- : Shows invalid input message
+    end
+end
+
+== User1 wants to chat with (connected) User2 ==
+
+User -> chatAgent ++ : Starts Chatting Session\nwith User2
+  chatAgent -> db ++ : retrieveHistory(User2)
+  db -> chatAgent -- : history_user2
+chatAgent -> User -- : Shows UI :\nChat window with conversation history
+
+User -> chatAgent ++ : Sends Message M1
+  chatAgent -> Network : Request (TCP) connection\nwith User2
+  chatAgent -> Clock ++ : getTime()
+  Clock -> chatAgent -- : current_time
+  chatAgent -> Network : sendMessage(User2,M1)
+  chatAgent -> db : updateHistory(User2,M1)
+chatAgent -> User -- : Shows UI :\n Updated chat with new message
+
+Network -> chatAgent ++ : Receive Messsage M2
+chatAgent -> User -- : Shows UI :\n Updated chat with new message
+
+User -> chatAgent : Closes Chatting Session
+chatAgent -> Network : End (TCP) connection\nwith User2\nClose chat UI
+
+== User1 receives a message from User3 ==
+
+Network -> chatAgent ++ : Incoming TCP connection request\nfrom User3
+chatAgent -> chatAgent : Start Chatting Session with User3
+Network -> chatAgent : Receive Messsage M3 from User3
+
+  chatAgent -> db ++ : retrieveHistory(User3) 
+  db -> chatAgent -- : history_user3
+chatAgent -> User -- : Shows UI :\n Updated chat\nwith history and new message
+
+== User1 closes the agent ==
+
+User -> chatAgent ++ : Closes Agent
+  chatAgent -> Network : End (TCP) connection\nwith User3
+  chatAgent -> Network : (UDP)\nnotifyUsers()
+chatAgent -> User -- : Closes UI
+
+@enduml

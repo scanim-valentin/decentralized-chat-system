@@ -1,0 +1,73 @@
+@startuml class
+abstract class main {
+    -boolean verifyUnicity(String name)
+    -void waitForConnectionRequest()
+    -void receiveNotification(Notification notif)
+    -void main()
+}
+
+abstract class UIManager {
+    +void openUI()
+    +void inputDialogBox(String Login)
+    +void openChattingSession(userID User)
+    +void closeChattingSession(userID User)
+    +void addMessage(message Message)
+    +void addHistory(message[] Messages)
+}
+
+abstract class DistributedDataManager {
+    -void sendUPDBroadcast(String )
+    +UserList getConnectedUserList()
+    +void notifyUsers()
+    +void notifyNewName(userID User,string Login)
+}
+
+abstract class  RemoteDatabaseManager{
+    - database_ip_address : String 
+    -void sendSQLRequest(String SQL_request)
+    +message[] retrieveHistory(userID User)
+    +void updateHistory(userID User, message Message)
+}
+
+class ChattingSession{
+    - user_ip_address : String 
+    - user_id : userID
+    - username : String
+    -Date getTime()
+    -void sendMessage(message Message)
+    -Message receiveMessage()
+
+    +void close()
+}
+
+class Message{
+    time : Date
+    content : String
+}
+
+class UserList{
+    user_list : UserList
+    username : String
+    map : Map<userID, String> 
+}
+
+class userID{
+    ID : int
+} 
+
+
+
+RemoteDatabaseManager "1" <-- main
+DistributedDataManager "1" <- main
+UIManager "1" <- main
+ChattingSession "0..*" <-- main
+UIManager <- ChattingSession
+UserList -> "0..*" userID
+main --> userID
+ChattingSession -> userID
+main --> UserList
+ChattingSession -> UserList
+ChattingSession -> Message
+main -> Message
+
+@enduml
