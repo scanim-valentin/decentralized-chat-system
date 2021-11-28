@@ -102,6 +102,16 @@ Network -> chatAgent : Incoming TCP connection request\nfrom User3
   Network -> chat2 : receiveMessage(User3,M3)
 chat2 -> UI -- : addMessage(M3)
 
+== User1 sends a file to User3 ==
+User -> chat2 ++ : Sends File F1
+chat2 -> Network : File transfert request\nto User3
+Network -> chat2 : File transfert accept\nfrom User3
+chat2 -> Network : sendFile(User3,F1)
+chat2 -> Clock ++ : getTime()
+Clock -> chat2 -- : current_time
+chat2 -> Network : sendMessage(User3,M4)\n(M4 is file name, size and date it was sent)
+chat2 -> databaseManager -- : updateHistory(User3,M4)
+  databaseManager -> db : SQL request
 == User1 closes the agent ==
 
 User -> UI : Closes Agent
