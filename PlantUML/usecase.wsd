@@ -5,7 +5,7 @@ left to right direction
     :Database: as db #line:red;text:red
     :Clock: as clock #line:green;text:green
 rectangle ChatAgent{
-
+ 
  user--(Open Agent)
  user--(Close Agent)
  user--(Change Username)
@@ -15,18 +15,21 @@ rectangle ChatAgent{
 (Notify Agents)---network
 (Verify Unicity)---network
 (Update Connected\nUser List)--network
-(Access History Database)--db
+(Access History Database)---db
  
  (Provide Date & Time) #line:green
  (Provide Date & Time)---clock #green
 
  user--(Send Message)
+ user--(Send File) 
  user--(Receive Message)
+ 
+ (Send Message)<|.(Send File) : <<include>>
  
  (Close Agent)..|>(Notify Agents) : <<include>>
 
  (Start Chatting Session)<|.(Send Message) : <<include>>
- (Start Chatting Session)..|>(Access History Database) : <<include>>
+ (Start Chatting Session).|>(Access History Database) : <<include>>
  (Send Message)..|>(Access History Database) : <<include>>
  (Send Message)..|>(Provide Date & Time) : <<include>>
 
