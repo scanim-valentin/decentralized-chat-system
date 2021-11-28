@@ -36,7 +36,8 @@ class ChattingSession{
     -Date getTime()
     -void sendMessage(message Message)
     -Message receiveMessage()
-
+    -void sendFile(string Path)
+    -void receiveFile()
     +void close()
 }
 
