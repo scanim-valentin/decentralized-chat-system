@@ -1,0 +1,28 @@
+@startuml component
+
+() "UDP" as UDP
+() "TCP" as TCP
+() "Database" as db
+
+component ChatAgent{
+() "UI events" as UIEvents
+() "to Database" as toDb
+() "from Database" as fromDb
+
+[DistributedDataManager] ..> UDP :<<uses>>
+UDP-[DistributedDataManager] :<<realizes>>
+[UIManager] - UIEvents
+[ChattingSession] ..> TCP :<<uses>>
+TCP-[ChattingSession] :<<realizes>>
+[RemoteDatabaseManager] ..> db :<<uses>>
+db - [RemoteDatabaseManager] : <<realizes>>
+
+[RemoteDatabaseManager] ..> fromDb:<<uses>>
+fromDb - [ChattingSession]
+
+[ChattingSession] ..> toDb :<<uses>>
+toDb - [RemoteDatabaseManager]: <<realizes>>
+
+[main]
+}
+@enduml

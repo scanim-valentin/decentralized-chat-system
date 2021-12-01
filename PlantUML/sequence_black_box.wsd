@@ -8,7 +8,7 @@ actor "Clock" as Clock
 == User1 opens the agent ==
 
 User -> chatAgent ++ : Opens Agent
-  chatAgent -> chatAgent : isUsernameValid = False\nuser_list = null
+ rnote over chatAgent: ""bool isUsernameValid = False""\n""UserList user_list = null""
 chatAgent -> User -- : Shows UI :\nUsername Input
 
 == Login phase ==
@@ -16,14 +16,19 @@ chatAgent -> User -- : Shows UI :\nUsername Input
 loop if !isUsernameValid
 User -> chatAgent ++ : Logins as "name"
 
-chatAgent -> Network ++ : (UDP)\nverifyUnicity()
-Network -> chatAgent -- : user_list
- 
-alt user_list.find("name") == false
+chatAgent -> Network ++ : UDPBroadcast_IDRequest()
+Network -> chatAgent : [from UPD packet] {User2_name, User2_IP, User2_port} 
+chatAgent -> chatAgent : user_list.append({User2_name, User2_IP, User2_port})
+Network -> chatAgent : . . . 
+Network -> chatAgent -- : [from UPD packet] {UserN_ID, UserN_IP, UserN_port}
+chatAgent -> chatAgent : user_list.append({UserN_name, UserN_IP, UserN_port})
+rnote over chatAgent:  isUsernameValid = !user_list.find("name")
+
+alt isUsernameValid == false
 chatAgent -> chatAgent : isUsernameValid = True
 User <- chatAgent : Shows Connected User List
-chatAgent -> Network : (UDP)\nnotifyConnection("name")
-    else user_list.find("name") == true
+chatAgent -> Network : UDPBroadcast_NotifyConnection("name")
+    else isUsernameValid == true
 User <- chatAgent -- : Shows invalid input message
     end
 end
@@ -35,7 +40,7 @@ User -> chatAgent ++ : Starts Chatting Session\nwith User2
   db -> chatAgent -- : history_user2
 chatAgent -> User -- : Shows UI :\nChat window with conversation history
 
-User -> chatAgent ++ : Sends Message M1
+User -> chatAgent ++ : Sends Message "Hi!" M1 
   chatAgent -> Network : Request (TCP) connection\nwith User2
   chatAgent -> Clock ++ : getTime()
   Clock -> chatAgent -- : current_time
@@ -43,7 +48,14 @@ User -> chatAgent ++ : Sends Message M1
   chatAgent -> db : updateHistory(User2,M1)
 chatAgent -> User -- : Shows UI :\n Updated chat with new message
 
-Network -> chatAgent ++ : Receive Messsage M2
+Network -> chatAgent ++ : Receive Messsage "Hello" M2 
+chatAgent -> User -- : Shows UI :\n Updated chat with new message
+
+User -> chatAgent ++ : Sends Message "See you later!" M3 
+  chatAgent -> Clock ++ : getTime()
+  Clock -> chatAgent -- : current_time
+  chatAgent -> Network : sendMessage(User2,M3)
+  chatAgent -> db : updateHistory(User2,M3)
 chatAgent -> User -- : Shows UI :\n Updated chat with new message
 
 User -> chatAgent : Closes Chatting Session
@@ -53,7 +65,7 @@ chatAgent -> Network : End (TCP) connection\nwith User2\nClose chat UI
 
 Network -> chatAgent ++ : Incoming TCP connection request\nfrom User3
 chatAgent -> chatAgent : Start Chatting Session with User3
-Network -> chatAgent : Receive Messsage M3 from User3
+Network -> chatAgent : Receive Messsage M4 from User3
 
   chatAgent -> db ++ : retrieveHistory(User3) 
   db -> chatAgent -- : history_user3
@@ -61,12 +73,12 @@ chatAgent -> User -- : Shows UI :\n Updated chat\nwith history and new message
 
 == User1 sends a file to User3 ==
 User -> chatAgent ++ : Sends File F1
-chatAgent -> Network : File transfert request\nto User3
-Network -> chatAgent : File transfert accept\nfrom User3
-chatAgent -> Network : sendFile(User3,F1)
+chatAgent -> Network : FTPRequest(User3)\nto User3
+Network -> chatAgent : FTPAccept()\nfrom User3
+chatAgent -> Network : FTPSendFile(User3,F1)
 chatAgent -> Clock ++ : getTime()
 Clock -> chatAgent -- : current_time
-chatAgent -> Network : sendMessage(User3,M4)\n(M4 is file name, size and date it was sent)
+chatAgent -> Network : sendMessage(User3,M4))
 chatAgent -> db -- : updateHistory(User3,M4)
 == User1 closes the agent ==
 

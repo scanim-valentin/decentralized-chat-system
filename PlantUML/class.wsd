@@ -58,7 +58,6 @@ class userID{
 
 
 
-RemoteDatabaseManager "1" <-- main
 DistributedDataManager "1" <- main
 UIManager "1" <- main
 ChattingSession "0..*" <-- main
@@ -69,6 +68,7 @@ ChattingSession -> userID
 main --> UserList
 ChattingSession -> UserList
 ChattingSession -> Message
+ChattingSession "0..*" -> RemoteDatabaseManager
 main -> Message
 
 @enduml
