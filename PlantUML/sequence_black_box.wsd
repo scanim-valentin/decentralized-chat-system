@@ -1,8 +1,8 @@
 @startuml sequence_black_box
 actor User1 as User
 participant "Chat Agent" as chatAgent
-actor "Network\n(User2,User3,...,UserN)" as Network
-actor "Remote Database\n(User*User*History)" as db
+actor "Network" as Network
+actor "Remote Database" as db
 actor "Clock" as Clock
 
 == User1 opens the agent ==

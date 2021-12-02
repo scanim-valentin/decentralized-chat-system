@@ -32,7 +32,7 @@ rectangle ChatAgent{
  (Start Chatting Session).|>(Access History Database) : <<include>>
  (Send Message)..|>(Access History Database) : <<include>>
  (Send Message)..|>(Provide Date & Time) : <<include>>
-
+ (Receive Message)..|>(Provide Date & Time) : <<include>>
  (Open Agent)..|>(Update Connected\nUser List) : <<include>>
  (Change Username)..|>(Notify Agents) : <<include>>
  (Choose Username)..|>(Notify Agents) : <<include>>
