@@ -1,12 +1,13 @@
 package mainpackage;
+import java.net.* ;
 
 public class UserID {
 	    // Déclaration des strings depuis cette classe seulement
 	    private String nom;
-	    private String hostAddress;
+	    private InetAddress hostAddress;
 	    
 	    // Definition de nom et de @IP
-	    protected void User(String nom, String address) {
+	    public UserID(String nom, InetAddress address) {
 	        this.nom=nom;
 	        this.hostAddress=address;
 	    }
@@ -21,12 +22,12 @@ public class UserID {
 	    	}
 	    
 	    // Lire l'@IP de l'utilisateur
-	    public String getAddress() { 
+	    public InetAddress getAddress() { 
 	    	return this.hostAddress;  // hostAddress prend l'@IP
 	    	}
 	    // Afficher le nom et l'adresse IP de l'utilisateur
 	    public String toString() {
-	    	return this.getNom()+" : "+this.getAddress();
+	    	return this.getNom()+" : "+this.getAddress().toString();
 	    	}
 	    
 	    public boolean equals(Object o)

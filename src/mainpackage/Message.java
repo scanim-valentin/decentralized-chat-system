@@ -8,12 +8,12 @@ public class Message {
 	
 	
 	public Message(String username, Date time, String content) {
-		this.username = username ; 
+		this.sender = username ; 
 		this.time = time ; 
 		this.content = content ; 
 	}
 	
 	public String toString() {
-		return "["+Date.toString+"] "+sender+": "+content.toString();
+		return "["+time.toString()+"] "+sender+": "+content.toString();
 	}
 }
