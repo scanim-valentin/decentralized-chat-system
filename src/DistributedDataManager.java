@@ -4,8 +4,8 @@ import java.io.* ;
 
 abstract class DistributedDataManager {
 
-	static final private int DGRAM_PORT_RX = 1236 ;
-	static final private int DGRAM_PORT_TX = 1237 ;
+	static final private int DGRAM_PORT_RX = 1238 ;
+	static final private int DGRAM_PORT_TX = 1239 ;
 	
 	//Each datagram sequence begins with one of these words indicating the type of content
 	static final private String ID_REQUEST_SIG = "ID_REQUEST" ; //Indicates that someone on the network is willing to update its userlist 
@@ -23,13 +23,30 @@ abstract class DistributedDataManager {
 	
 	//Continuously listen on DGRAM_PORT for incoming UPD notifications 
 	static class DDM_Deamon extends Thread {
+		static DatagramSocket dgramSocket_RX  ; 
+		static DatagramSocket dgramSocket_TX ; 
 		DDM_Deamon(String name){
 			super(name) ; 
-		}
-		public void run() {
 			try {
-				DatagramSocket dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX); //Socket to receive notifications
-				DatagramSocket dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX); //Socket to send notifications
+				dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX); //Socket to receive notifications
+				dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX); //Socket to send notifications
+			}catch(Exception E) {
+				E.printStackTrace();
+			}
+		}
+		
+		public void run() {
+			
+			Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
+			    try {
+			        dgramSocket_RX.close();
+			        System.out.println("RX socket is shut down!");
+			        dgramSocket_TX.close();
+			        System.out.println("TX socket is shut down!");
+			    } catch (Exception e) { e.printStackTrace(); }
+			}});
+			
+			try {
 				byte[] buffer = new byte[256]; //Entry socket buffer
 				DatagramPacket inPacket = new DatagramPacket(buffer, buffer.length); //Incoming dgram packet 
 				String packed ; 
@@ -127,7 +144,7 @@ abstract class DistributedDataManager {
 	//Sends a datagram to a unique recipient 
 	static private void UDPUnicast(InetAddress dest_addr, String sig, DatagramSocket dgramSocket) {
 		try {
-			DatagramPacket outPacket = new DatagramPacket(sig.getBytes(), sig.length(),dest_addr, DGRAM_PORT_TX); //A packet containing only the signal to be broadcasted
+			DatagramPacket outPacket = new DatagramPacket(sig.getBytes(), sig.length(),dest_addr, DGRAM_PORT_RX); //A packet containing only the signal to be broadcasted
 			dgramSocket.send(outPacket) ; //Broadcast ID request on the local network 
 		}
 		catch(Exception E_bc) {
