@@ -1,4 +1,3 @@
-package mainpackage;
 import java.net.* ;
 
 public class UserID {
