@@ -13,11 +13,11 @@ public class UserID {
 	    }
 	    
 	    // Lire le nom dans le string GetNom
-	    public String getNom() {
+	    public String getName() {
 	    	return this.nom;
 	    	}
 	    // Ecrire le nom dans le string name
-	    public String setNom(String name) {
+	    public String setName(String name) {
 	    	return nom = name;
 	    	}
 	    
@@ -27,7 +27,7 @@ public class UserID {
 	    	}
 	    // Afficher le nom et l'adresse IP de l'utilisateur
 	    public String toString() {
-	    	return this.getNom()+" : "+this.getAddress().toString();
+	    	return this.getName()+" : "+this.getAddress().toString();
 	    	}
 	    
 	    public boolean equals(Object o)
