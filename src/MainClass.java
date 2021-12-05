@@ -18,7 +18,7 @@ public class MainClass {
 	
 	
 	static private void debugPrint(String str) {
-		System.out.println("MainClass: "+str);
+		System.out.println("["+Thread.currentThread().getName()+"] MainClass: "+str);
 	}
 	
 	/*Checks if a username is valid, i.e.: 

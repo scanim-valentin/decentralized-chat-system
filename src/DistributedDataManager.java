@@ -185,6 +185,6 @@ abstract class DistributedDataManager {
 	}
 	
 	static private void debugPrint(String str) {
-		System.out.println("DistributedDataManager : "+str) ; 
+		System.out.println("["+Thread.currentThread().getName()+"] DistributedDataManager : "+str) ; 
 	}
 }
