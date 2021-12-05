@@ -15,6 +15,10 @@ abstract class DistributedDataManager {
 	
 	static final public String SEP = "|" ; //Separator, forbidden character in username choice
 	
+	static DatagramSocket dgramSocket_RX  ; 
+	static DatagramSocket dgramSocket_TX ; 
+	
+	
 	static void start_deamon(){
 		debugPrint("Starting deamon . . .") ; 
 		DDM_Deamon ddm_deamon = new DDM_Deamon("DDM_Deamon") ; 
@@ -23,8 +27,6 @@ abstract class DistributedDataManager {
 	
 	//Continuously listen on DGRAM_PORT for incoming UPD notifications 
 	static class DDM_Deamon extends Thread {
-		static DatagramSocket dgramSocket_RX  ; 
-		static DatagramSocket dgramSocket_TX ; 
 		DDM_Deamon(String name){
 			super(name) ; 
 			try {
@@ -129,14 +131,22 @@ abstract class DistributedDataManager {
 		return dgram;
 	}
 	
-	//Broadcasts an ID request to everyone on the local network 
-	static public void requestUserList() {		
-		try {
-			DatagramSocket dgramSocket = new DatagramSocket(DGRAM_PORT_TX); //Socket to receive answers 
-			UDPBroadcast_IDRequest(dgramSocket) ; //Will request everyone's ID
-		}catch(Exception E){
-			E.printStackTrace() ; 
-		}
+	static public void notifyConnection() {
+		String[] unpacked = {ONLINE_SIG,MainClass.username} ;
+		debugPrint("Notifying online status to everyone");
+		UDPBroadcast(pack(unpacked),dgramSocket_TX);
+	}
+	
+	static public void notifyDisconnection() {
+		String[] unpacked = {OFFLINE_SIG,MainClass.username} ;
+		debugPrint("Notifying offline status to everyone");
+		UDPBroadcast(pack(unpacked),dgramSocket_TX);
+	}
+	
+	static public void notifyNewName(String newname) {
+		String[] unpacked = {NEW_NAME_SIG,MainClass.username,newname} ;
+		debugPrint("Notifying change of username ("+MainClass.username+"->"+newname+") to everyone");		
+		UDPBroadcast(pack(unpacked),dgramSocket_TX);
 	}
 	
 	//Broadcast a notification on the local network

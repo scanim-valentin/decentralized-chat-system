@@ -68,7 +68,15 @@ public class MainClass {
 	    }catch(Exception E) {
 	    	E.printStackTrace();
 	    }
-        username = name_input ;
+        //Notifying everyone on the local network 
+        if(username.isEmpty()) {
+        	username = name_input ;
+        	DistributedDataManager.notifyConnection();
+        }else {
+        	DistributedDataManager.notifyNewName(name_input);
+        	username = name_input ; 
+        }
+        
         //notify everyone... TODO
         debugPrint("Set new name to "+username);
 	}
