@@ -59,7 +59,7 @@ abstract class DistributedDataManager {
 						debugPrint("Waiting for incoming signal . . .") ; 
 						dgramSocket_RX.receive(inPacket); //Receiving UDP answer
 						packed = new String(inPacket.getData(),0, inPacket.getLength()) ; 
-						debugPrint(InetAddress.getLocalHost().toString()+" Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
+						debugPrint(dgramSocket_TX.getInetAddress().toString()+" Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
 						unpacked = unpack(packed) ;
 						debugPrint("unpacked packet len="+unpacked.length+": "+unpacked.toString()) ; 
 						if(!inPacket.getAddress().equals(dgramSocket_TX.getInetAddress())) {
