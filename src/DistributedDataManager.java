@@ -62,7 +62,7 @@ abstract class DistributedDataManager {
 						debugPrint(" Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
 						unpacked = unpack(packed) ;
 						debugPrint("unpacked packet len="+unpacked.length+": "+unpacked.toString()) ; 
-						if(!inPacket.getAddress().isSiteLocalAddress()) {
+						if(NetworkInterface.getByInetAddress(inPacket.getAddress()) != null) {
 							switch(unpacked[0]) { //First element of the array is the datagram type
 								
 								case ID_REQUEST_SIG : //In the case someone on the network request everyone's identity, the agent answers with username
