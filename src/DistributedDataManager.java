@@ -13,7 +13,7 @@ abstract class DistributedDataManager {
 	static final private String OFFLINE_SIG = "OFFLINE" ; //Indicates that someone went offline and is follow by its username
 	static final private String NEW_NAME_SIG = "NEW_NAME" ;  //Indicates that someone changed their name and is followed by their old name and their new name
 	
-	static final private String SEP = "|" ; //Separator, forbidden character in username choice
+	static final public String SEP = "|" ; //Separator, forbidden character in username choice
 	
 	static void start_deamon(){
 		debugPrint("Starting deamon . . .") ; 
