@@ -61,7 +61,7 @@ abstract class DistributedDataManager {
 						packed = new String(inPacket.getData(),0, inPacket.getLength()) ; 
 						debugPrint("Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
 						unpacked = unpack(packed) ;
-						if(inPacket.getAddress().equals(InetAddress.getLocalHost())) {
+						if(!inPacket.getAddress().equals(InetAddress.getLocalHost())) {
 							switch(unpacked[0]) { //First element of the array is the datagram type
 								
 								case ID_REQUEST_SIG : //In the case someone on the network request everyone's identity, the agent answers with username
@@ -99,7 +99,7 @@ abstract class DistributedDataManager {
 									
 							}
 						}else {
-							debugPrint("Identified sender as localhost, ignoring packet") ; 
+							debugPrint("Identified sender as localhost ("+InetAddress.getLocalHost()+") , ignoring packet") ; 
 						}
 					}
 					catch(Exception E_rec) {
