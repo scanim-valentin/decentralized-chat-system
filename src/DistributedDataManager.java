@@ -59,10 +59,10 @@ abstract class DistributedDataManager {
 						debugPrint("Waiting for incoming signal . . .") ; 
 						dgramSocket_RX.receive(inPacket); //Receiving UDP answer
 						packed = new String(inPacket.getData(),0, inPacket.getLength()) ; 
-						debugPrint(dgramSocket_TX.getInetAddress().toString()+" Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
+						debugPrint(" Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
 						unpacked = unpack(packed) ;
 						debugPrint("unpacked packet len="+unpacked.length+": "+unpacked.toString()) ; 
-						if(!inPacket.getAddress().equals(dgramSocket_TX.getInetAddress())) {
+						if(!inPacket.getAddress().isSiteLocalAddress()) {
 							switch(unpacked[0]) { //First element of the array is the datagram type
 								
 								case ID_REQUEST_SIG : //In the case someone on the network request everyone's identity, the agent answers with username
@@ -71,6 +71,8 @@ abstract class DistributedDataManager {
 										InetAddress sender_addr = inPacket.getAddress() ;
 										String[] unpacked_answer = {ONLINE_SIG , MainClass.username} ; 
 										UDPUnicast(sender_addr, pack(unpacked_answer),dgramSocket_TX) ;
+									}else {
+										debugPrint("Not connected yet! Not answering") ; 
 									}
 									break; 
 								case ONLINE_SIG :
