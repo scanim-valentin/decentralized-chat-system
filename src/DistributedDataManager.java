@@ -59,8 +59,9 @@ abstract class DistributedDataManager {
 						debugPrint("Waiting for incoming signal . . .") ; 
 						dgramSocket_RX.receive(inPacket); //Receiving UDP answer
 						packed = new String(inPacket.getData(),0, inPacket.getLength()) ; 
-						debugPrint("Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
+						debugPrint(InetAddress.getLocalHost().toString()+" Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
 						unpacked = unpack(packed) ;
+						debugPrint("unpacked packet : "+unpacked.toString()) ; 
 						if(!inPacket.getAddress().equals(InetAddress.getLocalHost())) {
 							switch(unpacked[0]) { //First element of the array is the datagram type
 								
@@ -73,19 +74,19 @@ abstract class DistributedDataManager {
 									}
 									break; 
 								case ONLINE_SIG :
-									debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
+									debugPrint("Identified "+ONLINE_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
 									MainClass.userlist.add(new UserID(unpacked[1], inPacket.getAddress())) ; //In the case of an online signal the second element of the array is the username of the sender
 									debugPrint("Added name in userlist : "+MainClass.userlist.toString()) ;//To be added to the list
 									break ; 																
 									
 								case OFFLINE_SIG :
-									debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
+									debugPrint("Identified "+OFFLINE_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
 									MainClass.userlist.remove(new UserID(unpacked[1], inPacket.getAddress())) ; //In the case of an offline signal the second element of the array is the username of the sender
 									debugPrint("Removed name in userlist : "+MainClass.userlist.toString()) ; //To be removed from the list
 									break ; 																	
 									
 								case NEW_NAME_SIG :
-									debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(prev. \""+unpacked[1]+"\", now \""+unpacked[2]+"\")") ; 
+									debugPrint("Identified "+NEW_NAME_SIG+" from "+inPacket.getAddress().toString()+"(prev. \""+unpacked[1]+"\", now \""+unpacked[2]+"\")") ; 
 									int i = 0 ; 
 									while( (i < MainClass.userlist.size()) ) {
 										i++ ;
