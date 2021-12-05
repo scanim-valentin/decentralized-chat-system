@@ -125,6 +125,7 @@ public class MainClass {
 	        		case EXIT_IN : 
 	        			close = true ;
 	        			debugPrint("Closing agent . . .") ; 
+	        			DistributedDataManager.notifyDisconnection();
 	        			break;
 	        		case NEWNAME_IN :
 	        			changeUsername();
