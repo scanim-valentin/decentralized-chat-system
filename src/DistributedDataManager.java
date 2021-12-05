@@ -30,6 +30,7 @@ abstract class DistributedDataManager {
 		DDM_Deamon(String name){
 			super(name) ; 
 			try {
+				
 				dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX); //Socket to receive notifications
 				dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX); //Socket to send notifications
 			}catch(Exception E) {
@@ -42,6 +43,7 @@ abstract class DistributedDataManager {
 			//Closes sockets when the user closes the agent
 			Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
 			    try {
+        			DistributedDataManager.notifyDisconnection(); //Notifying every user in the local network
 			        dgramSocket_RX.close();
 			        System.out.println("RX socket is shut down!");
 			        dgramSocket_TX.close();
