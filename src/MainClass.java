@@ -14,7 +14,7 @@ public class MainClass {
 	static final public String EXIT_IN = "exit" ; 
 	static final public String NEWNAME_IN = "newname" ; 
 	static final public String CHATWITH_IN = "newchat" ;
-	
+	static final public String USRLIST_IN = "userlist" ;  
 	
 	
 	static private void debugPrint(String str) {
@@ -37,6 +37,16 @@ public class MainClass {
 		}
 		
 		return true ; 
+	}
+	
+	//Changes name in user list
+	static public void updateList(String oldname, String newname) {
+		for(UserID id: userlist) {
+			if(id.getName().equals(oldname)) { 
+				 id.setName(newname);
+				 debugPrint("Updated name in user list ("+oldname+"->"+newname+")") ; 
+			}
+		}
 	}
 	
 	private static void wait(int ms) {
@@ -119,8 +129,13 @@ public class MainClass {
 	        		case NEWNAME_IN :
 	        			changeUsername();
 	        			break;
+	        			
+	        		case USRLIST_IN : 
+	        			debugPrint("Userlist : "+userlist.toString());
+	        			break;
+	        			
 	        		default : 
-	        			debugPrint("Unidentified input. \n exit : close the agent\n newname : change username\n chat : start chatting session");
+	        			debugPrint("Unidentified input. \n exit : close the agent\n newname : change username\n chat : start chatting session\n userlist : see user list");
 	        	}
 	        }catch(Exception E) {
 	        	E.printStackTrace() ; 

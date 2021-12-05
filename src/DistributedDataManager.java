@@ -91,15 +91,7 @@ abstract class DistributedDataManager {
 									
 								case NEW_NAME_SIG :
 									debugPrint("Identified "+NEW_NAME_SIG+" from "+inPacket.getAddress().toString()+"(prev. \""+unpacked[1]+"\", now \""+unpacked[2]+"\")") ; 
-									int i = 0 ; 
-									while( (i < MainClass.userlist.size()) ) {
-										i++ ;
-										if(MainClass.userlist.get(i).getName().equals(unpacked[1])) {
-											MainClass.userlist.get(i).setName(unpacked[2]) ; //In that case, the second element is the old name  and the third element correspond to the new name
-											i = MainClass.userlist.size() ;  
-										}
-										debugPrint("Replaced name in userlist : "+MainClass.userlist.toString()) ; 
-									}
+									MainClass.updateList(unpacked[1], unpacked[2]);
 									break ;
 									
 							}
