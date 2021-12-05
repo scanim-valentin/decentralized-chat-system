@@ -61,7 +61,7 @@ abstract class DistributedDataManager {
 						packed = new String(inPacket.getData(),0, inPacket.getLength()) ; 
 						debugPrint(InetAddress.getLocalHost().toString()+" Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
 						unpacked = unpack(packed) ;
-						debugPrint("unpacked packet : "+unpacked.toString()) ; 
+						debugPrint("unpacked packet len="+unpacked.length+": "+unpacked.toString()) ; 
 						if(!inPacket.getAddress().equals(InetAddress.getLocalHost())) {
 							switch(unpacked[0]) { //First element of the array is the datagram type
 								

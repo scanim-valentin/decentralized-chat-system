@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainClass {
 	
-	static public List<UserID> userlist = null; //List of users to fill with other UsersID
+	static public List<UserID> userlist = new ArrayList<UserID>() ; //List of users to fill with other UsersID
 	
 	static public String username = "" ; 
 	
