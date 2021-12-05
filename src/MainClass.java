@@ -4,7 +4,7 @@ public class MainClass {
 	
 	static public List<UserID> userlist = null; //List of users to fill with other UsersID
 	
-	static public String username = " " ; 
+	static public String username = "" ; 
 	
 	static private void debugPrint(String str) {
 		System.out.println("MainClass: "+str);

@@ -37,6 +37,7 @@ abstract class DistributedDataManager {
 		
 		public void run() {
 			
+			//Closes sockets when the user closes the agent
 			Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
 			    try {
 			        dgramSocket_RX.close();
@@ -57,7 +58,7 @@ abstract class DistributedDataManager {
 					try { 
 						dgramSocket_RX.receive(inPacket); //Receiving UDP answer
 						packed = new String(inPacket.getData(),0, inPacket.getLength()) ; 
-						debugPrint("Received packet data: "+packed) ; 
+						debugPrint("Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
 						unpacked = unpack(packed) ; 
 						switch(unpacked[0]) { //First element of the array is the datagram type
 							
