@@ -55,7 +55,8 @@ abstract class DistributedDataManager {
 				debugPrint("Requesting IDs to establish user list") ; 
 				UDPBroadcast_IDRequest(dgramSocket_TX) ; //Will request everyone's ID
 				while(true) {
-					try { 
+					try {
+						debugPrint("Waiting for incoming signal . . .") ; 
 						dgramSocket_RX.receive(inPacket); //Receiving UDP answer
 						packed = new String(inPacket.getData(),0, inPacket.getLength()) ; 
 						debugPrint("Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
