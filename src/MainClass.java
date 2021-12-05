@@ -11,6 +11,10 @@ public class MainClass {
 	}
 	
 	public static void main(String[] s) {
+		if(s.length > 0) {
+			debugPrint("New username = "+s[0]) ; 
+			username = s[0] ; 
+		}
 		debugPrint("Starting DDM deamon . . .") ; 
 		DistributedDataManager.start_deamon();
 	}

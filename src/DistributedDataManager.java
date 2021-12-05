@@ -60,42 +60,46 @@ abstract class DistributedDataManager {
 						dgramSocket_RX.receive(inPacket); //Receiving UDP answer
 						packed = new String(inPacket.getData(),0, inPacket.getLength()) ; 
 						debugPrint("Received packet data: "+packed+" from user "+inPacket.getAddress().toString()) ; 
-						unpacked = unpack(packed) ; 
-						switch(unpacked[0]) { //First element of the array is the datagram type
-							
-							case ID_REQUEST_SIG : //In the case someone on the network request everyone's identity, the agent answers with username
-								if(!MainClass.username.isEmpty()) { //An empty string as a username is forbidden and should only happen if the user has yet to choose a name
-									debugPrint("Sending username \""+MainClass.username+"\" to "+inPacket.getAddress().toString()) ; 
-									InetAddress sender_addr = inPacket.getAddress() ;
-									String[] unpacked_answer = {ONLINE_SIG , MainClass.username} ; 
-									UDPUnicast(sender_addr, pack(unpacked_answer),dgramSocket_TX) ;
-								}
-								break; 
-							case ONLINE_SIG :
-								debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
-								MainClass.userlist.add(new UserID(unpacked[1], inPacket.getAddress())) ; //In the case of an online signal the second element of the array is the username of the sender
-								debugPrint("Added name in userlist : "+MainClass.userlist.toString()) ;//To be added to the list
-								break ; 																
+						unpacked = unpack(packed) ;
+						if(inPacket.getAddress().equals(InetAddress.getLocalHost())) {
+							switch(unpacked[0]) { //First element of the array is the datagram type
 								
-							case OFFLINE_SIG :
-								debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
-								MainClass.userlist.remove(new UserID(unpacked[1], inPacket.getAddress())) ; //In the case of an offline signal the second element of the array is the username of the sender
-								debugPrint("Removed name in userlist : "+MainClass.userlist.toString()) ; //To be removed from the list
-								break ; 																	
-								
-							case NEW_NAME_SIG :
-								debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(prev. \""+unpacked[1]+"\", now \""+unpacked[2]+"\")") ; 
-								int i = 0 ; 
-								while( (i < MainClass.userlist.size()) ) {
-									i++ ;
-									if(MainClass.userlist.get(i).getName().equals(unpacked[1])) {
-										MainClass.userlist.get(i).setName(unpacked[2]) ; //In that case, the second element is the old name  and the third element correspond to the new name
-										i = MainClass.userlist.size() ;  
+								case ID_REQUEST_SIG : //In the case someone on the network request everyone's identity, the agent answers with username
+									if(!MainClass.username.isEmpty()) { //An empty string as a username is forbidden and should only happen if the user has yet to choose a name
+										debugPrint("Sending username \""+MainClass.username+"\" to "+inPacket.getAddress().toString()) ; 
+										InetAddress sender_addr = inPacket.getAddress() ;
+										String[] unpacked_answer = {ONLINE_SIG , MainClass.username} ; 
+										UDPUnicast(sender_addr, pack(unpacked_answer),dgramSocket_TX) ;
 									}
-									debugPrint("Replaced name in userlist : "+MainClass.userlist.toString()) ; 
-								}
-								break ;
-								
+									break; 
+								case ONLINE_SIG :
+									debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
+									MainClass.userlist.add(new UserID(unpacked[1], inPacket.getAddress())) ; //In the case of an online signal the second element of the array is the username of the sender
+									debugPrint("Added name in userlist : "+MainClass.userlist.toString()) ;//To be added to the list
+									break ; 																
+									
+								case OFFLINE_SIG :
+									debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
+									MainClass.userlist.remove(new UserID(unpacked[1], inPacket.getAddress())) ; //In the case of an offline signal the second element of the array is the username of the sender
+									debugPrint("Removed name in userlist : "+MainClass.userlist.toString()) ; //To be removed from the list
+									break ; 																	
+									
+								case NEW_NAME_SIG :
+									debugPrint("Identified "+ID_REQUEST_SIG+" from "+inPacket.getAddress().toString()+"(prev. \""+unpacked[1]+"\", now \""+unpacked[2]+"\")") ; 
+									int i = 0 ; 
+									while( (i < MainClass.userlist.size()) ) {
+										i++ ;
+										if(MainClass.userlist.get(i).getName().equals(unpacked[1])) {
+											MainClass.userlist.get(i).setName(unpacked[2]) ; //In that case, the second element is the old name  and the third element correspond to the new name
+											i = MainClass.userlist.size() ;  
+										}
+										debugPrint("Replaced name in userlist : "+MainClass.userlist.toString()) ; 
+									}
+									break ;
+									
+							}
+						}else {
+							debugPrint("Identified sender as localhost, ignoring packet") ; 
 						}
 					}
 					catch(Exception E_rec) {
