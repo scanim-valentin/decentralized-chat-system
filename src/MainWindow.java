@@ -1,17 +1,15 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
 import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JTextArea;
 
 public class MainWindow {
 
@@ -20,6 +18,7 @@ public class MainWindow {
 	private JLabel lblNewLabel;
 	private JTextField textField;
 	private JLabel lblNewLabel_1;
+	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -49,28 +48,40 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(153, 255, 51));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[600px,grow][][]", "[][][243px][29px]"));
+		frame.getContentPane().setLayout(new MigLayout("", "[600px,grow][grow][]", "[][grow][243px][29px]"));
 		
 		lblNewLabel = new JLabel("Welcome");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setForeground(new Color(153, 0, 255));
+		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
 		frame.getContentPane().add(lblNewLabel, "cell 0 1,alignx center");
 		
 		btnNewButton_1 = new JButton("Exit");
+		btnNewButton_1.setForeground(new Color(255, 0, 0));
+		btnNewButton_1.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		btnNewButton_1.setBackground(new Color(255, 0, 0));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
 		JButton btnNewButton = new JButton("Connexion");
+		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		btnNewButton.setForeground(new Color(51, 0, 255));
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
+		textArea = new JTextArea();
+		frame.getContentPane().add(textArea, "cell 1 1,grow");
+		
 		lblNewLabel_1 = new JLabel("Login :");
+		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
 		frame.getContentPane().add(lblNewLabel_1, "flowx,cell 0 2");
 		
 		textField = new JTextField();
