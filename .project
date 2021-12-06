@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/Image/msn.jpg</name>
-			<type>1</type>
-			<location>/Users/lauricmarthrin-john/Downloads/msn.jpg</location>
-		</link>
-	</linkedResources>
 </projectDescription>

@@ -9,6 +9,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class MainWindow {
 
@@ -17,6 +18,7 @@ public class MainWindow {
 	private JLabel lblNewLabel;
 	private JTextField textField;
 	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 
 	/**
 	 * Launch the application.
@@ -74,6 +76,10 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon("/Users/lauricmarthrin-john/Downloads/msn.jpg"));
+		frame.getContentPane().add(lblNewLabel_2, "cell 1 1");
 		
 		lblNewLabel_1 = new JLabel("Login :");
 		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
