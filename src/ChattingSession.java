@@ -12,8 +12,12 @@ public class ChattingSession extends Thread {
 		this.other_user = other_user ; 
 	}
 	
-	static private void debugPrint(String str) {
+	private void debugPrint(String str) {
 		System.out.println("["+Thread.currentThread().getName()+"] ChattingSession: "+str);
+	}
+	
+	public void run() {
+		
 	}
 	
 }

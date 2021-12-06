@@ -9,6 +9,8 @@ public class MainClass {
 	
 	static public String username = "" ; 
 	
+	static public List<ChattingSession> chatlist = new ArrayList<ChattingSession>() ; //List of active chat sessions
+	
 	//Command prompt
 	static public String input = "" ; 
 	static final public String EXIT_IN = "exit" ; 
@@ -16,6 +18,8 @@ public class MainClass {
 	static final public String CHATWITH_IN = "newchat" ;
 	static final public String USRLIST_IN = "userlist" ;  
 	
+	//Maximum number of simultaneous chatting sessions
+	static final public int MAX_SESSIONS = 50 ;  
 	
 	static private void debugPrint(String str) {
 		System.out.println("["+Thread.currentThread().getName()+"] MainClass: "+str);
@@ -49,6 +53,7 @@ public class MainClass {
 		}
 	}
 	
+	//A simple method to wait a certain amount of time (ms)
 	private static void wait(int ms) {
 		try {
 			Thread.sleep(ms);
@@ -86,9 +91,39 @@ public class MainClass {
         	DistributedDataManager.notifyNewName(name_input);
         	username = name_input ; 
         }
-        
-        //notify everyone... TODO
         debugPrint("Set new name to "+username);
+	}
+	
+	//Waits for an input, checks the username validity and starts a new chatting session if it is valid
+	private static void newChat() {
+		BufferedReader reader = new BufferedReader(
+	            new InputStreamReader(System.in));
+		String name_input = "" ;
+        try {
+	        // Reading data using readLine
+	        boolean valid = false ; 
+        	while(!valid) {
+        		debugPrint("Who do you want to chat with? User list:"+userlist.toString());
+        		name_input = reader.readLine();
+        		for(UserID id: userlist) {
+        			if(id.getName().equals(name_input)) { //Checking the user existence 
+        				 debugPrint("Identified "+id.toString()+" in user list") ;
+        				 ChattingSession new_chat =  new ChattingSession(id,"ChattingSession"+ ( chatlist.size() + 1 ) ) ;  
+        		         if(!chatlist.contains(new_chat)) { //Checking if a conversation is already opened with that person
+        		        	 chatlist.add(new_chat); 
+        		        	 new_chat.start(); //Starts the chat thread
+        		         }
+        				 valid = true;
+        			} 
+        		}
+       
+	        	if (valid = false)
+	        		debugPrint("Unknown"+userlist.toString()) ; 
+	   
+	        }
+	    }catch(Exception E) {
+	    	E.printStackTrace();
+	    }
 	}
 	
 	//Prints the remaning time every second
@@ -107,8 +142,8 @@ public class MainClass {
 		//Waiting to gather all of the user id
 		debugPrint("Waiting for local ID request answer");
 		
-		//Waits 5 seconds to gather all of the usernames from the local network 
-		formatedDelay(5); 
+		//Waits 3 seconds to gather all of the usernames from the local network 
+		formatedDelay(3); 
 		
 		//Asks the user to choose a valid username
 		changeUsername(); 
@@ -126,6 +161,7 @@ public class MainClass {
 	        			close = true ;
 	        			debugPrint("Closing agent . . .") ; 
 	        			break;
+	        	
 	        		case NEWNAME_IN :
 	        			changeUsername();
 	        			break;
@@ -133,6 +169,10 @@ public class MainClass {
 	        		case USRLIST_IN : 
 	        			debugPrint("Userlist : "+userlist.toString());
 	        			break;
+	        			
+	        		case CHATWITH_IN : 
+	        			newChat(); 
+	        			break; 
 	        			
 	        		default : 
 	        			debugPrint("Unidentified input. \n exit : close the agent\n newname : change username\n chat : start chatting session\n userlist : see user list");
