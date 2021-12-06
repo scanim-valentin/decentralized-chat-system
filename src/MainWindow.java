@@ -7,12 +7,12 @@ class MainWindow {
         //Creating the Frame
         JFrame frame = new JFrame("Chat Session");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
+        frame.setSize(800, 600);
 
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();
         JMenu m1 = new JMenu("Change Name");
-        JMenu m2 = new JMenu("Exit");
+        JMenu m2 = new JMenu("                  Exit");
         mb.add(m1);
         mb.add(m2);
 
@@ -27,7 +27,6 @@ class MainWindow {
         panel.add(send);
         panel.add(sendfile);
   
-
         // Text Area at the Center
         JTextArea ta = new JTextArea();
 
