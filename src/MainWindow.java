@@ -9,7 +9,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JTextArea;
 
 public class MainWindow {
 
@@ -18,7 +17,6 @@ public class MainWindow {
 	private JLabel lblNewLabel;
 	private JTextField textField;
 	private JLabel lblNewLabel_1;
-	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -51,10 +49,10 @@ public class MainWindow {
 		frame.getContentPane().setBackground(new Color(153, 255, 51));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[600px,grow][grow][]", "[][grow][243px][29px]"));
+		frame.getContentPane().setLayout(new MigLayout("", "[600px,grow][][]", "[][][243px][29px]"));
 		
 		lblNewLabel = new JLabel("Welcome");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(153, 0, 255));
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
 		frame.getContentPane().add(lblNewLabel, "cell 0 1,alignx center");
@@ -76,9 +74,6 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
-		textArea = new JTextArea();
-		frame.getContentPane().add(textArea, "cell 1 1,grow");
 		
 		lblNewLabel_1 = new JLabel("Login :");
 		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
