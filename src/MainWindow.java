@@ -9,6 +9,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class MainWindow {
 
@@ -55,7 +56,7 @@ public class MainWindow {
 		lblNewLabel = new JLabel("Welcome");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(153, 0, 255));
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 56));
 		frame.getContentPane().add(lblNewLabel, "cell 0 1,alignx center");
 		
 		btnNewButton_1 = new JButton("Exit");
@@ -76,8 +77,9 @@ public class MainWindow {
 			}
 		});
 		
-		lblNewLabel_2 = new JLabel("New label");
-		frame.getContentPane().add(lblNewLabel_2, "cell 1 1");
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon("/Users/lauricmarthrin-john/GitHub/decentralized-chat-system/Images/index.jpg"));
+		frame.getContentPane().add(lblNewLabel_2, "cell 1 1,alignx center");
 		
 		lblNewLabel_1 = new JLabel("Login :");
 		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
