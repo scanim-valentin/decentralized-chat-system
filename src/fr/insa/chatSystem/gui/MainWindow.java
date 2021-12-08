@@ -44,8 +44,10 @@ public class MainWindow {
 
 	/**
 	 * Initialize the contents of the frame.
-	 */
+	 */	
+	 
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.getContentPane().setEnabled(false);
 		frame.getContentPane().setBackground(new Color(153, 255, 51));
@@ -109,7 +111,9 @@ public class MainWindow {
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Entrer login");
-		lblNewLabel_3.setBounds(347, 121, 86, 86);
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setBounds(99, 118, 221, 32);
 		frame.getContentPane().add(lblNewLabel_3);
 	}
+
 }
