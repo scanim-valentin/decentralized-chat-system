@@ -5,7 +5,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -108,5 +107,9 @@ public class MainWindow {
 		lblNewLabel_2.setIcon(new ImageIcon("/Users/lauricmarthrin-john/GitHub/decentralized-chat-system/src/Images/MSN-icon.png"));
 		lblNewLabel_2.setBounds(332, 11, 112, 126);
 		frame.getContentPane().add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Entrer login");
+		lblNewLabel_3.setBounds(347, 121, 86, 86);
+		frame.getContentPane().add(lblNewLabel_3);
 	}
 }
