@@ -3,6 +3,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.insa.chatSystem.model.ChattingSession;
+import fr.insa.chatSystem.model.UserID;
+
 public class MainClass {
 	
 	static public List<UserID> userlist = new ArrayList<UserID>() ; //List of users to fill with other UsersID

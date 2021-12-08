@@ -1,3 +1,4 @@
+package fr.insa.chatSystem.model;
 import java.util.Date ; 
 
 public class Message {

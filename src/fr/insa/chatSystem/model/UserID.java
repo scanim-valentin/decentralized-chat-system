@@ -1,3 +1,4 @@
+package fr.insa.chatSystem.model;
 import java.net.* ;
 
 public class UserID {
