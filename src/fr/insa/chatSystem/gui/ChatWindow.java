@@ -1,12 +1,19 @@
 package fr.insa.chatSystem.gui;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-public class ChatWindow {
+public class ChatWindow extends JFrame {
 
-	private JFrame frame;
+	/**
+	 * JVM pour identifier les objets lorsqu'il les sérialise/désérialise
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	protected static String pseudo;
 
 	/**
 	 * Launch the application.
@@ -15,8 +22,8 @@ public class ChatWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ChatWindow window = new ChatWindow();
-					window.frame.setVisible(true);
+					ChatWindow frame = new ChatWindow(pseudo);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -25,31 +32,19 @@ public class ChatWindow {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public ChatWindow() {
-		initialize();
-	}
 	public ChatWindow(String pseudo) {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-		JLabel label = new JLabel(pseudo);
-		frame.getContentPane().add(label, BorderLayout.NORTH);
-		
-		frame.setVisible(true);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-	
+		JLabel lblNewLabel = new JLabel(pseudo);
+		lblNewLabel.setBounds(32, 6, 107, 56);
+		contentPane.add(lblNewLabel);
 	}
 
 }

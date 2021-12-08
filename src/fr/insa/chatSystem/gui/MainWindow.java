@@ -20,7 +20,6 @@ public class MainWindow {
 	private JLabel lblNewLabel;
 	private JTextField textField;
 	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
 	/**
 	 * Launch the application.
 	 */
@@ -49,20 +48,23 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setEnabled(false);
 		frame.getContentPane().setBackground(new Color(153, 255, 51));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[600px,grow][][]", "[][][243px][29px]"));
+		frame.getContentPane().setLayout(null);
 		
 		lblNewLabel = new JLabel("Welcome");
+		lblNewLabel.setBounds(18, 11, 331, 107);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(153, 0, 255));
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 56));
-		frame.getContentPane().add(lblNewLabel, "cell 0 1,alignx center");
+		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
+		frame.getContentPane().add(lblNewLabel);
 		
 		btnNewButton_1 = new JButton("Exit");
+		btnNewButton_1.setBounds(332, 225, 105, 30);
 		btnNewButton_1.setForeground(new Color(255, 0, 0));
-		btnNewButton_1.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		btnNewButton_1.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
 		btnNewButton_1.setBackground(Color.CYAN);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -71,14 +73,15 @@ public class MainWindow {
 		});
 		
 		JButton btnNewButton = new JButton("Connexion");
-		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		btnNewButton.setBounds(151, 189, 123, 32);
+		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
 		btnNewButton.setForeground(new Color(51, 0, 255));
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String pseudo=textField.getText();
 				if (("").equals(pseudo)){
-					System.out.println("Pseudo vide ");
+					System.out.println("Pseudo vide !");
 				}else {
 					//monObjcontrollor.setUserName(pseudo); 
 					frame.dispose(); 
@@ -87,19 +90,23 @@ public class MainWindow {
 			}
 		});
 		
-		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("/Users/lauricmarthrin-john/GitHub/decentralized-chat-system/Images/index.jpg"));
-		frame.getContentPane().add(lblNewLabel_2, "cell 1 1,alignx center");
-		
 		lblNewLabel_1 = new JLabel("Login :");
-		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-		frame.getContentPane().add(lblNewLabel_1, "flowx,cell 0 2");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(22, 149, 65, 26);
+		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		frame.getContentPane().add(lblNewLabel_1);
 		
 		textField = new JTextField();  //Zone texte avec le login
-		frame.getContentPane().add(textField, "cell 0 2,growx");
-		textField.setColumns(20);
-		frame.getContentPane().add(btnNewButton, "cell 1 2,alignx center,aligny center");
-		frame.getContentPane().add(btnNewButton_1, "cell 0 3,alignx center,aligny center");
+		textField.setBounds(93, 151, 242, 26);
+		frame.getContentPane().add(textField);
+		textField.setColumns(30);
+		frame.getContentPane().add(btnNewButton);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setIcon(new ImageIcon("/Users/lauricmarthrin-john/GitHub/decentralized-chat-system/src/Images/MSN-icon.png"));
+		lblNewLabel_2.setBounds(332, 11, 112, 126);
+		frame.getContentPane().add(lblNewLabel_2);
 	}
-
 }
