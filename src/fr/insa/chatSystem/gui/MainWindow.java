@@ -1,3 +1,4 @@
+package fr.insa.chatSystem.gui;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;

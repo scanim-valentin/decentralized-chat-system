@@ -6,8 +6,8 @@ public class Message {
 	public String content ; 
 	
 	
-	public Message(String username, Date time, String content) {
-		this.sender = username ; 
+	public Message(String pseudo, Date time, String content) {
+		this.sender = pseudo ; 
 		this.time = time ; 
 		this.content = content ; 
 	}
