@@ -25,11 +25,13 @@ public class UserID {
 	    public InetAddress getAddress() { 
 	    	return this.hostAddress;  // hostAddress prend l'@IP
 	    	}
-	    // Afficher le nom et l'adresse IP de l'utilisateur
+	    // Afficher le nom et l'adresse IP de l'utilisateur & @Override controle la classe parente
+	    @Override
 	    public String toString() {
 	    	return this.getName()+" : "+this.getAddress().toString();
 	    	}
-	    
+	    // @Override controle de la classe parente (arg type de retour)
+	    @Override
 	    public boolean equals(Object o)
 	    {
 	    	// Si l'utilisateur ne rentre pas de login
