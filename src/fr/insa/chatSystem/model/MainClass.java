@@ -1,10 +1,8 @@
+package fr.insa.chatSystem.model;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.insa.chatSystem.model.ChattingSession;
-import fr.insa.chatSystem.model.UserID;
 
 public class MainClass {
 	

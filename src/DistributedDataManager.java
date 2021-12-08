@@ -1,5 +1,6 @@
 import java.util.List ;
 
+import fr.insa.chatSystem.model.MainClass;
 import fr.insa.chatSystem.model.UserID;
 
 import java.net.* ; 
