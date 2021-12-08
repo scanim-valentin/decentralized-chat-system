@@ -76,9 +76,9 @@ public class MainWindow {
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//String n=btnNewButton.getText();
-				//lblNewLabel.setText("Connexion ... Please wait" + n);
-				//frame.dispose(); ferme la fenetre
+				Call ChatWindow();
+				//frame.dispose(); // erme la fenetre
+				
 			}
 		});
 		
