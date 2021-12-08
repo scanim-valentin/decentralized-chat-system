@@ -62,9 +62,11 @@ public class MainWindow {
 		btnNewButton_1 = new JButton("Exit");
 		btnNewButton_1.setForeground(new Color(255, 0, 0));
 		btnNewButton_1.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-		btnNewButton_1.setBackground(new Color(255, 0, 0));
+		btnNewButton_1.setBackground(Color.CYAN);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			System.exit(0); //arrete le programme
+				//frame.dispose();
 			}
 		});
 		
@@ -74,6 +76,9 @@ public class MainWindow {
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//String n=btnNewButton.getText();
+				//lblNewLabel.setText("Connexion ... Please wait" + n);
+				//frame.dispose(); ferme la fenetre
 			}
 		});
 		
