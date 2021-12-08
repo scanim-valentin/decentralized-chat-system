@@ -2,22 +2,22 @@ import java.net.* ;
 
 public class UserID {
 	    // Déclaration des strings depuis cette classe seulement
-	    private String nom;
+	    private String name;
 	    private InetAddress hostAddress;
 	    
 	    // Definition de nom et de @IP
-	    public UserID(String nom, InetAddress address) {
-	        this.nom=nom;
+	    public UserID(InetAddress address, String name) {
+	        this.name=name;
 	        this.hostAddress=address;
 	    }
 	    
 	    // Lire le nom dans le string GetNom
 	    public String getName() {
-	    	return this.nom;
+	    	return this.name;
 	    	}
 	    // Ecrire le nom dans le string name
 	    public String setName(String name) {
-	    	return nom = name;
+	    	return this.name = name;
 	    	}
 	    
 	    // Lire l'@IP de l'utilisateur
