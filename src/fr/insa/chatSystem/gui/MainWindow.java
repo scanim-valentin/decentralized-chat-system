@@ -10,8 +10,12 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
-public class MainWindow {
+public class MainWindow extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JButton btnNewButton_1;
 	private JTextField textField;
@@ -34,6 +38,7 @@ public class MainWindow {
 	private void initialize() {
 		
 		frame = new JFrame();
+		frame.setTitle("ChatSystem");
 		frame.getContentPane().setEnabled(false);
 		frame.getContentPane().setBackground(new Color(153, 255, 51));
 		frame.setBounds(100, 100, 450, 300);
