@@ -13,6 +13,7 @@ import javax.swing.JToolBar;
 import javax.swing.JMenuBar;
 import java.awt.TextArea;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class ChatWindow extends JFrame {
 
@@ -25,7 +26,7 @@ public class ChatWindow extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,15 +38,17 @@ public class ChatWindow extends JFrame {
 				}
 			}
 		});
-	}
+	}	 */
 
 
 	/**
 	 * Create the frame.
+	 * @param pseudo 
 	 */
-	public ChatWindow() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 500);
+	public ChatWindow(String pseudo) {
+		JFrame window = new JFrame(); 
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -63,17 +66,9 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		textField = new JTextField();
-		textField.setBounds(134, 389, 406, 64);
+		textField.setBounds(146, 389, 406, 58);
 		contentPane.add(textField);
 		textField.setColumns(20);
-		
-		JToolBar toolBar = new JToolBar();
-		toolBar.setBounds(211, 74, 456, 20);
-		contentPane.add(toolBar);
-		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(48, 12, 619, 22);
-		contentPane.add(menuBar);
 		
 		TextArea textArea = new TextArea();
 		textArea.setBackground(new Color(153, 153, 0));
@@ -81,7 +76,27 @@ public class ChatWindow extends JFrame {
 		contentPane.add(textArea);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(6, 367, 688, 12);
+		separator.setBounds(6, 371, 688, 12);
 		contentPane.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setOrientation(SwingConstants.VERTICAL);
+		separator_1.setBounds(134, 12, 21, 367);
+		contentPane.add(separator_1);
+		
+		JButton btnNewButton_2 = new JButton("Disconnect");
+		btnNewButton_2.setBounds(564, 12, 117, 29);
+		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Change Name");
+		btnNewButton_3.setBounds(180, 12, 117, 29);
+		contentPane.add(btnNewButton_3);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(146, 76, 535, -35);
+		contentPane.add(separator_2);
+		
+		window.setContentPane(contentPane);
+		window.setVisible(true);
 	}
 }

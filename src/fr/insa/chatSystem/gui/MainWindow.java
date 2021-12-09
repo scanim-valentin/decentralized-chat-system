@@ -13,32 +13,17 @@ import javax.swing.ImageIcon;
 
 public class MainWindow {
 
-	protected static final String UserID = null;
 	private JFrame frame;
 	private JButton btnNewButton_1;
 	private JLabel lblNewLabel;
 	private JTextField textField;
 	private JLabel lblNewLabel_1;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
+	 * @param pseudo 
 	 */
-	public MainWindow() {
+	public MainWindow(Object pseudo) {
 		initialize();
 	}
 
@@ -114,6 +99,7 @@ public class MainWindow {
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setBounds(99, 118, 221, 32);
 		frame.getContentPane().add(lblNewLabel_3);
+		frame.setVisible(true);
 	}
 
 }
