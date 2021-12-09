@@ -19,6 +19,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JLabel;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import java.awt.Font;
 
 public class ChatWindow extends JFrame {
 
@@ -36,6 +39,8 @@ public class ChatWindow extends JFrame {
 	public ChatWindow(String pseudo) {
 		
 		JFrame window = new JFrame(); 
+		window.setResizable(false); // ne pas changer la taille de la fenetre
+		window.setTitle("Chat System V1.1");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
@@ -44,14 +49,15 @@ public class ChatWindow extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Send");
+		btnNewButton.setBackground(new Color(0, 0, 0));
 		btnNewButton.setForeground(new Color(0, 0, 255));
-		btnNewButton.setBounds(574, 389, 117, 29);
+		btnNewButton.setBounds(574, 389, 120, 40);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Send File");
-		btnNewButton_1.setBackground(Color.ORANGE);
+		btnNewButton_1.setBackground(new Color(0, 0, 0));
 		btnNewButton_1.setForeground(new Color(0, 0, 128));
-		btnNewButton_1.setBounds(574, 430, 117, 29);
+		btnNewButton_1.setBounds(574, 430, 120, 29);
 		contentPane.add(btnNewButton_1);
 		
 		JSeparator separator = new JSeparator();
@@ -60,10 +66,11 @@ public class ChatWindow extends JFrame {
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(134, 12, 21, 367);
+		separator_1.setBounds(143, 16, 12, 367);
 		contentPane.add(separator_1);
 		
 		JButton btnNewButton_2 = new JButton("Disconnect");
+		btnNewButton_2.setForeground(new Color(255, 51, 0));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -73,6 +80,7 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Change Name");
+		btnNewButton_3.setForeground(new Color(51, 204, 0));
 		btnNewButton_3.setBounds(180, 12, 117, 29);
 		contentPane.add(btnNewButton_3);
 		
@@ -81,12 +89,16 @@ public class ChatWindow extends JFrame {
 		contentPane.add(separator_2);
 		
 		textField = new JTextField();
+		textField.setForeground(new Color(255, 204, 0));
+		textField.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		textField.setBackground(UIManager.getColor("EditorPane.inactiveForeground"));
 		textField.setBounds(259, 389, 313, 77);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JList list = new JList();
-		list.setBounds(17, 53, 105, 312);
+		list.setBackground(Color.LIGHT_GRAY);
+		list.setBounds(17, 53, 117, 306);
 		contentPane.add(list);
 		
 		JPanel panel = new JPanel();
@@ -96,17 +108,26 @@ public class ChatWindow extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Message :");
+		lblNewLabel.setForeground(new Color(153, 51, 0));
 		lblNewLabel.setBounds(185, 394, 62, 24);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("User list :");
-		lblNewLabel_1.setBounds(17, 25, 105, 24);
+		lblNewLabel_1.setForeground(new Color(0, 102, 255));
+		lblNewLabel_1.setBounds(17, 12, 105, 24);
 		contentPane.add(lblNewLabel_1);
 		
-		JButton btnNewButton_4 = new JButton("New button");
-		btnNewButton_4.setBounds(6, 117, 117, 29);
+		JButton btnNewButton_4 = new JButton("Help");
+		btnNewButton_4.setForeground(UIManager.getColor("RadioButton.select"));
+		btnNewButton_4.setBounds(17, 430, 117, 29);
 		contentPane.add(btnNewButton_4);
 		
+		JLabel lblNewLabel_2 = new JLabel("pseudo ");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setBounds(16, 388, 139, 29);
+		contentPane.add(lblNewLabel_2);
+		
+		//Display the widow
 		window.setVisible(true);
 	}
 }
