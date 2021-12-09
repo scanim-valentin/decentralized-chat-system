@@ -22,57 +22,35 @@ public class ChatWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-
-	/**
-	 * Launch the application.
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ChatWindow frame = new ChatWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}	 */
-
 
 	/**
 	 * Create the frame.
 	 * @param pseudo 
 	 */
 	public ChatWindow(String pseudo) {
+		
 		JFrame window = new JFrame(); 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		window.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.setForeground(new Color(0, 0, 255));
-		btnNewButton.setBounds(564, 389, 117, 29);
+		btnNewButton.setBounds(574, 389, 117, 29);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Send File");
 		btnNewButton_1.setBackground(Color.ORANGE);
 		btnNewButton_1.setForeground(new Color(0, 0, 128));
-		btnNewButton_1.setBounds(564, 418, 117, 29);
+		btnNewButton_1.setBounds(574, 430, 117, 29);
 		contentPane.add(btnNewButton_1);
-		
-		textField = new JTextField();
-		textField.setBounds(146, 389, 406, 58);
-		contentPane.add(textField);
-		textField.setColumns(20);
 		
 		TextArea textArea = new TextArea();
 		textArea.setBackground(new Color(153, 153, 0));
-		textArea.setBounds(184, 100, 478, 251);
+		textArea.setBounds(204, 380, 351, 79);
 		contentPane.add(textArea);
 		
 		JSeparator separator = new JSeparator();
@@ -96,7 +74,6 @@ public class ChatWindow extends JFrame {
 		separator_2.setBounds(146, 76, 535, -35);
 		contentPane.add(separator_2);
 		
-		window.setContentPane(contentPane);
 		window.setVisible(true);
 	}
 }
