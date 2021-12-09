@@ -1,25 +1,17 @@
 package fr.insa.chatSystem.gui;
 
-import java.awt.EventQueue;
-import java.awt.Window;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
-import javax.swing.JToolBar;
-import javax.swing.JMenuBar;
-import java.awt.TextArea;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JLabel;
-import java.awt.SystemColor;
 import javax.swing.UIManager;
 import java.awt.Font;
 
@@ -49,13 +41,11 @@ public class ChatWindow extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Send");
-		btnNewButton.setBackground(new Color(0, 0, 0));
 		btnNewButton.setForeground(new Color(0, 0, 255));
 		btnNewButton.setBounds(574, 389, 120, 40);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Send File");
-		btnNewButton_1.setBackground(new Color(0, 0, 0));
 		btnNewButton_1.setForeground(new Color(0, 0, 128));
 		btnNewButton_1.setBounds(574, 430, 120, 29);
 		contentPane.add(btnNewButton_1);
@@ -122,8 +112,7 @@ public class ChatWindow extends JFrame {
 		btnNewButton_4.setBounds(17, 430, 117, 29);
 		contentPane.add(btnNewButton_4);
 		
-		JLabel lblNewLabel_2 = new JLabel("pseudo ");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblNewLabel_2 = new JLabel("pseudo");
 		lblNewLabel_2.setBounds(16, 388, 139, 29);
 		contentPane.add(lblNewLabel_2);
 		
