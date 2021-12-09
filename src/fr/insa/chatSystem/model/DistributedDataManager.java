@@ -1,7 +1,5 @@
 package fr.insa.chatSystem.model;
-import java.util.List ;
 import java.net.* ; 
-import java.io.* ; 
 
 abstract class DistributedDataManager {
 
@@ -82,13 +80,13 @@ abstract class DistributedDataManager {
 									break; 
 								case ONLINE_SIG :
 									debugPrint("Identified "+ONLINE_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
-									MainClass.userlist.add(new UserID(unpacked[1], inPacket.getAddress())) ; //In the case of an online signal the second element of the array is the username of the sender
+									MainClass.userlist.add(new UserID(inPacket.getAddress(), unpacked[1])) ; //In the case of an online signal the second element of the array is the username of the sender
 									debugPrint("Added name in userlist : "+MainClass.userlist.toString()) ;//To be added to the list
 									break ; 																
 									
 								case OFFLINE_SIG :
 									debugPrint("Identified "+OFFLINE_SIG+" from "+inPacket.getAddress().toString()+"(\""+unpacked[1]+"\")") ; 
-									MainClass.userlist.remove(new UserID(unpacked[1], inPacket.getAddress())) ; //In the case of an offline signal the second element of the array is the username of the sender
+									MainClass.userlist.remove(new UserID(inPacket.getAddress(), unpacked[1])) ; //In the case of an offline signal the second element of the array is the username of the sender
 									debugPrint("Removed name in userlist : "+MainClass.userlist.toString()) ; //To be removed from the list
 									break ; 																	
 									
