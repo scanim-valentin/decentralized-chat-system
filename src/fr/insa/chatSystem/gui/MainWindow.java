@@ -39,7 +39,7 @@ public class MainWindow extends JFrame{
 		
 		frame = new JFrame();
 		frame.setResizable(false); // Ne pas changer la taille de la fenetre
-		frame.setTitle("Chat System V1.1");
+		frame.setTitle("Chat System V1.0");
 		frame.getContentPane().setEnabled(false);
 		frame.getContentPane().setBackground(new Color(153, 255, 51));
 		frame.setBounds(100, 100, 450, 300);

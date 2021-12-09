@@ -32,7 +32,7 @@ public class ChatWindow extends JFrame {
 		
 		JFrame window = new JFrame(); 
 		window.setResizable(false); // ne pas changer la taille de la fenetre
-		window.setTitle("Chat System V1.1");
+		window.setTitle("Chat System V1.0");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
