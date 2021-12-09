@@ -1,5 +1,4 @@
 package fr.insa.chatSystem.gui;
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -15,9 +14,10 @@ public class MainWindow {
 
 	private JFrame frame;
 	private JButton btnNewButton_1;
-	private JLabel lblNewLabel;
 	private JTextField textField;
+	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_3;
 
 	/**
 	 * Create the application.
@@ -64,10 +64,11 @@ public class MainWindow {
 		btnNewButton.setForeground(new Color(51, 0, 255));
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				String pseudo=textField.getText();
 				if (("").equals(pseudo)){
-					System.out.println("Pseudo vide !");
+					lblNewLabel_3.setText("Nickname empty");		
 				}else {
 					//monObjcontrollor.setUserName(pseudo); 
 					frame.dispose(); 
@@ -95,7 +96,9 @@ public class MainWindow {
 		lblNewLabel_2.setBounds(332, 11, 112, 126);
 		frame.getContentPane().add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Entrer login");
+		lblNewLabel_3 = new JLabel("Entrer login");
+		lblNewLabel_3.setForeground(Color.GRAY);
+		lblNewLabel_3.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setBounds(99, 118, 221, 32);
 		frame.getContentPane().add(lblNewLabel_3);
