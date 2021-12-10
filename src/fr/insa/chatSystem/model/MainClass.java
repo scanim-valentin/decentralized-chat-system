@@ -135,7 +135,7 @@ public class MainClass {
 		}
 	}
 	
-	public static void main(String[] s) {
+	public static void nogui() {
 		
 		debugPrint("Starting DDM deamon . . .") ; 
 		DistributedDataManager.start_deamon();
