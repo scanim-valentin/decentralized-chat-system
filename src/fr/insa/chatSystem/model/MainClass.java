@@ -110,7 +110,7 @@ public class MainClass {
         			if(id.getName().equals(name_input)) { //Checking the user existence 
         				 debugPrint("Identified "+id.toString()+" in user list") ;
         				 ChattingSession new_chat =  new ChattingSession(id,"ChattingSession"+ ( chatlist.size() + 1 ) ) ;  
-        		         if(!chatlist.contains(new_chat)) { //Checking if a conversation is already opened with that person
+        		         if(!chatlist.contains(new_chat)) { //Checking if a conversation is already opened with that perso
         		        	 chatlist.add(new_chat); 
         		        	 new_chat.start(); //Starts the chat thread
         		         }
