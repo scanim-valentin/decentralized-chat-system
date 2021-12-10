@@ -1,7 +1,7 @@
 package fr.insa.chatSystem.model;
 import java.net.* ; 
 
-abstract class DistributedDataManager {
+public abstract class DistributedDataManager {
 
 	static final private int DGRAM_PORT_RX = 1238 ;
 	static final private int DGRAM_PORT_TX = 1239 ;
@@ -18,7 +18,7 @@ abstract class DistributedDataManager {
 	static DatagramSocket dgramSocket_TX ; 
 	
 	
-	static void start_deamon(){
+	public static void start_deamon(){
 		debugPrint("Starting deamon . . .") ; 
 		DDM_Deamon ddm_deamon = new DDM_Deamon("DDM_Deamon") ; 
 		ddm_deamon.start();  

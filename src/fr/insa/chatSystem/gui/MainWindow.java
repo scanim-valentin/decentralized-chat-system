@@ -5,6 +5,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
+import fr.insa.chatSystem.model.DistributedDataManager;
+import fr.insa.chatSystem.model.MainClass;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
@@ -60,7 +64,7 @@ public class MainWindow extends JFrame{
 		btnNewButton_1.setBackground(Color.CYAN);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			System.exit(0); //arrete le programme
+				System.exit(0); //arrete le programme
 			}
 		});
 		
@@ -73,8 +77,8 @@ public class MainWindow extends JFrame{
 
 			public void actionPerformed(ActionEvent e) {
 				String pseudo=textField.getText();
-				if (("").equals(pseudo)){
-					lblNewLabel_3.setText("Nickname empty");		
+				if (!MainClass.isValid(pseudo)){
+					lblNewLabel_3.setText("Invalid input! Empty string or contains forbidden character "+DistributedDataManager.SEP);		
 				}else {
 					//monObjcontrollor.setUserName(pseudo); 
 					frame.dispose(); 

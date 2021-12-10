@@ -31,7 +31,7 @@ public class MainClass {
 	* - it does not contain a forbidden character
 	* - this username is available 
 	*/ 
-	static private boolean isValid(String S) {
+	public static boolean isValid(String S) {
 		
 		if(S.isBlank() || S.contains(DistributedDataManager.SEP))
 			return false ; 
@@ -128,14 +128,14 @@ public class MainClass {
 	}
 	
 	//Prints the remaning time every second
-	private static void formatedDelay(int delay) {
+	public static void formatedDelay(int delay) {
 		for(int i = 0 ; i < delay ; i++) {
 			wait(1000);
 			debugPrint((delay-i)+" seconds remaining . . . ") ; 
 		}
 	}
 	
-	public static void nogui() {
+		public static void nogui() {
 		
 		debugPrint("Starting DDM deamon . . .") ; 
 		DistributedDataManager.start_deamon();
@@ -186,3 +186,4 @@ public class MainClass {
 		System.exit(0); 
 	}
 }
+
