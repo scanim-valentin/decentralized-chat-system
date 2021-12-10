@@ -82,6 +82,7 @@ public class MainWindow extends JFrame{
 				}else {
 					//monObjcontrollor.setUserName(pseudo); 
 					frame.dispose(); 
+					DistributedDataManager.notifyConnection();
 					new ChatWindow(pseudo); 
 				}		
 			}
