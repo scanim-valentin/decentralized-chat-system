@@ -4,13 +4,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.insa.chatSystem.model.ChattingSessionManager.*;
+
 public class MainClass {
 	
 	static public List<UserID> userlist = new ArrayList<UserID>() ; //List of users to fill with other UsersID
 	
 	static public String username = "" ; 
 	
-	static public List<ChattingSession> chatlist = new ArrayList<ChattingSession>() ; //List of active chat sessions
 	
 	//Command prompt
 	static public String input = "" ; 
@@ -96,7 +97,7 @@ public class MainClass {
 	}
 	
 	//Waits for an input, checks the username validity and starts a new chatting session if it is valid
-	private static void newChat() {
+	private static void getChatRequest() {
 		BufferedReader reader = new BufferedReader(
 	            new InputStreamReader(System.in));
 		String name_input = "" ;
@@ -106,16 +107,10 @@ public class MainClass {
         	while(!valid) {
         		debugPrint("Who do you want to chat with? User list:"+userlist.toString());
         		name_input = reader.readLine();
-        		for(UserID id: userlist) {
-        			if(id.getName().equals(name_input)) { //Checking the user existence 
-        				 debugPrint("Identified "+id.toString()+" in user list") ;
-        				 ChattingSession new_chat =  new ChattingSession(id,"ChattingSession"+ ( chatlist.size() + 1 ) ) ;  
-        		         if(!chatlist.contains(new_chat)) { //Checking if a conversation is already opened with that perso
-        		        	 chatlist.add(new_chat); 
-        		        	 new_chat.start(); //Starts the chat thread
-        		         }
-        				 valid = true;
-        			} 
+        		
+        		if(ChattingSessionManager.newChat(name_input)) {
+        			debugPrint("Chatting session created with user "+name_input) ; 
+        			valid = true ; 
         		}
        
 	        	if (valid = false)
@@ -135,7 +130,7 @@ public class MainClass {
 		}
 	}
 	
-		public static void nogui() {
+	public static void nogui() {
 		
 		debugPrint("Starting DDM deamon . . .") ; 
 		DistributedDataManager.start_deamon();
@@ -172,7 +167,7 @@ public class MainClass {
 	        			break;
 	        			
 	        		case CHATWITH_IN : 
-	        			newChat(); 
+	        			getChatRequest(); 
 	        			break; 
 	        			
 	        		default : 
