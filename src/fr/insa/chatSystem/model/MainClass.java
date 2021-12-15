@@ -111,7 +111,7 @@ public class MainClass {
         		int i = 0;
 				boolean in_list = false;
 				debugPrint("Looking for username . . .") ; 
-				while(( i < MainClass.userlist.size() ) &&  in_list) {
+				while(( i < MainClass.userlist.size() ) &&  !in_list) {
 					UserID usrid = MainClass.userlist.get(i);
 					if(usrid.getName().equals(name_input)) {
 						debugPrint("Found user at address "+usrid.getAddress().toString()+" for name "+name_input) ; 
@@ -152,6 +152,10 @@ public class MainClass {
 		
 		//Asks the user to choose a valid username
 		changeUsername(); 
+		
+		debugPrint("Starting CSM deamon . . .") ; 
+		ChattingSessionManager.start_deamon();
+
 		
 		// Enter data using BufferReader
 		debugPrint("Please enter a command.");
