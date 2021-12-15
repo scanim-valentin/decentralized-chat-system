@@ -1,11 +1,14 @@
 package fr.insa.chatSystem.gui;
 
+import fr.insa.chatSystem.model.RemoteUser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
@@ -23,6 +26,9 @@ public class ChatWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
+	
+	DefaultListModel<RemoteUser> remote_users_list;
+	JList<RemoteUser> remote_users_jlist;
 
 	/**
 	 * Create the frame.
@@ -41,6 +47,11 @@ public class ChatWindow extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Send");
+		btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+				sendMessage(textField.getText());   // recupéré le texte
+            }
+        });
 		btnNewButton.setForeground(new Color(0, 0, 255));
 		btnNewButton.setBounds(574, 389, 120, 40);
 		contentPane.add(btnNewButton);
@@ -49,6 +60,11 @@ public class ChatWindow extends JFrame {
 		btnNewButton_1.setForeground(new Color(0, 0, 128));
 		btnNewButton_1.setBounds(574, 430, 120, 29);
 		contentPane.add(btnNewButton_1);
+		btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+				//sendFile(title);   // Envoie du fichier
+            }
+        });
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(6, 371, 688, 12);
@@ -86,7 +102,7 @@ public class ChatWindow extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JList list = new JList();
+		JList<RemoteUser> list = new JList<RemoteUser>();
 		list.setBackground(Color.LIGHT_GRAY);
 		list.setBounds(17, 53, 117, 306);
 		contentPane.add(list);
@@ -112,11 +128,22 @@ public class ChatWindow extends JFrame {
 		btnNewButton_4.setBounds(17, 430, 117, 29);
 		contentPane.add(btnNewButton_4);
 		
-		JLabel lblNewLabel_2 = new JLabel("pseudo");
+		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setBounds(16, 388, 139, 29);
 		contentPane.add(lblNewLabel_2);
+		lblNewLabel_2.add(pseudo);
 		
 		//Display the widow
 		window.setVisible(true);
+	}
+
+	protected void sendFile(String text) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void sendMessage(String text) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 import fr.insa.chatSystem.model.DistributedDataManager;
-import fr.insa.chatSystem.model.MainClass;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -77,8 +76,8 @@ public class MainWindow extends JFrame{
 
 			public void actionPerformed(ActionEvent e) {
 				String pseudo=textField.getText();
-				if (!MainClass.isValid(pseudo)){
-					lblNewLabel_3.setText("Invalid input! Empty string or contains forbidden character "+DistributedDataManager.SEP);		
+				if (!(pseudo==null)){
+					lblNewLabel_3.setText("Login empty !");
 				}else {
 					//monObjcontrollor.setUserName(pseudo); 
 					frame.dispose(); 
