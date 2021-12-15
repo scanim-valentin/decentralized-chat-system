@@ -25,9 +25,17 @@ public abstract class ChattingSessionManager{
 		
 		private Socket socket = null; 
 		
-		public ChattingSession(UserID other_user, String threadname) {
+		public ChattingSession(UserID other_user, Socket socket, String threadname) {
 			super(threadname);
 			this.other_user = other_user ; 
+			this.socket = socket; 
+			debugPrint("Created new chatting session");
+			//TODO to remove
+		}
+		
+		public ChattingSession(UserID other_user, String threadname) {
+			super(threadname);
+			this.other_user = other_user ;  
 			debugPrint("Created new chatting session");
 			sendMessage("test");
 			//TODO to remove
@@ -94,7 +102,7 @@ public abstract class ChattingSessionManager{
 					int i = 0;
 					boolean in_list = false;
 					debugPrint("Looking for username . . .") ; 
-					while(( i < MainClass.userlist.size() ) &&  in_list) {
+					while(( i < MainClass.userlist.size() ) &&  !in_list) {
 						UserID usrid = MainClass.userlist.get(i);
 						if(usrid.getAddress().equals(new_sock.getInetAddress())) {
 							debugPrint("Found user "+usrid.getName()+" for address "+new_sock.getInetAddress()) ; 
