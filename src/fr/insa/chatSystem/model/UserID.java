@@ -1,28 +1,27 @@
 package fr.insa.chatSystem.model;
-import java.net.* ;
 
 public class UserID {
 	    // Déclaration des strings depuis cette classe seulement
 	    private String name;
-	    private InetAddress hostAddress;
+	    private String hostAddress;
 	    
-	    // Definition de nom et de @IP
-	    public UserID(InetAddress address, String name) {
-	        this.name=name;
-	        this.hostAddress=address;
+	    // Definition de name et de @IP
+	    public UserID(String nom, String hostAddress) {
+	        name=nom;
+	        this.hostAddress=hostAddress;
 	    }
 	    
 	    // Lire le nom dans le string GetNom
 	    public String getName() {
-	    	return this.name;
+	    	return name;
 	    	}
 	    // Ecrire le nom dans le string name
-	    public String setName(String name) {
-	    	return this.name = name;
+	    public String setName(String nom) {
+	    	return name = nom;
 	    	}
 	    
 	    // Lire l'@IP de l'utilisateur
-	    public InetAddress getAddress() { 
+	    public String getAddress() { 
 	    	return this.hostAddress;  // hostAddress prend l'@IP
 	    	}
 	    // Afficher le nom et l'adresse IP de l'utilisateur & @Override controle la classe parente
