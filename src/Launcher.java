@@ -1,4 +1,5 @@
 import fr.insa.chatSystem.gui.MainWindow;
+import fr.insa.chatSystem.model.MainClass;
 
 
 public class Launcher {
