@@ -108,13 +108,22 @@ public class MainClass {
         		debugPrint("Who do you want to chat with? User list:"+userlist.toString());
         		name_input = reader.readLine();
         		
-        		if(ChattingSessionManager.newChat(name_input)) {
-        			debugPrint("Chatting session created with user "+name_input) ; 
-        			valid = true ; 
-        		}
-       
-	        	if (valid = false)
-	        		debugPrint("Unknown"+userlist.toString()) ; 
+        		int i = 0;
+				boolean in_list = false;
+				debugPrint("Looking for username . . .") ; 
+				while(( i < MainClass.userlist.size() ) &&  in_list) {
+					UserID usrid = MainClass.userlist.get(i);
+					if(usrid.getName().equals(name_input)) {
+						debugPrint("Found user at address "+usrid.getAddress().toString()+" for name "+name_input) ; 
+						in_list = true ; 
+						ChattingSessionManager.chatlist.add(new ChattingSession(usrid,"Chat Thread "+ChattingSessionManager.chatlist.size())) ;
+						valid = true ; 
+					}
+					i++;
+				}
+				if(!in_list) {
+					debugPrint("No user with name "+name_input+" has been found ! Please try again") ; 
+				}
 	   
 	        }
 	    }catch(Exception E) {
@@ -171,7 +180,7 @@ public class MainClass {
 	        			break; 
 	        			
 	        		default : 
-	        			debugPrint("Unidentified input. \n exit : close the agent\n newname : change username\n chat : start chatting session\n userlist : see user list");
+	        			debugPrint("Unidentified input. \n exit : close the agent\n newname : change username\n newchat : start chatting session\n userlist : see user list");
 	        	}
 	        }catch(Exception E) {
 	        	E.printStackTrace() ; 
