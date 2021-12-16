@@ -1,8 +1,10 @@
-package fr.insa.chatSystem.model;
+package fr.insa.chatSystem.controller;
 
 import java.net.*;
 
-public abstract class DistributedDataManager {
+import fr.insa.chatSystem.model.UserID;
+
+public abstract class DistributedDataController {
 
 	static final private int DGRAM_PORT_RX = 1238;
 	static final private int DGRAM_PORT_TX = 1239;
@@ -48,7 +50,7 @@ public abstract class DistributedDataManager {
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				public void run() {
 					try {
-						DistributedDataManager.notifyDisconnection(); // Notifying every user in the local network
+						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
 						dgramSocket_RX.close();
 						System.out.println("RX socket is shut down!");
 						dgramSocket_TX.close();
@@ -82,13 +84,13 @@ public abstract class DistributedDataManager {
 
 							case ID_REQUEST_SIG: // In the case someone on the network request everyone's identity, the
 													// agent answers with username
-								if (!MainClass.username.isEmpty()) { // An empty string as a username is forbidden and
+								if (!MainController.username.isEmpty()) { // An empty string as a username is forbidden and
 																		// should only happen if the user has yet to
 																		// choose a name
-									debugPrint("Sending username \"" + MainClass.username + "\" to "
+									debugPrint("Sending username \"" + MainController.username + "\" to "
 											+ inPacket.getAddress().toString());
 									InetAddress sender_addr = inPacket.getAddress();
-									String[] unpacked_answer = { ONLINE_SIG, MainClass.username };
+									String[] unpacked_answer = { ONLINE_SIG, MainController.username };
 									UDPUnicast(sender_addr, pack(unpacked_answer), dgramSocket_TX);
 								} else {
 									debugPrint("Not connected yet! Not answering");
@@ -97,7 +99,7 @@ public abstract class DistributedDataManager {
 							case ONLINE_SIG:
 								debugPrint("Identified " + ONLINE_SIG + " from " + inPacket.getAddress().toString()
 										+ "(\"" + unpacked[1] + "\")");
-								MainClass.userlist.add(new UserID(inPacket.getAddress(), unpacked[1])); // In the case
+								MainController.userlist.add(new UserID(inPacket.getAddress(), unpacked[1])); // In the case
 																										// of an online
 																										// signal the
 																										// second
@@ -105,14 +107,14 @@ public abstract class DistributedDataManager {
 																										// the array is
 																										// the username
 																										// of the sender
-								debugPrint("Added name in userlist : " + MainClass.userlist.toString());// To be added
+								debugPrint("Added name in userlist : " + MainController.userlist.toString());// To be added
 																										// to the list
 								break;
 
 							case OFFLINE_SIG:
 								debugPrint("Identified " + OFFLINE_SIG + " from " + inPacket.getAddress().toString()
 										+ "(\"" + unpacked[1] + "\")");
-								MainClass.userlist.remove(new UserID(inPacket.getAddress(), unpacked[1])); // In the
+								MainController.userlist.remove(new UserID(inPacket.getAddress(), unpacked[1])); // In the
 																											// case of
 																											// an
 																											// offline
@@ -126,7 +128,7 @@ public abstract class DistributedDataManager {
 																											// username
 																											// of the
 																											// sender
-								debugPrint("Removed name in userlist : " + MainClass.userlist.toString()); // To be
+								debugPrint("Removed name in userlist : " + MainController.userlist.toString()); // To be
 																											// removed
 																											// from the
 																											// list
@@ -135,7 +137,7 @@ public abstract class DistributedDataManager {
 							case NEW_NAME_SIG:
 								debugPrint("Identified " + NEW_NAME_SIG + " from " + inPacket.getAddress().toString()
 										+ "(prev. \"" + unpacked[1] + "\", now \"" + unpacked[2] + "\")");
-								MainClass.updateList(unpacked[1], unpacked[2]);
+								MainController.updateList(unpacked[1], unpacked[2]);
 								break;
 
 							}
@@ -169,20 +171,20 @@ public abstract class DistributedDataManager {
 	}
 
 	static public void notifyConnection() {
-		String[] unpacked = { ONLINE_SIG, MainClass.username };
+		String[] unpacked = { ONLINE_SIG, MainController.username };
 		debugPrint("Notifying online status to everyone");
 		UDPBroadcast(pack(unpacked), dgramSocket_TX);
 	}
 
 	static public void notifyDisconnection() {
-		String[] unpacked = { OFFLINE_SIG, MainClass.username };
+		String[] unpacked = { OFFLINE_SIG, MainController.username };
 		debugPrint("Notifying offline status to everyone");
 		UDPBroadcast(pack(unpacked), dgramSocket_TX);
 	}
 
 	static public void notifyNewName(String newname) {
-		String[] unpacked = { NEW_NAME_SIG, MainClass.username, newname };
-		debugPrint("Notifying change of username (" + MainClass.username + "->" + newname + ") to everyone");
+		String[] unpacked = { NEW_NAME_SIG, MainController.username, newname };
+		debugPrint("Notifying change of username (" + MainController.username + "->" + newname + ") to everyone");
 		UDPBroadcast(pack(unpacked), dgramSocket_TX);
 	}
 
@@ -234,6 +236,6 @@ public abstract class DistributedDataManager {
 	}
 
 	static private void debugPrint(String str) {
-		System.out.println("[" + Thread.currentThread().getName() + "] DistributedDataManager : " + str);
+		System.out.println("[" + Thread.currentThread().getName() + "] DistributedDataController : " + str);
 	}
 }

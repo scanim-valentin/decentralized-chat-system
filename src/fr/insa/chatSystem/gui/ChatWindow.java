@@ -1,9 +1,11 @@
 package fr.insa.chatSystem.gui;
 
-import fr.insa.chatSystem.model.RemoteUser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import fr.insa.chatSystem.model.UserID;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -27,10 +29,15 @@ public class ChatWindow extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 
-	DefaultListModel<RemoteUser> remote_users_list;
-	JList<RemoteUser> remote_users_jlist;
+//	DefaultListModel<RemoteUser> remote_users_list;
+//	JList<RemoteUser> remote_users_jlist;
 
-	public String pseudo;
+	//J'ai remplacé RemoteUser par UserID pour que ça puisse compiler
+	//Je n'ai pas compris l'intéret des classes RemoteUser et LocalUser
+	DefaultListModel<UserID> remote_users_list;
+	JList<UserID> remote_users_jlist;	
+	
+//	public String pseudo;
 	/**
 	 * Create the frame.
 	 * 
@@ -104,12 +111,19 @@ public class ChatWindow extends JFrame {
 		textField.setBounds(259, 389, 313, 77);
 		contentPane.add(textField);
 		textField.setColumns(10);
-
+/*
 		JList<RemoteUser> list = new JList<RemoteUser>();
 		list.setBackground(Color.LIGHT_GRAY);
 		list.setBounds(17, 53, 117, 306);
 		contentPane.add(list);
-
+*/
+		//Réparation
+		JList<UserID> list = new JList<UserID>();
+		list.setBackground(Color.LIGHT_GRAY);
+		list.setBounds(17, 53, 117, 306);
+		contentPane.add(list);
+		//
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
 		panel.setBounds(167, 53, 504, 306);

@@ -1,4 +1,4 @@
-package fr.insa.chatSystem.model;
+package fr.insa.chatSystem.controller;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -10,15 +10,16 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.insa.chatSystem.model.DistributedDataManager.DDM_Deamon;
+import fr.insa.chatSystem.model.Message;
+import fr.insa.chatSystem.model.UserID;
 
-public abstract class ChattingSessionManager {
+public abstract class ChattingSessionController {
 
 	static final private int CHAT_PORT = 1240;
 
 	static public List<ChattingSession> chatlist = new ArrayList<ChattingSession>(); // List of active chat sessions
 
-	static class ChattingSession extends Thread {
+	public static class ChattingSession extends Thread {
 
 		private UserID other_user; // Other participant to the conversation
 		private List<Message> message_list = new ArrayList<Message>(); // List of messages (history)
@@ -89,7 +90,7 @@ public abstract class ChattingSessionManager {
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				public void run() {
 					try {
-						DistributedDataManager.notifyDisconnection(); // Notifying every user in the local network
+						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
 						chat_socket_generator.close();
 						System.out.println("Chat socket generator is shut down!");
 					} catch (Exception e) {
@@ -107,8 +108,8 @@ public abstract class ChattingSessionManager {
 					int i = 0;
 					boolean in_list = false;
 					debugPrint("Looking for username . . .");
-					while ((i < MainClass.userlist.size()) && !in_list) {
-						UserID usrid = MainClass.userlist.get(i);
+					while ((i < MainController.userlist.size()) && !in_list) {
+						UserID usrid = MainController.userlist.get(i);
 						if (usrid.getAddress().equals(new_sock.getInetAddress())) {
 							debugPrint("Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
 							in_list = true;
@@ -128,6 +129,6 @@ public abstract class ChattingSessionManager {
 	}
 
 	static private void debugPrint(String str) {
-		System.out.println("[" + Thread.currentThread().getName() + "] ChattingSessionManager : " + str);
+		System.out.println("[" + Thread.currentThread().getName() + "] ChattingSessionController : " + str);
 	}
 }
