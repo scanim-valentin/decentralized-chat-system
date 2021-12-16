@@ -18,7 +18,7 @@ public abstract class ChattingSessionController {
 	static final private int CHAT_PORT = 1240;
 
 	static public List<ChattingSession> chatlist = new ArrayList<ChattingSession>(); // List of active chat sessions
-
+	
 	public static class ChattingSession extends Thread {
 
 					
@@ -26,21 +26,21 @@ public abstract class ChattingSessionController {
 		private List<Message> message_list = new ArrayList<Message>(); // List of messages (history)
 
 		private Socket socket = null;
-
-		public ChattingSession(UserID other_user, Socket socket, String threadname) {
-			super(threadname);
-			this.other_user = other_user;
-			this.socket = socket;
-			MainController.NO_GUI_debugPrint ("Created new chatting session");
-			// TODO to remove
-		}
-
+		
+		//CONSTRUCTEUR A UTILISER DANS LE CAS OU LE SOCKET N'EST PAS ENCORE DEFINI
+		//CÀD QUAND L'UTILISATEUR VEUT LANCER UNE SESSION DE CHAT
 		public ChattingSession(UserID other_user, String threadname) {
 			super(threadname);
 			this.other_user = other_user;
 			MainController.NO_GUI_debugPrint ("Created new chatting session");
 			sendMessage("test");
-			// TODO to remove
+		}
+		
+		public ChattingSession(UserID other_user, Socket socket, String threadname) {
+			super(threadname);
+			this.other_user = other_user;
+			this.socket = socket;
+			MainController.NO_GUI_debugPrint ("Created new chatting session");
 		}
 
 		private void sendMessage(String M) {
