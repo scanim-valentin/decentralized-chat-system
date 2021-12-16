@@ -21,6 +21,7 @@ public abstract class ChattingSessionController {
 
 	public static class ChattingSession extends Thread {
 
+					
 		private UserID other_user; // Other participant to the conversation
 		private List<Message> message_list = new ArrayList<Message>(); // List of messages (history)
 
@@ -30,14 +31,14 @@ public abstract class ChattingSessionController {
 			super(threadname);
 			this.other_user = other_user;
 			this.socket = socket;
-			debugPrint("Created new chatting session");
+			MainController.NO_GUI_debugPrint ("Created new chatting session");
 			// TODO to remove
 		}
 
 		public ChattingSession(UserID other_user, String threadname) {
 			super(threadname);
 			this.other_user = other_user;
-			debugPrint("Created new chatting session");
+			MainController.NO_GUI_debugPrint ("Created new chatting session");
 			sendMessage("test");
 			// TODO to remove
 		}
@@ -47,26 +48,34 @@ public abstract class ChattingSessionController {
 
 				try {
 					socket = new Socket(other_user.getAddress(), CHAT_PORT);
-					debugPrint("Created socket to chat with " + other_user.toString());
+					MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
 				} catch (IOException e) {
-					debugPrint("Blimey! It appears " + other_user.toString() + " is busy or something");
+					MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
 					e.printStackTrace();
 				}
 			}
 		}
 
-		private void debugPrint(String str) {
-			System.out.println("[" + Thread.currentThread().getName() + "] ChattingSession: " + str);
-		}
-
 		public void run() {
+
+			// Closes sockets when the user closes the agent
+			Runtime.getRuntime().addShutdownHook(new Thread() {
+				public void run() {
+					try {
+						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
+						socket.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 
 		}
 
 	}
 
 	public static void start_deamon() {
-		debugPrint("Starting deamon . . .");
+		MainController.NO_GUI_debugPrint ("Starting deamon . . .");
 		CSM_Deamon csm_deamon = new CSM_Deamon("CSM_Deamon");
 		csm_deamon.start();
 	}
@@ -90,9 +99,16 @@ public abstract class ChattingSessionController {
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				public void run() {
 					try {
+						//Shutting down deamon socket 
 						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
 						chat_socket_generator.close();
-						System.out.println("Chat socket generator is shut down!");
+						MainController.NO_GUI_debugPrint ("Chat socket generator is shut down!");
+						
+						//Shutting down sockets for each chatting session
+						for(ChattingSession session: chatlist) {
+							session.socket.close();
+							MainController.NO_GUI_debugPrint ("Chat socket connected to "+session.getName()+" is shut down!");
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -101,24 +117,24 @@ public abstract class ChattingSessionController {
 
 			try {
 				Socket new_sock;
-				debugPrint("Listening");
+				MainController.NO_GUI_debugPrint ("Listening");
 				while (true) {
 					new_sock = chat_socket_generator.accept();
-					debugPrint("Received chat request from " + new_sock.getInetAddress().toString());
+					MainController.NO_GUI_debugPrint ("Received chat request from " + new_sock.getInetAddress().toString());
 					int i = 0;
 					boolean in_list = false;
-					debugPrint("Looking for username . . .");
+					MainController.NO_GUI_debugPrint ("Looking for username . . .");
 					while ((i < MainController.userlist.size()) && !in_list) {
 						UserID usrid = MainController.userlist.get(i);
 						if (usrid.getAddress().equals(new_sock.getInetAddress())) {
-							debugPrint("Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
+							MainController.NO_GUI_debugPrint ("Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
 							in_list = true;
 							chatlist.add(new ChattingSession(usrid, "Chat Thread " + chatlist.size()));
 						}
 						i++;
 					}
 					if (!in_list)
-						debugPrint("No user with address " + new_sock.getInetAddress() + " has been found ! Ignoring");
+						MainController.NO_GUI_debugPrint ("No user with address " + new_sock.getInetAddress() + " has been found ! Ignoring");
 
 				}
 
@@ -126,9 +142,5 @@ public abstract class ChattingSessionController {
 				E_sock.printStackTrace();
 			}
 		}
-	}
-
-	static private void debugPrint(String str) {
-		System.out.println("[" + Thread.currentThread().getName() + "] ChattingSessionController : " + str);
 	}
 }

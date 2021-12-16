@@ -58,6 +58,8 @@ public class MainController {
 	//-------------------------------------------------------------------------------
 	//PARTIE DEBUG - NE PAS SUPPRIMER
 	
+	static public Boolean debug_mode = false ; 
+	
 	// Command prompt
 	static public String input = "";
 	static final public String EXIT_IN = "exit";
@@ -162,6 +164,8 @@ public class MainController {
 		//FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
 		public static void NO_GUI_agent() {
 			
+			debug_mode = true ; 
+			
 			NO_GUI_debugPrint("Starting DDM deamon . . .") ; 
 			DistributedDataController.start_deamon();
 			
@@ -211,8 +215,15 @@ public class MainController {
 			System.exit(0); 
 		}
 		
-		static private void NO_GUI_debugPrint(String str) {
-			System.out.println("[" + Thread.currentThread().getName() + "] DistributedDataManager : " + str);
+		//UNE FONCTION POUR AFFICHER DU DEBUG AVEC DES DETAILS
+		//NE PAS SUPPRIMER
+		static public void NO_GUI_debugPrint(String str) {
+				//dgram.split("\\" + SEP)
+				if(debug_mode) {
+					String[] info_file = Thread.currentThread().getStackTrace()[2].getFileName().split("\\.java") ; 
+					System.out.println("[" + Thread.currentThread().getName() + "] "+info_file[0]+" : " + str);
+					
+				}
 		}
 		
 		
