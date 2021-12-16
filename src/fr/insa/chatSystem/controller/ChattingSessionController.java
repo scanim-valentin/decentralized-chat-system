@@ -47,7 +47,7 @@ public abstract class ChattingSessionController {
 			if (socket == null) {
 
 				try {
-					socket = new Socket(other_user.getAddress(), CHAT_PORT);
+					socket = new Socket(other_user.getAddress(), CHAT_PORT+1);
 					MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
 				} catch (IOException e) {
 					MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
@@ -117,7 +117,7 @@ public abstract class ChattingSessionController {
 
 			try {
 				Socket new_sock;
-				MainController.NO_GUI_debugPrint ("Listening");
+				MainController.NO_GUI_debugPrint ("Listening on port "+CHAT_PORT);
 				while (true) {
 					new_sock = chat_socket_generator.accept();
 					MainController.NO_GUI_debugPrint ("Received chat request from " + new_sock.getInetAddress().toString());

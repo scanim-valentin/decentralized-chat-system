@@ -166,7 +166,7 @@ public class MainController {
 			
 			debug_mode = true ; 
 			
-			NO_GUI_debugPrint("Starting DDM deamon . . .") ; 
+			NO_GUI_debugPrint("Starting DDC deamon . . .") ; 
 			DistributedDataController.start_deamon();
 			
 			//Waiting to gather all of the user id
@@ -177,6 +177,9 @@ public class MainController {
 			
 			//Asks the user to choose a valid username
 			NO_GUI_changeUsername(); 
+			
+			NO_GUI_debugPrint("Starting CSC deamon . . .") ; 
+			ChattingSessionController.start_deamon();
 			
 			// Enter data using BufferReader
 			NO_GUI_debugPrint("Please enter a command.");
