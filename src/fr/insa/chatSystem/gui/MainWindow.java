@@ -28,7 +28,7 @@ public class MainWindow extends JFrame {
 	 * Create the application.
 	 * @param pseudo
 	 */
-	public MainWindow(Object pseudo) {
+	public MainWindow(String username) {
 		initialize(); // fenetre de connexion
 	}
 
@@ -72,11 +72,10 @@ public class MainWindow extends JFrame {
 		// Action de la connexion
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//String pseudo = textField.getText();
-				String pseudo;
-				if (!("").equals(pseudo = textField.getText())) {
+				String username;
+				if (!("").equals(username = textField.getText())) {
 					frame.dispose();			
-					new ChatWindow(pseudo);
+					new ChatWindow(username);
 				} else {lblNewLabel_3.setText("Login empty !");}
 			}
 		});
@@ -96,8 +95,7 @@ public class MainWindow extends JFrame {
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(
-				new ImageIcon("/Users/lauricmarthrin-john/GitHub/decentralized-chat-system/src/Images/MSN-icon.png"));
+		lblNewLabel_2.setIcon( new ImageIcon("./Images/MSN-icon.png"));
 		lblNewLabel_2.setBounds(332, 11, 112, 126);
 		frame.getContentPane().add(lblNewLabel_2);
 

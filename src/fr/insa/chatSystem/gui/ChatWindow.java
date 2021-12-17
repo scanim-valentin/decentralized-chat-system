@@ -10,7 +10,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.Component;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
@@ -44,7 +43,7 @@ public class ChatWindow extends JFrame {
 	 * @param pseudo2
 	 * @param  
 	 */
-	public ChatWindow(String pseudo2 ) {
+	public ChatWindow(String username ) {
 
 		JFrame window = new JFrame();
 		window.setResizable(false); // ne pas changer la taille de la fenetre
@@ -98,6 +97,11 @@ public class ChatWindow extends JFrame {
 		JButton btnNewButton_3 = new JButton("Change Name");
 		btnNewButton_3.setForeground(new Color(51, 204, 0));
 		btnNewButton_3.setBounds(180, 12, 117, 29);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ChangeNameWindow(username);
+			}
+		});
 		contentPane.add(btnNewButton_3);
 
 		JSeparator separator_2 = new JSeparator();
@@ -148,7 +152,7 @@ public class ChatWindow extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setBounds(16, 388, 139, 29);
 		contentPane.add(lblNewLabel_2);
-		//lblNewLabel_2.add(pseudo2);
+		lblNewLabel_2.setText(username);
 
 		// Display the widow
 		window.setVisible(true);
