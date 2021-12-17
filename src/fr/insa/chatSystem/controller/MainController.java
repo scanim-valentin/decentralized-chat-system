@@ -54,6 +54,32 @@ public class MainController {
 			Thread.currentThread().interrupt();
 		}
 	}
+	
+	//Checks the username validity and changes username if it
+		// is valid
+		// If it is valid, changes username attributes and asks the
+		// DistributedDataManager to notify everyone on the network and returns true
+		// otherwise it returns false
+		public static boolean changeUsername(String usrnm) {
+			boolean valid = false ; 
+			try {
+				// Reading data using readLine
+				if (isValid(usrnm)) {
+					// Notifying everyone on the local network
+					if (username.isEmpty()) {
+						username = usrnm;
+						DistributedDataController.notifyConnection();
+					} else {
+						DistributedDataController.notifyNewName(usrnm);
+						username = usrnm;
+					}
+					valid = true ; 
+				}
+			} catch (Exception E) {
+				E.printStackTrace();
+			}
+			return valid ; 
+		}
 
 	//-------------------------------------------------------------------------------
 	//PARTIE DEBUG - NE PAS SUPPRIMER

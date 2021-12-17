@@ -114,20 +114,9 @@ public abstract class DistributedDataController {
 							case OFFLINE_SIG:
 								MainController.NO_GUI_debugPrint ("Identified " + OFFLINE_SIG + " from " + inPacket.getAddress().toString()
 										+ "(\"" + unpacked[1] + "\")");
-								MainController.userlist.remove(new UserID(inPacket.getAddress(), unpacked[1])); // In the
-																											// case of
-																											// an
-																											// offline
-																											// signal
-																											// the
-																											// second
-																											// element
-																											// of the
-																											// array is
-																											// the
-																											// username
-																											// of the
-																											// sender
+								MainController.userlist.remove(new UserID(inPacket.getAddress(), unpacked[1])); 
+								// In the case of an offline signal the second element of the array is the username of the sender
+								
 								MainController.NO_GUI_debugPrint ("Removed name in userlist : " + MainController.userlist.toString()); // To be
 																											// removed
 																											// from the
