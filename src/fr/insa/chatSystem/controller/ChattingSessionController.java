@@ -15,7 +15,7 @@ import fr.insa.chatSystem.model.UserID;
 
 public abstract class ChattingSessionController {
 
-	static final private int CHAT_PORT = 1240;
+	static final private int CHAT_PORT = 3000 ;
 
 	static public List<ChattingSession> chatlist = new ArrayList<ChattingSession>(); // List of active chat sessions
 	
@@ -47,7 +47,7 @@ public abstract class ChattingSessionController {
 			if (socket == null) {
 
 				try {
-					socket = new Socket(other_user.getAddress(), CHAT_PORT+1);
+					socket = new Socket(other_user.getAddress(), CHAT_PORT);
 					MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
 				} catch (IOException e) {
 					MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
@@ -129,7 +129,7 @@ public abstract class ChattingSessionController {
 						if (usrid.getAddress().equals(new_sock.getInetAddress())) {
 							MainController.NO_GUI_debugPrint ("Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
 							in_list = true;
-							chatlist.add(new ChattingSession(usrid, "Chat Thread " + chatlist.size()));
+							chatlist.add(new ChattingSession(usrid, new_sock, "Chat Thread " + chatlist.size()));
 						}
 						i++;
 					}
