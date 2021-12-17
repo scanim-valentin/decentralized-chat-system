@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import fr.insa.chatSystem.model.UserID;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;

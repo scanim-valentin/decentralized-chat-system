@@ -105,6 +105,8 @@ public class MainWindow extends JFrame {
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setBounds(99, 118, 221, 32);
 		frame.getContentPane().add(lblNewLabel_3);
+
+		// Display the widow
 		frame.setVisible(true);
 	}
 }

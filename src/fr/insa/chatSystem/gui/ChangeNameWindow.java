@@ -1,6 +1,5 @@
 package fr.insa.chatSystem.gui;
 
-import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -23,7 +22,7 @@ public class ChangeNameWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Window frame;
+	private JFrame frame;
 	private JTextField textField;
 
 	/**
@@ -31,13 +30,16 @@ public class ChangeNameWindow extends JFrame {
 	 */
 	public ChangeNameWindow(String username) {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		frame = new JFrame(); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		frame.setResizable(false); // Ne pas changer la taille de la fenetre
+		frame.setTitle("Chat System V1.0");
 		contentPane.setBackground(new Color(255, 215, 0));
 		contentPane.setForeground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Change Name");
@@ -106,6 +108,8 @@ public class ChangeNameWindow extends JFrame {
 		lblNewLabel_2_1_2.setBounds(356, 6, 76, 71);
 		contentPane.add(lblNewLabel_2_1_2);
 		
+		// Display the widow
+		//frame.add(contentPane);
 		frame.setVisible(true);
 	}
 }
