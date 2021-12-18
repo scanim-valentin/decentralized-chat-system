@@ -43,7 +43,7 @@ public abstract class ChattingSessionController {
 			MainController.NO_GUI_debugPrint ("Created new chatting session");
 		}
 
-		private void sendMessage(String M) {
+		public void sendMessage(String M) {
 			if (socket == null) {
 
 				try {
@@ -54,6 +54,14 @@ public abstract class ChattingSessionController {
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		public String toString() {
+			return other_user.toString();
+		}
+		
+		public UserID getUser() {
+			return this.other_user ; 
 		}
 
 		public void run() {

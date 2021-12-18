@@ -1,6 +1,7 @@
 package fr.insa.chatSystem.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -92,6 +93,10 @@ public class MainController {
 	static final public String NEWNAME_IN = "newname";
 	static final public String CHATWITH_IN = "newchat";
 	static final public String USRLIST_IN = "userlist";
+	static final public String CHATLIST_IN = "chatlist";
+	static final public String SENDTO_IN = "send";
+	static final public String ENDCHAT_IN = "endchat";
+	static final public String HELP_IN = "help";
 	
 	// Changes name in user list
 	//NE PAS SUPPRIMER
@@ -186,6 +191,42 @@ public class MainController {
 			}
 		}
 		
+		//Wait for a name and send a message if name is valid 
+		public static void NO_GUI_send() {
+			NO_GUI_debugPrint("To who? "+ChattingSessionController.chatlist.toString());
+			BufferedReader reader = new BufferedReader(
+		            new InputStreamReader(System.in));
+			String name_input = "" ;
+			try {
+				name_input = reader.readLine();
+				int i = 0;
+				boolean in_list = false;
+				NO_GUI_debugPrint("Looking for active conversation  . . .") ; 
+				ChattingSession session ; 
+				while(( i < ChattingSessionController.chatlist.size() ) &&  !in_list) {
+					session = ChattingSessionController.chatlist.get(i);
+					UserID usrid = session.getUser();
+					if(usrid.getName().equals(name_input)) {
+						NO_GUI_debugPrint("Found active conversation at address "+usrid.getAddress().toString()+" for name "+name_input) ; 
+						in_list = true ; 
+						NO_GUI_debugPrint("Enter message :");
+						session.sendMessage(reader.readLine());
+					}
+					i++;
+				}
+				if(!in_list) {
+					NO_GUI_debugPrint("No active conversation with user "+name_input+" has been found !") ; 
+				}
+				
+				
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    		
+    		
+		}
+		
 		//NE PAS SUPPRIMER
 		//FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
 		public static void NO_GUI_agent() {
@@ -210,12 +251,17 @@ public class MainController {
 			// Enter data using BufferReader
 			NO_GUI_debugPrint("Please enter a command.");
 			boolean close = false ; 
+			String help = "\n help : display the command list \n exit : close the agent\n newname : change username\n newchat : start chatting session \n send : send a message in a conversation \n endchat : end a conversation \n chatlist : see active conversation list \n userlist : see user list";
 			while(!close) {
 				//Command prompt
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		        try {
 		        	input = reader.readLine() ; 
 		        	switch(input) {
+		        		case HELP_IN : 
+		        			NO_GUI_debugPrint(help);
+		        			break;
+		        			
 		        		case EXIT_IN : 
 		        			close = true ;
 		        			NO_GUI_debugPrint("Closing agent . . .") ; 
@@ -231,10 +277,18 @@ public class MainController {
 		        			
 		        		case CHATWITH_IN : 
 		        			NO_GUI_getChatRequest(); 
-		        			break; 
+		        			break;
+		        			
+		        		case CHATLIST_IN : 
+		        			NO_GUI_debugPrint("Userlist : "+ChattingSessionController.chatlist.toString());
+		        			break;
+		        			
+		        		case SENDTO_IN : 
+		        			NO_GUI_send();
+		        			break;
 		        			
 		        		default : 
-		        			NO_GUI_debugPrint("Unidentified input. \n exit : close the agent\n newname : change username\n newchat : start chatting session\n userlist : see user list");
+		        			NO_GUI_debugPrint("Unidentified input."+help);
 		        	}
 		        }catch(Exception E) {
 		        	E.printStackTrace() ; 
