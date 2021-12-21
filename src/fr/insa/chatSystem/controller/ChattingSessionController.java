@@ -164,8 +164,9 @@ public abstract class ChattingSessionController {
 						MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
 						this.start();
 				}
-				PrintWriter output = new PrintWriter(socket.getOutputStream());
+				PrintWriter output = new PrintWriter(socket.getOutputStream()); 
 				Message msg = new Message(M);
+				MainController.NO_GUI_debugPrint ("Sent "+msg.toString()) ;
 				output.println(msg);
 			
 			} catch (Exception e) {
@@ -201,9 +202,10 @@ public abstract class ChattingSessionController {
 			
 			BufferedReader input;
 			try {
+				MainController.NO_GUI_debugPrint ("Listenning . . .");
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String input_msg = input.readLine();
-				MainController.NO_GUI_debugPrint (input_msg);
+				MainController.NO_GUI_debugPrint ("Received: "+input_msg);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
