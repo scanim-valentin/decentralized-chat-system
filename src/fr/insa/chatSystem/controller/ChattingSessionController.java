@@ -1,6 +1,9 @@
 package fr.insa.chatSystem.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -8,6 +11,7 @@ import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.insa.chatSystem.model.Message;
@@ -31,7 +35,12 @@ public abstract class ChattingSessionController {
 		if(session == null) {
 			return result.SESSION_DOES_NOT_EXIST ; 
 		}
-		session.interrupt();
+		try {
+			session.socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result.SUCCESS ; 
 	}
 	
@@ -143,20 +152,27 @@ public abstract class ChattingSessionController {
 			this.other_user = other_user;
 			this.socket = socket;
 			MainController.NO_GUI_debugPrint ("Created new chatting session");
+			this.start();
 		}
 
 		//Will send a dated message and begin the TCP connection if it is the first message in the conversation (i.e. socket hasn't been instanciated yet)
 		public void sendMessage(String M) {
-			if (socket == null) {
-
-				try {
-					socket = new Socket(other_user.getAddress(), CHAT_PORT);
-					MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
-				} catch (IOException e) {
-					MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
-					e.printStackTrace();
+			try {
+				
+				if (socket == null) {
+						socket = new Socket(other_user.getAddress(), CHAT_PORT);
+						MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
+						this.start();
 				}
+				PrintWriter output = new PrintWriter(socket.getOutputStream());
+				Message msg = new Message(M);
+				output.println(msg);
+			
+			} catch (Exception e) {
+				MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
+				e.printStackTrace();
 			}
+			
 		}
 		
 		public String toString() {
@@ -183,8 +199,17 @@ public abstract class ChattingSessionController {
 				}
 			});
 			
-			
+			BufferedReader input;
+			try {
+				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				String input_msg = input.readLine();
+				MainController.NO_GUI_debugPrint (input_msg);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
+			
 		}
 
 	}
@@ -222,7 +247,7 @@ public abstract class ChattingSessionController {
 						//Shutting down sockets for each chatting session
 						for(ChattingSession session: chatlist) {
 							session.socket.close();
-							MainController.NO_GUI_debugPrint ("Chat socket connected to "+session.getName()+" is shut down!");
+							MainController.NO_GUI_debugPrint ("Chat socket connected to "+session.getID().toString()+" is shut down!");
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
