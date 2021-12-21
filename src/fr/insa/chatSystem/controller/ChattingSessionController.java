@@ -143,7 +143,6 @@ public abstract class ChattingSessionController {
 			super(threadname);
 			this.other_user = other_user;
 			MainController.NO_GUI_debugPrint ("Created new chatting session");
-			sendMessage("test");
 		}
 		
 		//Constructor to be used when the agent receives a new valid chat request from the network
