@@ -21,7 +21,7 @@ import fr.insa.chatSystem.controller.MainController.result;
 
 public abstract class ChattingSessionController {
 	//METHODES PUBLIQUES AVEC INTERFACE 
-	
+
 	//Termine la session de chat avec l'utilisateur de nom "username"
 	//Retourne INCORRECT_USERNAME si le nom n'est pas valide
 	//Retourne SESSION_DOES_NOT_EXIST si la session de chat n'existe pas
@@ -43,7 +43,7 @@ public abstract class ChattingSessionController {
 		}
 		return result.SUCCESS ; 
 	}
-	
+
 	//Envoie "message_content" a l'utilisateur de nom "username"
 	//Retourne INCORRECT_USERNAME si le nom n'est pas valide
 	//Retourne SESSION_DOES_NOT_EXIST si la session de chat n'existe pas
@@ -63,7 +63,7 @@ public abstract class ChattingSessionController {
 		session.sendMessage(message_content);
 		return result.SUCCESS ; 
 	}
-	
+
 	//Cree une nouvelle session de chat avec l'utilisateur "other_user"
 	//Retourne ALREADY_EXISTS si la session existe deja
 	//Retourne INCORRECT_USERNAME si le nom d'utilisateur est incorect
@@ -83,38 +83,38 @@ public abstract class ChattingSessionController {
 			}else {
 				return result.ALREADY_EXISTS ;
 			}
-			
+
 		}else{
 			return result.INVALID_USERNAME ; 
 		}
 	}
-	
-	
+
+
 	//Retourne la liste des session de chat
 	//Utile pour l'afficher
 	public static List<ChattingSession> getChatList() {
 		return chatlist ; 
 	}
-	
-	
+
+
 	//PRIVATE
-	
+
 	//Port used to chat
 	static final private int CHAT_PORT = 3000 ;
-	
+
 	//List of all active chatting sessions
 	static private List<ChattingSession> chatlist = new ArrayList<ChattingSession>(); // List of active chat sessions
-	
+
 	private static ChattingSession getSessionByID(UserID id) {
 		for (ChattingSession session : chatlist) {
 			if(session.getID().equals(id)) {
 				return session ; 
 			}
-				
+
 		}
 		return null ; 
 	}
-	
+
 	/*
 	//Returns chattingsession if session already exists, throws an exception otherwise
 	private static ChattingSession getSessionByID(UserID id) throws IDNotFoundInChatListException {
@@ -123,28 +123,28 @@ public abstract class ChattingSessionController {
 				MainController.NO_GUI_debugPrint("Found chatting session with "+id.toString()) ; 
 				return session ; 
 			}
-				
+
 		}
 		MainController.NO_GUI_debugPrint("No session with "+id.toString()+" has been found !") ; 
 		throw new IDNotFoundInChatListException("ID not found in chat list!" );
 	}*/
 
-	
+
 	private static class ChattingSession extends Thread {
 
-					
+
 		private UserID other_user; // Other participant to the conversation
 		private List<Message> message_list = new ArrayList<Message>(); // List of messages (history)
 
 		private Socket socket = null;
-		
+
 		//Constructor to be used when the agent's user wants the launch a new chatting session
 		public ChattingSession(UserID other_user, String threadname) {
 			super(threadname);
 			this.other_user = other_user;
 			MainController.NO_GUI_debugPrint ("Created new chatting session");
 		}
-		
+
 		//Constructor to be used when the agent receives a new valid chat request from the network
 		public ChattingSession(UserID other_user, Socket socket, String threadname) {
 			super(threadname);
@@ -157,33 +157,33 @@ public abstract class ChattingSessionController {
 		//Will send a dated message and begin the TCP connection if it is the first message in the conversation (i.e. socket hasn't been instanciated yet)
 		public void sendMessage(String M) {
 			try {
-				
+
 				if (socket == null) {
-						socket = new Socket(other_user.getAddress(), CHAT_PORT);
-						MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
-						this.start();
+					socket = new Socket(other_user.getAddress(), CHAT_PORT);
+					MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
+					this.start();
 				}
 				PrintWriter output = new PrintWriter(socket.getOutputStream()); 
 				Message msg = new Message(M);
 				MainController.NO_GUI_debugPrint ("Sent "+msg.toString()) ;
 				output.println(msg);
-			
+
 			} catch (Exception e) {
 				MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
 				e.printStackTrace();
 			}
-			
+
 		}
-		
+
 		public String toString() {
 			return other_user.toString();
 		}
-		
+
 		public UserID getID() {
 			return this.other_user ; 
 		}
-		
-		
+
+
 
 		public void run() {
 
@@ -198,19 +198,21 @@ public abstract class ChattingSessionController {
 					}
 				}
 			});
-			
-			BufferedReader input;
-			try {
-				MainController.NO_GUI_debugPrint ("Listenning . . .");
-				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				String input_msg = input.readLine();
-				MainController.NO_GUI_debugPrint ("Received: "+input_msg);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 
-			
+			BufferedReader input;
+			while(true) {
+				try {
+					MainController.NO_GUI_debugPrint ("Listenning . . .");
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					String input_msg = input.readLine();
+					MainController.NO_GUI_debugPrint ("Received: "+input_msg);
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+
+			}
 		}
 
 	}
@@ -244,7 +246,7 @@ public abstract class ChattingSessionController {
 						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
 						chat_socket_generator.close();
 						MainController.NO_GUI_debugPrint ("Chat socket generator is shut down!");
-						
+
 						//Shutting down sockets for each chatting session
 						for(ChattingSession session: chatlist) {
 							session.socket.close();
@@ -255,7 +257,7 @@ public abstract class ChattingSessionController {
 					}
 				}
 			});
-			
+
 			//Listenning for incoming TCP connection request and gerating a new chatting session if the source IP known 
 			try {
 				Socket new_sock;
@@ -271,7 +273,7 @@ public abstract class ChattingSessionController {
 						MainController.NO_GUI_debugPrint ("Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
 						chatlist.add(new ChattingSession(usrid, new_sock, "Chat Thread " + chatlist.size()));
 					}
-					
+
 				}
 
 			} catch (Exception E_sock) {
