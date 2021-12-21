@@ -58,7 +58,7 @@ public abstract class ChattingSessionController {
 	//Cree une nouvelle session de chat avec l'utilisateur "other_user"
 	//Retourne ALREADY_EXISTS si la session existe deja
 	//Retourne INCORRECT_USERNAME si le nom d'utilisateur est incorect
-	//Retourne SUCCESS si ça a marche
+	//Retourne SUCCESS si ca a marche
 	public static result newChat(String username){
 		//First checking if username exists
 		UserID id = DistributedDataController.getIDByName(username) ; 
