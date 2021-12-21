@@ -21,7 +21,7 @@ public abstract class ChattingSessionController {
 	//Termine la session de chat avec l'utilisateur de nom "username"
 	//Retourne INCORRECT_USERNAME si le nom n'est pas valide
 	//Retourne SESSION_DOES_NOT_EXIST si la session de chat n'existe pas
-	//Retourne SUCCESS si la session s'est bien fermée
+	//Retourne SUCCESS si la session s'est bien fermee
 	public static result closeSession(String username) {
 		UserID id = DistributedDataController.getIDByName(username) ; 
 		if(id == null) {
@@ -38,7 +38,7 @@ public abstract class ChattingSessionController {
 	//Envoie "message_content" a l'utilisateur de nom "username"
 	//Retourne INCORRECT_USERNAME si le nom n'est pas valide
 	//Retourne SESSION_DOES_NOT_EXIST si la session de chat n'existe pas
-	//Retourne SUCCESS si le message a bien été envoyé
+	//Retourne SUCCESS si le message a bien ete envoye
 	public static result sendMessage(String username, String message_content){
 		UserID id = DistributedDataController.getIDByName(username) ; 
 		if(id == null) {
@@ -55,10 +55,10 @@ public abstract class ChattingSessionController {
 		return result.SUCCESS ; 
 	}
 	
-	//Crée une nouvelle session de chat avec l'utilisateur "other_user"
-	//Retourne ALREADY_EXISTS si la session existe déjà
+	//Cree une nouvelle session de chat avec l'utilisateur "other_user"
+	//Retourne ALREADY_EXISTS si la session existe deja
 	//Retourne INCORRECT_USERNAME si le nom d'utilisateur est incorect
-	//Retourne SUCCESS si ça a marché
+	//Retourne SUCCESS si ça a marche
 	public static result newChat(String username){
 		//First checking if username exists
 		UserID id = DistributedDataController.getIDByName(username) ; 

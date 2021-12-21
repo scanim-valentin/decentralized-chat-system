@@ -12,7 +12,7 @@ public abstract class DistributedDataController {
 	//PARTIE PUBLIQUES
 
 
-	//Lance le thread d'écoute UDP
+	//Lance le thread d'ecoute UDP
 	//A APPELER DES LE DEBUT
 	public static void start_deamon() {
 		MainController.NO_GUI_debugPrint ("Starting deamon . . .");
@@ -58,9 +58,9 @@ public abstract class DistributedDataController {
 
 
 	//Checks the username validity and changes username if it is valid
-	//Retourne SUCCESS si le nom d'utilisateur est valide et a été changé
-	//Retourne INVALID_CONTENT si le nom contient des charactère interdits ou si il est vide
-	//Retourne ALREADY_EXISTS si le nom existe déjà dans la liste d'utilisateur
+	//Retourne SUCCESS si le nom d'utilisateur est valide et a ete change
+	//Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
+	//Retourne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
 	public static result changeUsername(String usrnm) {
 		result R = isValid(usrnm) ; 
 		try {
@@ -131,9 +131,9 @@ public abstract class DistributedDataController {
 	static DatagramSocket dgramSocket_RX;
 	static DatagramSocket dgramSocket_TX;
 	
-	//Retourne SUCCESS si le nom d'utilisateur est valide (non utilisé par quelqu'un d'autre et n'utilise pas le charactère interdit et n'est pas vide)
-	//Retourne INVALID_CONTENT si le nom contient des charactère interdits ou si il est vide
-	//Reoturne ALREADY_EXISTS si le nom existe déjà dans la liste d'utilisateur
+	//Retourne SUCCESS si le nom d'utilisateur est valide (non utilise par quelqu'un d'autre et n'utilise pas le charactere interdit et n'est pas vide)
+	//Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
+	//Reoturne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
 	private static result isValid(String S) {
 
 		if (S.isBlank() || S.contains(DistributedDataController.SEP))
