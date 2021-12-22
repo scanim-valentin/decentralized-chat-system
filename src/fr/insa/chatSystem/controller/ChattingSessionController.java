@@ -197,20 +197,19 @@ public abstract class ChattingSessionController {
 					}
 				}
 			});
-
-			while(true) {
-				String input_msg ; 
+				String input_msg = null ; 
 				try {
+					
 					MainController.NO_GUI_debugPrint ("Listenning . . .");
-					input_msg = this.input.readLine();
-					MainController.NO_GUI_debugPrint ("Received: "+input_msg);
-
+					while(null != (input_msg = this.input.readLine()) ) {
+						MainController.NO_GUI_debugPrint ("Received: "+input_msg);
+					}
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
 
-			}
 		}
 
 	}
