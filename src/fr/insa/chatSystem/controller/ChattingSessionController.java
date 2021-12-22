@@ -143,6 +143,7 @@ public abstract class ChattingSessionController {
 		
 		//Will send a dated message and begin the TCP connection if it is the first message in the conversation (i.e. socket hasn't been instanciated yet)
 		public void send(String M) {
+			MainController.NO_GUI_debugPrint ("FONCTION SEND INVOQUEE WTF WTF WTF WTF");
 			try {
 
 				if (socket == null) {
