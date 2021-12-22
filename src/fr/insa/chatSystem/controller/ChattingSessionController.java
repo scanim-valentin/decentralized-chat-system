@@ -115,21 +115,6 @@ public abstract class ChattingSessionController {
 		return null ; 
 	}
 
-	/*
-	//Returns chattingsession if session already exists, throws an exception otherwise
-	private static ChattingSession getSessionByID(UserID id) throws IDNotFoundInChatListException {
-		for (ChattingSession session : chatlist) {
-			if(session.getID().equals(id)) {
-				MainController.NO_GUI_debugPrint("Found chatting session with "+id.toString()) ; 
-				return session ; 
-			}
-
-		}
-		MainController.NO_GUI_debugPrint("No session with "+id.toString()+" has been found !") ; 
-		throw new IDNotFoundInChatListException("ID not found in chat list!" );
-	}*/
-
-
 	private static class ChattingSession extends Thread {
 
 
@@ -152,6 +137,7 @@ public abstract class ChattingSessionController {
 			this.socket = socket;
 			MainController.NO_GUI_debugPrint ("Created new chatting session");
 			this.start();
+			MainController.NO_GUI_debugPrint ("Started thread");
 		}
 
 		//Will send a dated message and begin the TCP connection if it is the first message in the conversation (i.e. socket hasn't been instanciated yet)
@@ -167,6 +153,7 @@ public abstract class ChattingSessionController {
 				Message msg = new Message(M);
 				MainController.NO_GUI_debugPrint ("Sent "+msg.toString()) ;
 				output.println(msg);
+				output.flush();   
 
 			} catch (Exception e) {
 				MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
