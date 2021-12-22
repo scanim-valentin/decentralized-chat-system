@@ -205,6 +205,9 @@ public abstract class ChattingSessionController {
 					if(input_msg == null) {
 						active = false ; 
 						MainController.NO_GUI_debugPrint ("Disconnected");
+						this.input.close();
+						this.output.close();
+						this.socket.close(); 
 					} else {
 						MainController.NO_GUI_debugPrint ("Received: "+input_msg);
 					}
