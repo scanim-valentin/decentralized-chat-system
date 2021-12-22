@@ -201,7 +201,7 @@ public abstract class ChattingSessionController {
 				try {
 					
 					MainController.NO_GUI_debugPrint ("Listenning . . .");
-					while(null != (input_msg = this.input.readLine()) ) {
+					while((input_msg = this.input.readLine()) != null) {
 						MainController.NO_GUI_debugPrint ("Received: "+input_msg);
 					}
 					
