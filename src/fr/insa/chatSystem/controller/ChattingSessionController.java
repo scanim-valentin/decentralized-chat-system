@@ -60,7 +60,7 @@ public abstract class ChattingSessionController {
 		if(message_content.isBlank() || message_content.contains(DistributedDataController.getIllegalContent())) {
 			return result.INVALID_CONTENT ;
 		}
-		session.sendMessage(message_content);
+		session.send(message_content);
 		return result.SUCCESS ; 
 	}
 
@@ -75,6 +75,7 @@ public abstract class ChattingSessionController {
 			ChattingSession session = getSessionByID(id) ;
 			//Now checking if chatting session already exists
 			if(session == null) {
+				MainController.NO_GUI_debugPrint ("Creating new chatting session . . . ");
 				String threadname = "CS "+username ;
 				UserID user = DistributedDataController.getIDByName(username) ; 
 				session = new ChattingSession(user, threadname) ; 
@@ -139,9 +140,9 @@ public abstract class ChattingSessionController {
 			this.start();
 			MainController.NO_GUI_debugPrint ("Started thread");
 		}
-
+		
 		//Will send a dated message and begin the TCP connection if it is the first message in the conversation (i.e. socket hasn't been instanciated yet)
-		public void sendMessage(String M) {
+		public void send(String M) {
 			try {
 
 				if (socket == null) {
