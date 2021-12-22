@@ -123,7 +123,9 @@ public abstract class ChattingSessionController {
 		private List<Message> message_list = new ArrayList<Message>(); // List of messages (history)
 
 		private Socket socket = null;
-
+		private PrintWriter output = null ; 
+		BufferedReader input = null ; 
+		
 		//Constructor to be used when the agent's user wants the launch a new chatting session
 		public ChattingSession(UserID other_user, String threadname) {
 			super(threadname);
@@ -137,6 +139,12 @@ public abstract class ChattingSessionController {
 			this.other_user = other_user;
 			this.socket = socket;
 			MainController.NO_GUI_debugPrint ("Created new chatting session");
+			try {
+				this.output = new PrintWriter(this.socket.getOutputStream(),true);
+				this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));			
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
 			this.start();
 			MainController.NO_GUI_debugPrint ("Started thread");
 		}
@@ -149,12 +157,13 @@ public abstract class ChattingSessionController {
 				if (socket == null) {
 					this.socket = new Socket(other_user.getAddress(), CHAT_PORT);
 					MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
+					this.output = new PrintWriter(this.socket.getOutputStream(),true); 
+					this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					this.start();
 				}
-				PrintWriter output = new PrintWriter(this.socket.getOutputStream(),true); 
 				Message msg = new Message(M);
 				MainController.NO_GUI_debugPrint ("Sent "+msg.toString()) ;
-				output.println(msg); 
+				this.output.println(msg); 
 
 			} catch (Exception e) {
 				MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
@@ -180,6 +189,8 @@ public abstract class ChattingSessionController {
 				public void run() {
 					try {
 						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
+						input.close();
+						output.close();
 						socket.close();
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -187,12 +198,11 @@ public abstract class ChattingSessionController {
 				}
 			});
 
-			BufferedReader input;
 			while(true) {
+				String input_msg ; 
 				try {
 					MainController.NO_GUI_debugPrint ("Listenning . . .");
-					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					String input_msg = input.readLine();
+					input_msg = this.input.readLine();
 					MainController.NO_GUI_debugPrint ("Received: "+input_msg);
 
 				} catch (IOException e) {
