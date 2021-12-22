@@ -189,27 +189,32 @@ public abstract class ChattingSessionController {
 				public void run() {
 					try {
 						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
-						input.close();
-						output.close();
 						socket.close();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			});
-				String input_msg = null ; 
+			String input_msg ; 
+			boolean active = true ; 
+			while(active) {
 				try {
-					
 					MainController.NO_GUI_debugPrint ("Listenning . . .");
-					while((input_msg = this.input.readLine()) != null) {
+					input_msg = this.input.readLine();
+					
+					if(input_msg == null) {
+						active = false ; 
+						MainController.NO_GUI_debugPrint ("Disconnected");
+					} else {
 						MainController.NO_GUI_debugPrint ("Received: "+input_msg);
 					}
-					
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
 
+			}
 		}
 
 	}
