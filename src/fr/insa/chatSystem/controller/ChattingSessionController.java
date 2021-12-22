@@ -145,15 +145,14 @@ public abstract class ChattingSessionController {
 			try {
 
 				if (socket == null) {
-					socket = new Socket(other_user.getAddress(), CHAT_PORT);
+					this.socket = new Socket(other_user.getAddress(), CHAT_PORT);
 					MainController.NO_GUI_debugPrint ("Created socket to chat with " + other_user.toString());
 					this.start();
 				}
-				PrintWriter output = new PrintWriter(socket.getOutputStream()); 
+				PrintWriter output = new PrintWriter(this.socket.getOutputStream(),true); 
 				Message msg = new Message(M);
 				MainController.NO_GUI_debugPrint ("Sent "+msg.toString()) ;
-				output.println(msg);
-				output.flush();   
+				output.println(msg); 
 
 			} catch (Exception e) {
 				MainController.NO_GUI_debugPrint ("Blimey! It appears " + other_user.toString() + " is busy or something");
