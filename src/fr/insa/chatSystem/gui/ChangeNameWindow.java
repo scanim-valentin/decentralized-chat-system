@@ -49,21 +49,21 @@ public class ChangeNameWindow extends JFrame {
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setBounds(16, 6, 78, 71);
-		lblNewLabel_2.setIcon( new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
+		lblNewLabel_2.setIcon( new ImageIcon("./Images/MSN-icon.png"));
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("");
-		lblNewLabel_2_1.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
+		lblNewLabel_2_1.setIcon(new ImageIcon("./Images/MSN-icon.png"));
 		lblNewLabel_2_1.setBounds(16, 175, 85, 77);
 		contentPane.add(lblNewLabel_2_1);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("");
-		lblNewLabel_2_1_1.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
+		lblNewLabel_2_1_1.setIcon(new ImageIcon("./Images/MSN-icon.png"));
 		lblNewLabel_2_1_1.setBounds(356, 175, 76, 77);
 		contentPane.add(lblNewLabel_2_1_1);
 		
 		JLabel lblNewLabel_2_1_2 = new JLabel("");
-		lblNewLabel_2_1_2.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
+		lblNewLabel_2_1_2.setIcon(new ImageIcon("./Images/MSN-icon.png"));
 		lblNewLabel_2_1_2.setBounds(356, 6, 76, 71);
 		contentPane.add(lblNewLabel_2_1_2);
 		
@@ -104,8 +104,7 @@ public class ChangeNameWindow extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		// Display the widow
-		//frame.add(contentPane);
+		// Display the frame
 		frame.setVisible(true);
 	}
 }
