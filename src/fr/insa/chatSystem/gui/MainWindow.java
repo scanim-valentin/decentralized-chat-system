@@ -6,6 +6,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
+import fr.insa.chatSystem.controller.DistributedDataController;
+import fr.insa.chatSystem.controller.MainController;
+import fr.insa.chatSystem.controller.MainController.result;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
@@ -72,11 +77,22 @@ public class MainWindow extends JFrame {
 		// Action de la connexion
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username;
-				if (!("").equals(username = textField.getText())) {
+				String username = textField.getText();
+				result R = DistributedDataController.changeUsername(username);
+				switch(R) {
+				case INVALID_CONTENT :
+					lblNewLabel_3.setText("Invalid content!");
+					break;
+					
+				case ALREADY_EXISTS : 
+					lblNewLabel_3.setText("Username already exists!");
+					break; 
+					
+				default : 
 					frame.dispose();			
 					new ChatWindow(username);
-				} else {lblNewLabel_3.setText("Login empty !");}
+					break; 
+				}
 			}
 		});
 
