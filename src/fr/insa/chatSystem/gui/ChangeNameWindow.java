@@ -3,6 +3,10 @@ package fr.insa.chatSystem.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import fr.insa.chatSystem.controller.DistributedDataController;
+import fr.insa.chatSystem.controller.MainController.result;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -29,11 +33,10 @@ public class ChangeNameWindow extends JFrame {
 	 */
 	public ChangeNameWindow(String username) {
 		
-		frame = new JFrame(); 
+		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
-		frame.setResizable(false); // Ne pas changer la taille de la fenetre
 		frame.setTitle("Chat System V1.0");
 		contentPane.setBackground(new Color(255, 215, 0));
 		contentPane.setForeground(Color.DARK_GRAY);
@@ -42,9 +45,10 @@ public class ChangeNameWindow extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
 		lblNewLabel_1.setForeground(Color.RED);
-		lblNewLabel_1.setBounds(347, 106, 85, 36);
+		lblNewLabel_1.setBounds(116, 64, 209, 36);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -70,12 +74,24 @@ public class ChangeNameWindow extends JFrame {
 		JButton btnNewButton = new JButton("Change Name");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username;
-				if (!("").equals(username = textField.getText())) {
+				String username = textField.getText();
+				result R = DistributedDataController.changeUsername(username);
+				switch(R) {
+				case INVALID_CONTENT :
+					lblNewLabel_1.setText("Invalid content !");
+					break;
+					
+				case ALREADY_EXISTS : 
+					lblNewLabel_1.setText("Username already exists !");
+					break; 
+					
+				default : 
+					frame.dispose();			
 					new ChatWindow(username);
-					frame.dispose();
-				} else {lblNewLabel_1.setText("ERROR!");}}
-			});
+					break; 
+				}
+			}
+		});
 		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
 		btnNewButton.setForeground(Color.BLUE);
 		btnNewButton.setBounds(154, 175, 136, 46);
@@ -85,13 +101,14 @@ public class ChangeNameWindow extends JFrame {
 		lblNewLabel.setForeground(SystemColor.controlHighlight);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(106, 38, 229, 53);
+		lblNewLabel.setBounds(106, 22, 229, 53);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton_1 = new JButton("CANCEL");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
+				new ChatWindow(username);
 			}
 		});
 		btnNewButton_1.setFont(new Font("Lucida Grande", Font.BOLD, 13));
@@ -102,7 +119,7 @@ public class ChangeNameWindow extends JFrame {
 		textField = new JTextField();
 		textField.setBounds(106, 103, 229, 46);
 		contentPane.add(textField);
-		textField.setColumns(10);
+		textField.setColumns(20);
 		
 		// Display the frame
 		frame.setVisible(true);

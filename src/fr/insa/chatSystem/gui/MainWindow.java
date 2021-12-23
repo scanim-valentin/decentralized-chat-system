@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 import fr.insa.chatSystem.controller.DistributedDataController;
-import fr.insa.chatSystem.controller.MainController;
 import fr.insa.chatSystem.controller.MainController.result;
 
 import javax.swing.JLabel;
@@ -81,11 +80,11 @@ public class MainWindow extends JFrame {
 				result R = DistributedDataController.changeUsername(username);
 				switch(R) {
 				case INVALID_CONTENT :
-					lblNewLabel_3.setText("Invalid content!");
+					lblNewLabel_3.setText("Invalid content !");
 					break;
 					
 				case ALREADY_EXISTS : 
-					lblNewLabel_3.setText("Username already exists!");
+					lblNewLabel_3.setText("Username already exists !");
 					break; 
 					
 				default : 
