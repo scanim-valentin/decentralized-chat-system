@@ -87,7 +87,9 @@ public class ChatWindow extends JFrame {
 		btnNewButton_2.setForeground(new Color(255, 51, 0));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				new MainWindow(username);
+				window.dispose();
+				// Demande de déconnexion
 			}
 		});
 		btnNewButton_2.setBounds(564, 12, 117, 29);
@@ -146,7 +148,12 @@ public class ChatWindow extends JFrame {
 
 		JButton btnNewButton_4 = new JButton("Help");
 		btnNewButton_4.setForeground(UIManager.getColor("RadioButton.select"));
-		btnNewButton_4.setBounds(17, 430, 117, 29);
+		btnNewButton_4.setBounds(17, 430, 117, 29);		
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 		contentPane.add(btnNewButton_4);
 
 		JLabel lblNewLabel_2 = new JLabel("");
