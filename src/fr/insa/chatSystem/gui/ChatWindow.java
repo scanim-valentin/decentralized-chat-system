@@ -98,7 +98,8 @@ public class ChatWindow extends JFrame {
 		btnNewButton_3.setBounds(180, 12, 117, 29);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ChangeNameWindow(username);
+			    new ChangeNameWindow(username);
+				window.dispose();
 			}
 		});
 		contentPane.add(btnNewButton_3);

@@ -3,7 +3,6 @@ package fr.insa.chatSystem.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -42,18 +41,41 @@ public class ChangeNameWindow extends JFrame {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		lblNewLabel_1.setForeground(Color.RED);
+		lblNewLabel_1.setBounds(347, 106, 85, 36);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBounds(16, 6, 78, 71);
+		lblNewLabel_2.setIcon( new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("");
+		lblNewLabel_2_1.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
+		lblNewLabel_2_1.setBounds(16, 175, 85, 77);
+		contentPane.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_2_1_1 = new JLabel("");
+		lblNewLabel_2_1_1.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
+		lblNewLabel_2_1_1.setBounds(356, 175, 76, 77);
+		contentPane.add(lblNewLabel_2_1_1);
+		
+		JLabel lblNewLabel_2_1_2 = new JLabel("");
+		lblNewLabel_2_1_2.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
+		lblNewLabel_2_1_2.setBounds(356, 6, 76, 71);
+		contentPane.add(lblNewLabel_2_1_2);
+		
 		JButton btnNewButton = new JButton("Change Name");
 		btnNewButton.addActionListener(new ActionListener() {
-			private AbstractButton lblNewLabel_1;
-
 			public void actionPerformed(ActionEvent e) {
 				String username;
 				if (!("").equals(username = textField.getText())) {
-					frame.dispose();			
 					new ChatWindow(username);
-				} else {lblNewLabel_1 = null;
-				lblNewLabel_1.setText("ERROR!");}}
-		});
+					frame.dispose();
+				} else {lblNewLabel_1.setText("ERROR!");}}
+			});
 		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
 		btnNewButton.setForeground(Color.BLUE);
 		btnNewButton.setBounds(154, 175, 136, 46);
@@ -81,32 +103,6 @@ public class ChangeNameWindow extends JFrame {
 		textField.setBounds(106, 103, 229, 46);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-		lblNewLabel_1.setForeground(Color.RED);
-		lblNewLabel_1.setBounds(347, 106, 85, 36);
-		contentPane.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setBounds(16, 6, 78, 71);
-		lblNewLabel_2.setIcon( new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_2_1 = new JLabel("");
-		lblNewLabel_2_1.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
-		lblNewLabel_2_1.setBounds(16, 175, 85, 77);
-		contentPane.add(lblNewLabel_2_1);
-		
-		JLabel lblNewLabel_2_1_1 = new JLabel("");
-		lblNewLabel_2_1_1.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
-		lblNewLabel_2_1_1.setBounds(356, 175, 76, 77);
-		contentPane.add(lblNewLabel_2_1_1);
-		
-		JLabel lblNewLabel_2_1_2 = new JLabel("");
-		lblNewLabel_2_1_2.setIcon(new ImageIcon("/Users/lauricmarthrin-john/git/decentralized-chat-system/Images/MSN-icon.png"));
-		lblNewLabel_2_1_2.setBounds(356, 6, 76, 71);
-		contentPane.add(lblNewLabel_2_1_2);
 		
 		// Display the widow
 		//frame.add(contentPane);
