@@ -38,8 +38,6 @@ public class ChatWindow extends JFrame {
 //	public String pseudo;
 	/**
 	 * Create the frame.
-	 * 
-	 * @param pseudo2
 	 * @param  
 	 */
 	public ChatWindow(String username ) {
@@ -87,7 +85,7 @@ public class ChatWindow extends JFrame {
 		btnNewButton_2.setForeground(new Color(255, 51, 0));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new MainWindow(username);
+				new ConnectWindow(username);
 				window.dispose();
 				// Demande de déconnexion
 			}

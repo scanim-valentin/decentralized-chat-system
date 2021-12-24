@@ -1,21 +1,20 @@
 package fr.insa.chatSystem.gui;
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import fr.insa.chatSystem.controller.DistributedDataController;
 import fr.insa.chatSystem.controller.MainController.result;
 
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.ImageIcon;
-
-public class MainWindow extends JFrame {
+public class ConnectWindow extends JFrame {
 
 	/**
 	 * 
@@ -32,7 +31,7 @@ public class MainWindow extends JFrame {
 	 * Create the application.
 	 * @param pseudo
 	 */
-	public MainWindow(String username) {
+	public ConnectWindow(String username) {
 		initialize(); // fenetre de connexion
 	}
 
