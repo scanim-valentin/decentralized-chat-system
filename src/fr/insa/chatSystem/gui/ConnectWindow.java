@@ -29,6 +29,7 @@ public class ConnectWindow extends JFrame {
 
 	/**
 	 * Create the application.
+	 * 
 	 * @param pseudo
 	 */
 	public ConnectWindow(String username) {
@@ -77,19 +78,19 @@ public class ConnectWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String username = textField.getText();
 				result R = DistributedDataController.changeUsername(username);
-				switch(R) {
-				case INVALID_CONTENT :
+				switch (R) {
+				case INVALID_CONTENT:
 					lblNewLabel_3.setText("Invalid content !");
 					break;
-					
-				case ALREADY_EXISTS : 
+
+				case ALREADY_EXISTS:
 					lblNewLabel_3.setText("Username already exists !");
-					break; 
-					
-				default : 
-					frame.dispose();			
+					break;
+
+				default:
+					frame.dispose();
 					new ChatWindow(username);
-					break; 
+					break;
 				}
 			}
 		});
@@ -109,7 +110,7 @@ public class ConnectWindow extends JFrame {
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon( new ImageIcon("./Images/MSN-icon.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("./Images/MSN-icon.png"));
 		lblNewLabel_2.setBounds(332, 11, 112, 126);
 		frame.getContentPane().add(lblNewLabel_2);
 

@@ -31,17 +31,18 @@ public class ChatWindow extends JFrame {
 //	DefaultListModel<RemoteUser> remote_users_list;
 //	JList<RemoteUser> remote_users_jlist;
 
-	//J'ai remplacé RemoteUser par UserID pour que ça puisse compiler
-	//Je n'ai pas compris l'intéret des classes RemoteUser et LocalUser
+	// J'ai remplacé RemoteUser par UserID pour que ça puisse compiler
+	// Je n'ai pas compris l'intéret des classes RemoteUser et LocalUser
 	DefaultListModel<UserID> remote_users_list;
-	JList<UserID> remote_users_jlist;	
-	
+	JList<UserID> remote_users_jlist;
+
 //	public String pseudo;
 	/**
 	 * Create the frame.
-	 * @param  
+	 * 
+	 * @param
 	 */
-	public ChatWindow(String username ) {
+	public ChatWindow(String username) {
 
 		JFrame window = new JFrame();
 		window.setResizable(false); // ne pas changer la taille de la fenetre
@@ -99,7 +100,7 @@ public class ChatWindow extends JFrame {
 		btnNewButton_3.setBounds(180, 12, 117, 29);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    new ChangeNameWindow(username);
+				new ChangeNameWindow(username);
 				window.dispose();
 			}
 		});
@@ -116,19 +117,18 @@ public class ChatWindow extends JFrame {
 		textField.setBounds(259, 389, 313, 77);
 		contentPane.add(textField);
 		textField.setColumns(10);
-/*
-		JList<RemoteUser> list = new JList<RemoteUser>();
-		list.setBackground(Color.LIGHT_GRAY);
-		list.setBounds(17, 53, 117, 306);
-		contentPane.add(list);
-*/
-		//Réparation
+		/*
+		 * JList<RemoteUser> list = new JList<RemoteUser>();
+		 * list.setBackground(Color.LIGHT_GRAY); list.setBounds(17, 53, 117, 306);
+		 * contentPane.add(list);
+		 */
+		// Réparation
 		JList<UserID> list = new JList<UserID>();
 		list.setBackground(Color.LIGHT_GRAY);
 		list.setBounds(17, 53, 117, 306);
 		contentPane.add(list);
 		//
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
 		panel.setBounds(167, 53, 504, 306);
@@ -147,7 +147,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnNewButton_4 = new JButton("Help");
 		btnNewButton_4.setForeground(UIManager.getColor("RadioButton.select"));
-		btnNewButton_4.setBounds(17, 430, 117, 29);		
+		btnNewButton_4.setBounds(17, 430, 117, 29);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
