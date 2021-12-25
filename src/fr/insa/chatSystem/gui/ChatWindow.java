@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import fr.insa.chatSystem.model.RemoteUser;
 import fr.insa.chatSystem.model.UserID;
 
 public class ChatWindow extends JFrame {
@@ -117,17 +118,10 @@ public class ChatWindow extends JFrame {
 		textField.setBounds(259, 389, 313, 77);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		/*
-		 * JList<RemoteUser> list = new JList<RemoteUser>();
-		 * list.setBackground(Color.LIGHT_GRAY); list.setBounds(17, 53, 117, 306);
-		 * contentPane.add(list);
-		 */
-		// Réparation
-		JList<UserID> list = new JList<UserID>();
-		list.setBackground(Color.LIGHT_GRAY);
-		list.setBounds(17, 53, 117, 306);
-		contentPane.add(list);
-		//
+		
+		 JList<RemoteUser> list = new JList<RemoteUser>();
+		 list.setBackground(Color.LIGHT_GRAY); list.setBounds(17, 53, 117, 306);
+		 contentPane.add(list);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
