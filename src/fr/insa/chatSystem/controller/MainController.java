@@ -3,6 +3,8 @@ package fr.insa.chatSystem.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 
 public class MainController {
@@ -27,7 +29,7 @@ public class MainController {
 	//PARTIE DEBUG - NE PAS SUPPRIMER
 
 	static public Boolean debug_mode = false ; 
-
+	static public InetAddress addr = null ; //When testing on a single computer (with virtual interfaces), this field is the local address in use by this agent
 	// Command prompt
 	static public String input = "";
 	static final public String EXIT_IN = "exit";
@@ -151,10 +153,20 @@ public class MainController {
 
 	//NE PAS SUPPRIMER
 	//FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
-	public static void NO_GUI_agent() {
-
+	public static void NO_GUI_agent(String[] args) {
+		
 		debug_mode = true ; 
-
+		NO_GUI_debugPrint("Args = "+args[0]) ;
+		if(args[0].equals("ip")) {
+			try {
+				NO_GUI_debugPrint("Specified IP "+args[1]) ;
+				addr = InetAddress.getByName(args[1]) ;
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+		
 		NO_GUI_debugPrint("Starting DDC deamon . . .") ; 
 		DistributedDataController.start_deamon();
 

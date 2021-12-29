@@ -154,10 +154,16 @@ public abstract class DistributedDataController {
 			super(name);
 			try {
 
-				dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX); // Socket to receive notifications
-				dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX); // Socket to send notifications
+				if(MainController.addr == null) {
+						dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX); // Socket to receive notifications
+						dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX); // Socket to send notifications
+				}else {
+					dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX,MainController.addr); // Socket to receive notifications
+					dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX,MainController.addr); // Socket to send notifications
+				}
 			} catch (Exception E) {
 				E.printStackTrace();
+				while(true);
 			}
 		}
 
@@ -185,6 +191,7 @@ public abstract class DistributedDataController {
 				String[] unpacked;
 				MainController.NO_GUI_debugPrint ("Requesting IDs to establish user list");
 				UDPBroadcast_IDRequest(dgramSocket_TX); // Will request everyone's ID
+				
 				while (true) {
 					try {
 						MainController.NO_GUI_debugPrint ("Waiting for incoming signal . . .");
@@ -194,9 +201,11 @@ public abstract class DistributedDataController {
 								" Received packet data: " + packed + " from user " + inPacket.getAddress().toString());
 						unpacked = unpack(packed);
 						MainController.NO_GUI_debugPrint ("unpacked packet len=" + unpacked.length + ": " + unpacked.toString());
-						if (NetworkInterface.getByInetAddress(inPacket.getAddress()) == null) { // Checks if received
+						
+						if ( (MainController.addr != null && MainController.addr != inPacket.getAddress()) || (NetworkInterface.getByInetAddress(inPacket.getAddress()) == null)) { // Checks if received
 							// packet is from any
 							// local interface ...
+							// Important : always checking if debug mode is activated (testing on a single machine with a SPECIFIED address bound to an agent)
 							switch (unpacked[0]) { // First element of the array is the datagram type
 
 							case ID_REQUEST_SIG: // In the case someone on the network request everyone's identity, the
@@ -216,7 +225,7 @@ public abstract class DistributedDataController {
 							case ONLINE_SIG:
 								MainController.NO_GUI_debugPrint ("Identified " + ONLINE_SIG + " from " + inPacket.getAddress().toString()
 										+ "(\"" + unpacked[1] + "\")");
-								userlist.add(new UserID(inPacket.getAddress(), unpacked[1])); // In the case
+								userlist.add(new UserID(unpacked[1],inPacket.getAddress())); // In the case
 								// of an online
 								// signal the
 								// second
@@ -231,7 +240,7 @@ public abstract class DistributedDataController {
 							case OFFLINE_SIG:
 								MainController.NO_GUI_debugPrint ("Identified " + OFFLINE_SIG + " from " + inPacket.getAddress().toString()
 										+ "(\"" + unpacked[1] + "\")");
-								userlist.remove(new UserID(inPacket.getAddress(), unpacked[1])); 
+								userlist.remove(new UserID(unpacked[1],inPacket.getAddress())); 
 								// In the case of an offline signal the second element of the array is the username of the sender
 
 								MainController.NO_GUI_debugPrint ("Removed name in userlist : " + userlist.toString()); // To be

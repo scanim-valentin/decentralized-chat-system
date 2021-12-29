@@ -5,10 +5,10 @@ import java.net.*;
 public class UserID {
 	// Déclaration des strings depuis cette classe seulement
 	private String name;
-	private String hostAddress;
+	private InetAddress hostAddress;
 
 	// Definition de nom et de @IP
-	public UserID(String name, String addr ) {
+	public UserID(String name, InetAddress addr ) {
 		this.name = name;
 		this.hostAddress = addr;
 	}
@@ -24,7 +24,7 @@ public class UserID {
 	}
 
 	// Lire l'@IP de l'utilisateur
-	public String getAddress() {
+	public InetAddress getAddress() {
 		return this.hostAddress; // hostAddress prend l'@IP
 	}
 
