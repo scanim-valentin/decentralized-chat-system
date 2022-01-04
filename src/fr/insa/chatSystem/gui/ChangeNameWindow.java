@@ -34,7 +34,7 @@ public class ChangeNameWindow extends JFrame {
 	public ChangeNameWindow(String username) {
 
 		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		frame.setTitle("Chat System V1.0");
@@ -78,7 +78,7 @@ public class ChangeNameWindow extends JFrame {
 				result R = DistributedDataController.changeUsername(username);
 				switch (R) {
 				case INVALID_CONTENT:
-					lblNewLabel_1.setText("Invalid content !");
+					lblNewLabel_1.setText("Empty field !");
 					break;
 
 				case ALREADY_EXISTS:

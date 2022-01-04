@@ -27,19 +27,11 @@ public class ChatWindow extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 
-//	DefaultListModel<RemoteUser> remote_users_list;
-//	JList<RemoteUser> remote_users_jlist;
-
-	// J'ai remplacé RemoteUser par UserID pour que ça puisse compiler
-	// Je n'ai pas compris l'intéret des classes RemoteUser et LocalUser
 	DefaultListModel<UserID> remote_users_list;
 	JList<UserID> remote_users_jlist;
 
-//	public String pseudo;
 	/**
 	 * Create the frame.
-	 * 
-	 * @param
 	 */
 	public ChatWindow(String username) {
 
@@ -69,7 +61,7 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnNewButton_1);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// sendFile(title); // Envoie du fichier
+				sendFile(); // Envoie du fichier
 			}
 		});
 
@@ -100,7 +92,7 @@ public class ChatWindow extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ChangeNameWindow(username);
-				window.dispose();
+				//window.dispose();
 			}
 		});
 		contentPane.add(btnNewButton_3);
@@ -116,10 +108,11 @@ public class ChatWindow extends JFrame {
 		textField.setBounds(259, 389, 313, 77);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
-		 JList<UserID> list = new JList<UserID>();
-		 list.setBackground(Color.LIGHT_GRAY); list.setBounds(17, 53, 117, 306);
-		 contentPane.add(list);
+
+		JList<UserID> list = new JList<UserID>();
+		list.setBackground(Color.LIGHT_GRAY);
+		list.setBounds(17, 53, 117, 306);
+		contentPane.add(list);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
@@ -142,7 +135,7 @@ public class ChatWindow extends JFrame {
 		btnNewButton_4.setBounds(17, 430, 117, 29);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				new HelpWindow();
 			}
 		});
 		contentPane.add(btnNewButton_4);
@@ -152,11 +145,21 @@ public class ChatWindow extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		lblNewLabel_2.setText(username);
 
+		JButton DataBase = new JButton("Connect DB");
+		DataBase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ConnectDBWindow();
+			}
+		});
+		DataBase.setForeground(Color.BLUE);
+		DataBase.setBounds(298, 12, 117, 29);
+		contentPane.add(DataBase);
+
 		// Display the widow
 		window.setVisible(true);
 	}
 
-	protected void sendFile(String text) {
+	protected void sendFile() {
 
 	}
 

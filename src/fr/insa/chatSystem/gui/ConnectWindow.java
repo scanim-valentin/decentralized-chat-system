@@ -21,11 +21,11 @@ public class ConnectWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JButton btnNewButton_1;
-	private JTextField textField;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_3;
+	private JButton ButtonExit;
+	private JTextField textFieldName;
+	private JLabel Label;
+	private JLabel LabelLogin;
+	private JLabel ZoneResponse;
 
 	/**
 	 * Create the application.
@@ -42,7 +42,7 @@ public class ConnectWindow extends JFrame {
 	private void initialize() {
 
 		frame = new JFrame();
-		frame.setResizable(false); // Ne pas changer la taille de la fenetre
+		//frame.setResizable(false); // Ne pas changer la taille de la fenetre
 		frame.setTitle("Chat System V1.0");
 		frame.getContentPane().setEnabled(false);
 		frame.getContentPane().setBackground(new Color(153, 255, 51));
@@ -50,41 +50,41 @@ public class ConnectWindow extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		lblNewLabel = new JLabel("Welcome");
-		lblNewLabel.setBounds(18, 11, 331, 107);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(new Color(153, 0, 255));
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
-		frame.getContentPane().add(lblNewLabel);
+		Label = new JLabel("Welcome");
+		Label.setBounds(18, 11, 331, 107);
+		Label.setHorizontalAlignment(SwingConstants.CENTER);
+		Label.setForeground(new Color(153, 0, 255));
+		Label.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
+		frame.getContentPane().add(Label);
 
-		btnNewButton_1 = new JButton("Exit");
-		btnNewButton_1.setBounds(332, 225, 105, 30);
-		btnNewButton_1.setForeground(new Color(255, 0, 0));
-		btnNewButton_1.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-		btnNewButton_1.setBackground(Color.CYAN);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		ButtonExit = new JButton("Exit");
+		ButtonExit.setBounds(332, 225, 105, 30);
+		ButtonExit.setForeground(new Color(255, 0, 0));
+		ButtonExit.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		ButtonExit.setBackground(Color.CYAN);
+		ButtonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0); // arrete le programme
 			}
 		});
 
-		JButton btnNewButton = new JButton("Connexion");
-		btnNewButton.setBounds(151, 189, 123, 32);
-		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-		btnNewButton.setForeground(new Color(51, 0, 255));
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
+		JButton ButtonConnexion = new JButton("Connexion");
+		ButtonConnexion.setBounds(151, 189, 123, 32);
+		ButtonConnexion.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		ButtonConnexion.setForeground(new Color(51, 0, 255));
+		ButtonConnexion.setHorizontalAlignment(SwingConstants.LEFT);
 		// Action de la connexion
-		btnNewButton.addActionListener(new ActionListener() {
+		ButtonConnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username = textField.getText();
+				String username = textFieldName.getText();
 				result R = DistributedDataController.changeUsername(username);
 				switch (R) {
 				case INVALID_CONTENT:
-					lblNewLabel_3.setText("Invalid content !");
+					ZoneResponse.setText("Empty field !");
 					break;
 
 				case ALREADY_EXISTS:
-					lblNewLabel_3.setText("Username already exists !");
+					ZoneResponse.setText("Username already exists !");
 					break;
 
 				default:
@@ -95,33 +95,33 @@ public class ConnectWindow extends JFrame {
 			}
 		});
 
-		lblNewLabel_1 = new JLabel("Login :");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(22, 149, 65, 26);
-		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-		frame.getContentPane().add(lblNewLabel_1);
+		LabelLogin = new JLabel("Login :");
+		LabelLogin.setHorizontalAlignment(SwingConstants.CENTER);
+		LabelLogin.setBounds(22, 149, 65, 26);
+		LabelLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		frame.getContentPane().add(LabelLogin);
 
-		textField = new JTextField(); // Zone texte avec le login
-		textField.setBounds(93, 151, 242, 26);
-		frame.getContentPane().add(textField);
-		textField.setColumns(30);
-		frame.getContentPane().add(btnNewButton);
-		frame.getContentPane().add(btnNewButton_1);
+		textFieldName = new JTextField(); // Zone texte avec le login
+		textFieldName.setBounds(93, 151, 242, 26);
+		frame.getContentPane().add(textFieldName);
+		textFieldName.setColumns(30);
+		frame.getContentPane().add(ButtonConnexion);
+		frame.getContentPane().add(ButtonExit);
 
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(new ImageIcon("./Images/MSN-icon.png"));
-		lblNewLabel_2.setBounds(332, 11, 112, 126);
-		frame.getContentPane().add(lblNewLabel_2);
+		JLabel Logo = new JLabel("");
+		Logo.setHorizontalAlignment(SwingConstants.CENTER);
+		Logo.setIcon(new ImageIcon("./Images/MSN-icon.png"));
+		Logo.setBounds(332, 11, 112, 126);
+		frame.getContentPane().add(Logo);
 
-		lblNewLabel_3 = new JLabel("Entrer login");
-		lblNewLabel_3.setForeground(Color.GRAY);
-		lblNewLabel_3.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setBounds(99, 118, 221, 32);
-		frame.getContentPane().add(lblNewLabel_3);
+		ZoneResponse = new JLabel("Entrer login");
+		ZoneResponse.setForeground(Color.GRAY);
+		ZoneResponse.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		ZoneResponse.setHorizontalAlignment(SwingConstants.CENTER);
+		ZoneResponse.setBounds(99, 118, 221, 32);
+		frame.getContentPane().add(ZoneResponse);
 
-		// Display the widow
+		// Display the window
 		frame.setVisible(true);
 	}
 }
