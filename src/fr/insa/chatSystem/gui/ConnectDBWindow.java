@@ -29,21 +29,21 @@ public class ConnectDBWindow extends JFrame {
 	 */
 	public ConnectDBWindow() {
 		
-		ConnectDBWindow frame = new ConnectDBWindow();
-
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		frame.setContentPane(contentPane);
 		
 		JButton btnNewButton = new JButton("Connect DB");
 		btnNewButton.setForeground(Color.DARK_GRAY);
 		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		btnNewButton.setBounds(139, 191, 192, 39);
+		btnNewButton.setBounds(153, 191, 192, 39);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		contentPane.setLayout(null);

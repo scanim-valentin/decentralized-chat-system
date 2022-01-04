@@ -146,13 +146,13 @@ public class ChatWindow extends JFrame {
 		lblNewLabel_2.setText(username);
 
 		JButton DataBase = new JButton("Connect DB");
+		DataBase.setForeground(Color.BLUE);
+		DataBase.setBounds(298, 12, 117, 29);
 		DataBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ConnectDBWindow();
 			}
 		});
-		DataBase.setForeground(Color.BLUE);
-		DataBase.setBounds(298, 12, 117, 29);
 		contentPane.add(DataBase);
 
 		// Display the widow
