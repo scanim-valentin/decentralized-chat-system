@@ -37,7 +37,7 @@ public class HelpWindow extends JFrame {
 		
 		JLabel HelpImage = new JLabel("");
 		HelpImage.setHorizontalAlignment(SwingConstants.CENTER);
-		HelpImage.setIcon(new ImageIcon("./Images/helpchat.png"));
+		HelpImage.setIcon(new ImageIcon("/Users/lauricmarthrin-john/GitHub/decentralized-chat-system/Images/helpchat.png"));
 		HelpImage.setBounds(6, 6, 607, 805);
 		frame.getContentPane().add(HelpImage);
 		
