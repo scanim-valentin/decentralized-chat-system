@@ -31,13 +31,13 @@ public class HelpWindow extends JFrame {
 		frame.setTitle("Chat System V1.0");
 		frame.getContentPane().setEnabled(false);
 		frame.getContentPane().setBackground(new Color(153, 255, 51));
-		frame.setBounds(100, 100, 619, 839);
+		frame.setBounds(800, 50, 620, 840);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel HelpImage = new JLabel("");
 		HelpImage.setHorizontalAlignment(SwingConstants.CENTER);
-		HelpImage.setIcon(new ImageIcon("/Users/lauricmarthrin-john/GitHub/decentralized-chat-system/Images/helpchat.png"));
+		HelpImage.setIcon(new ImageIcon("./Images/helpchat.png"));
 		HelpImage.setBounds(6, 6, 607, 805);
 		frame.getContentPane().add(HelpImage);
 		

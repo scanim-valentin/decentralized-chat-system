@@ -61,18 +61,18 @@ public abstract class DistributedDataController {
 	//Retourne SUCCESS si le nom d'utilisateur est valide et a ete change
 	//Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
 	//Retourne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
-	public static result changeUsername(String usrnm) {
-		result R = isValid(usrnm) ; 
+	public static result changeUsername(String username) {
+		result R = isValid(username) ; 
 		try {
 			// Reading data using readLine
 			if(R == result.SUCCESS) {
 				// Notifying everyone on the local network
 				if (MainController.username.isEmpty()) {
-					MainController.username = usrnm;
+					MainController.username = username;
 					DistributedDataController.notifyConnection();
 				} else {
-					DistributedDataController.notifyNewName(usrnm);
-					MainController.username = usrnm;
+					DistributedDataController.notifyNewName(username);
+					MainController.username = username;
 				}
 			}
 
