@@ -31,7 +31,7 @@ public class ChangeNameWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ChangeNameWindow(String username) {
+	public ChangeNameWindow(String username, JLabel pseudoLabel) {
 
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -75,7 +75,7 @@ public class ChangeNameWindow extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = textField.getText();
-				result R = DistributedDataController.changeUsername(username);
+				result R = DistributedDataController.setUsername(username);
 				switch (R) {
 				case INVALID_CONTENT:
 					lblNewLabel_1.setText("Empty field !");
@@ -87,7 +87,7 @@ public class ChangeNameWindow extends JFrame {
 
 				default:
 					frame.dispose();
-					new ChatWindow(username);
+					pseudoLabel.setText(username); //Changer le nom de l'username dans la fenetre 
 					break;
 				}
 			}
@@ -108,7 +108,6 @@ public class ChangeNameWindow extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				new ChatWindow(username);
 			}
 		});
 		btnNewButton_1.setFont(new Font("Lucida Grande", Font.BOLD, 13));

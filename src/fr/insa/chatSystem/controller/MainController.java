@@ -6,13 +6,12 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-
 public class MainController {
 
-	static public String username = "" ;
+	static public String username = "";
 
-	public static enum result{
-		SUCCESS, ALREADY_EXISTS, INVALID_USERNAME, SESSION_DOES_NOT_EXIST, INVALID_CONTENT; 
+	public static enum result {
+		SUCCESS, ALREADY_EXISTS, INVALID_USERNAME, SESSION_DOES_NOT_EXIST, INVALID_CONTENT;
 	}
 
 	// A simple method to wait a certain amount of time (ms)
@@ -23,13 +22,13 @@ public class MainController {
 			Thread.currentThread().interrupt();
 		}
 	}
-	
 
-	//-------------------------------------------------------------------------------
-	//PARTIE DEBUG - NE PAS SUPPRIMER
+	// -------------------------------------------------------------------------------
+	// PARTIE DEBUG - NE PAS SUPPRIMER
 
-	static public Boolean debug_mode = false ; 
-	static public InetAddress addr = null ; //When testing on a single computer (with virtual interfaces), this field is the local address in use by this agent
+	static public Boolean debug_mode = false;
+	static public InetAddress addr = null; // When testing on a single computer (with virtual interfaces), this field is
+											// the local address in use by this agent
 	// Command prompt
 	static public String input = "";
 	static final public String EXIT_IN = "exit";
@@ -41,7 +40,6 @@ public class MainController {
 	static final public String ENDCHAT_IN = "endchat";
 	static final public String HELP_IN = "help";
 
-
 	// Waits for an input, checks the username validity and changes username if it
 	// is valid
 	// If it is valid, changes username attributes and asks the
@@ -52,200 +50,195 @@ public class MainController {
 		try {
 			// Reading data using readLine
 			name_input = reader.readLine();
-			result R = DistributedDataController.changeUsername(name_input);
-			switch(R) {
-			case INVALID_CONTENT :
-				MainController.NO_GUI_debugPrint("Username contains illegal character "+DistributedDataController.getIllegalContent()) ;
+			result R = DistributedDataController.setUsername(name_input);
+			switch (R) {
+			case INVALID_CONTENT:
+				MainController.NO_GUI_debugPrint(
+						"Username contains illegal character " + DistributedDataController.getIllegalContent());
 				break;
-				
-			case ALREADY_EXISTS : 
-				MainController.NO_GUI_debugPrint("Username already exists in userlist!") ;	
-				break; 
-				
-			default : 
-				MainController.NO_GUI_debugPrint("Successfully changed username to"+name_input) ;
-				break; 
+
+			case ALREADY_EXISTS:
+				MainController.NO_GUI_debugPrint("Username already exists in userlist!");
+				break;
+
+			default:
+				MainController.NO_GUI_debugPrint("Successfully changed username to" + name_input);
+				break;
 			}
 		} catch (Exception E) {
 			E.printStackTrace();
 		}
-		
+
 	}
 
-
-	//Waits for an input, checks the username validity and starts a new chatting session if it is valid
-	//NE PAS SUPPRIMER
-	//FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
+	// Waits for an input, checks the username validity and starts a new chatting
+	// session if it is valid
+	// NE PAS SUPPRIMER
+	// FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
 	private static void NO_GUI_getChatRequest() {
-		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(System.in));
-		String name_input = "" ;
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		String name_input = "";
 		try {
 			// Reading data using readLine
-			NO_GUI_debugPrint("Who do you want to chat with? User list:"+DistributedDataController.getUserList().toString());
+			NO_GUI_debugPrint(
+					"Who do you want to chat with? User list:" + DistributedDataController.getUserList().toString());
 			name_input = reader.readLine();
-			result R = ChattingSessionController.newChat(name_input) ; 
-			switch(R) {
-			case ALREADY_EXISTS : 
-				MainController.NO_GUI_debugPrint("Session with "+name_input+" already exists!") ;
-				break; 
-			case INVALID_USERNAME :
-				MainController.NO_GUI_debugPrint("No user with name "+name_input+" has been found!") ;
+			result R = ChattingSessionController.newChat(name_input);
+			switch (R) {
+			case ALREADY_EXISTS:
+				MainController.NO_GUI_debugPrint("Session with " + name_input + " already exists!");
 				break;
-			default : 
-				MainController.NO_GUI_debugPrint("Created chat session with "+name_input) ;
-				break; 
+			case INVALID_USERNAME:
+				MainController.NO_GUI_debugPrint("No user with name " + name_input + " has been found!");
+				break;
+			default:
+				MainController.NO_GUI_debugPrint("Created chat session with " + name_input);
+				break;
 			}
 
-		}catch(Exception E) {
+		} catch (Exception E) {
 			E.printStackTrace();
 		}
 	}
 
-	//Prints the remaning time every second
-	//NE PAS SUPPRIMER
-	//FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
+	// Prints the remaning time every second
+	// NE PAS SUPPRIMER
+	// FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
 	public static void NO_GUI_formatedDelay(int delay) {
-		for(int i = 0 ; i < delay ; i++) {
+		for (int i = 0; i < delay; i++) {
 			wait(1000);
-			NO_GUI_debugPrint((delay-i)+" seconds remaining . . . ") ; 
+			NO_GUI_debugPrint((delay - i) + " seconds remaining . . . ");
 		}
 	}
 
-	//Wait for a name and send a message if name is valid 
+	// Wait for a name and send a message if name is valid
 	public static void NO_GUI_send() {
-		NO_GUI_debugPrint("To who? "+ChattingSessionController.getChatList().toString());
-		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(System.in));
-		String name_input = "" ;
+		NO_GUI_debugPrint("To who? " + ChattingSessionController.getChatList().toString());
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		String name_input = "";
 		try {
 			name_input = reader.readLine();
-			NO_GUI_debugPrint("Enter message to send to "+name_input) ;
+			NO_GUI_debugPrint("Enter message to send to " + name_input);
 			String message_content = reader.readLine();
-			result R = ChattingSessionController.sendMessage(name_input,message_content) ; 
-			switch(R) {
+			result R = ChattingSessionController.sendMessage(name_input, message_content);
+			switch (R) {
 
-			case SESSION_DOES_NOT_EXIST: 
-				MainController.NO_GUI_debugPrint("Session with "+name_input+" does not exist exists!") ;
-				break; 
-
-			case INVALID_USERNAME :
-				MainController.NO_GUI_debugPrint("No user with name "+name_input+" has been found!") ;
+			case SESSION_DOES_NOT_EXIST:
+				MainController.NO_GUI_debugPrint("Session with " + name_input + " does not exist exists!");
 				break;
 
-			case INVALID_CONTENT: 
-				MainController.NO_GUI_debugPrint("Message contains illegal character "+DistributedDataController.getIllegalContent()) ;
-				break; 
+			case INVALID_USERNAME:
+				MainController.NO_GUI_debugPrint("No user with name " + name_input + " has been found!");
+				break;
 
-			default : 
-				MainController.NO_GUI_debugPrint("Message sent to user "+name_input) ;
-				break; 
+			case INVALID_CONTENT:
+				MainController.NO_GUI_debugPrint(
+						"Message contains illegal character " + DistributedDataController.getIllegalContent());
+				break;
+
+			default:
+				MainController.NO_GUI_debugPrint("Message sent to user " + name_input);
+				break;
 			}
-
-
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 
-	//NE PAS SUPPRIMER
-	//FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
+	// NE PAS SUPPRIMER
+	// FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
 	public static void NO_GUI_agent(String[] args) {
-		
-		debug_mode = true ; 
-		NO_GUI_debugPrint("Args = "+args[0]) ;
-		if(args[0].equals("ip")) {
+
+		debug_mode = true;
+		NO_GUI_debugPrint("Args = " + args[0]);
+		if (args[0].equals("ip")) {
 			try {
-				NO_GUI_debugPrint("Specified IP "+args[1]) ;
-				addr = InetAddress.getByName(args[1]) ;
+				NO_GUI_debugPrint("Specified IP " + args[1]);
+				addr = InetAddress.getByName(args[1]);
 			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
 		}
-		
-		NO_GUI_debugPrint("Starting DDC deamon . . .") ; 
+
+		NO_GUI_debugPrint("Starting DDC deamon . . .");
 		DistributedDataController.start_deamon();
 
-		//Waiting to gather all of the user id
+		// Waiting to gather all of the user id
 		NO_GUI_debugPrint("Waiting for local ID request answer");
 
-		//Waits 3 seconds to gather all of the usernames from the local network 
-		NO_GUI_formatedDelay(3); 
+		// Waits 3 seconds to gather all of the usernames from the local network
+		NO_GUI_formatedDelay(3);
 
-		//Asks the user to choose a valid username
-		while(username == "") {
+		// Asks the user to choose a valid username
+		while (username == "") {
 			NO_GUI_debugPrint("Please enter a valid username.");
 			NO_GUI_changeUsername();
 		}
 
-		NO_GUI_debugPrint("Starting CSC deamon . . .") ; 
+		NO_GUI_debugPrint("Starting CSC deamon . . .");
 		ChattingSessionController.start_deamon();
 
-		boolean close = false ; 
+		boolean close = false;
 		String help = "\n help : display the command list \n exit : close the agent\n newname : change username\n newchat : start chatting session \n send : send a message in a conversation \n endchat : end a conversation \n chatlist : see active conversation list \n userlist : see user list";
-		while(!close) {
-			//Command prompt
+		while (!close) {
+			// Command prompt
 			// Enter data using BufferReader
 			NO_GUI_debugPrint("Please enter a command.");
-			
+
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			try {
-				input = reader.readLine() ; 
-				switch(input) {
-				case HELP_IN : 
+				input = reader.readLine();
+				switch (input) {
+				case HELP_IN:
 					NO_GUI_debugPrint(help);
 					break;
 
-				case EXIT_IN : 
-					close = true ;
-					NO_GUI_debugPrint("Closing agent . . .") ; 
+				case EXIT_IN:
+					close = true;
+					NO_GUI_debugPrint("Closing agent . . .");
 					break;
 
-				case NEWNAME_IN :
+				case NEWNAME_IN:
 					NO_GUI_changeUsername();
 					break;
 
-				case USRLIST_IN : 
-					NO_GUI_debugPrint("Userlist : "+DistributedDataController.getUserList().toString());
+				case USRLIST_IN:
+					NO_GUI_debugPrint("Userlist : " + DistributedDataController.getUserList().toString());
 					break;
 
-				case CHATWITH_IN : 
-					NO_GUI_getChatRequest(); 
+				case CHATWITH_IN:
+					NO_GUI_getChatRequest();
 					break;
 
-				case CHATLIST_IN : 
-					NO_GUI_debugPrint("Chat list : "+ChattingSessionController.getChatList().toString());
+				case CHATLIST_IN:
+					NO_GUI_debugPrint("Chat list : " + ChattingSessionController.getChatList().toString());
 					break;
 
-				case SENDTO_IN : 
+				case SENDTO_IN:
 					NO_GUI_send();
 					break;
 
-				default : 
-					NO_GUI_debugPrint("Unidentified input."+help);
+				default:
+					NO_GUI_debugPrint("Unidentified input." + help);
 				}
-			}catch(Exception E) {
-				E.printStackTrace() ; 
+			} catch (Exception E) {
+				E.printStackTrace();
 			}
 		}
-		NO_GUI_debugPrint("Goodbye.") ; 
-		System.exit(0); 
+		NO_GUI_debugPrint("Goodbye.");
+		System.exit(0);
 	}
 
-	//UNE FONCTION POUR AFFICHER DU DEBUG AVEC DES DETAILS
-	//NE PAS SUPPRIMER
+	// UNE FONCTION POUR AFFICHER DU DEBUG AVEC DES DETAILS
+	// NE PAS SUPPRIMER
 	static public void NO_GUI_debugPrint(String str) {
-		//dgram.split("\\" + SEP)
-		if(debug_mode) {
-			String[] info_file = Thread.currentThread().getStackTrace()[2].getFileName().split("\\.java") ; 
-			System.out.println("[" + Thread.currentThread().getName() + "] "+info_file[0]+" : " + str);
+		// dgram.split("\\" + SEP)
+		if (debug_mode) {
+			String[] info_file = Thread.currentThread().getStackTrace()[2].getFileName().split("\\.java");
+			System.out.println("[" + Thread.currentThread().getName() + "] " + info_file[0] + " : " + str);
 
 		}
 	}
-
 
 }

@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import fr.insa.chatSystem.controller.ChattingSessionController;
 import fr.insa.chatSystem.controller.DistributedDataController;
 import fr.insa.chatSystem.controller.MainController.result;
 
@@ -20,6 +22,7 @@ public class ConnectWindow extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static ChatWindow MainWindow;
 	private JFrame frame;
 	private JButton ButtonExit;
 	private JTextField textFieldName;
@@ -42,7 +45,6 @@ public class ConnectWindow extends JFrame {
 	private void initialize() {
 
 		frame = new JFrame();
-		//frame.setResizable(false); // Ne pas changer la taille de la fenetre
 		frame.setTitle("Chat System V1.0");
 		frame.getContentPane().setEnabled(false);
 		frame.getContentPane().setBackground(new Color(153, 255, 51));
@@ -73,11 +75,10 @@ public class ConnectWindow extends JFrame {
 		ButtonConnexion.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
 		ButtonConnexion.setForeground(new Color(51, 0, 255));
 		ButtonConnexion.setHorizontalAlignment(SwingConstants.LEFT);
-		// Action de la connexion
 		ButtonConnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = textFieldName.getText();
-				result R = DistributedDataController.changeUsername(username);
+				result R = DistributedDataController.setUsername(username);
 				switch (R) {
 				case INVALID_CONTENT:
 					ZoneResponse.setText("Empty field !");
@@ -89,7 +90,8 @@ public class ConnectWindow extends JFrame {
 
 				default:
 					frame.dispose();
-					new ChatWindow(username);
+					ConnectWindow.MainWindow = new ChatWindow(username);
+					ChattingSessionController.start_deamon();
 					break;
 				}
 			}
@@ -103,8 +105,8 @@ public class ConnectWindow extends JFrame {
 
 		textFieldName = new JTextField(); // Zone texte avec le login
 		textFieldName.setBounds(93, 151, 242, 26);
-		frame.getContentPane().add(textFieldName);
 		textFieldName.setColumns(30);
+		frame.getContentPane().add(textFieldName);
 		frame.getContentPane().add(ButtonConnexion);
 		frame.getContentPane().add(ButtonExit);
 

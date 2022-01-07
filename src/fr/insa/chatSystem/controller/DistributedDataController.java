@@ -61,7 +61,7 @@ public abstract class DistributedDataController {
 	//Retourne SUCCESS si le nom d'utilisateur est valide et a ete change
 	//Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
 	//Retourne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
-	public static result changeUsername(String username) {
+	public static result setUsername(String username) {
 		result R = isValid(username) ; 
 		try {
 			// Reading data using readLine
@@ -318,8 +318,8 @@ public abstract class DistributedDataController {
 	static private void UDPBroadcast_IDRequest(DatagramSocket dgramSocket) {
 		UDPBroadcast(ID_REQUEST_SIG, dgramSocket);
 	}
-
-	static private void UDPBroadcast_NotifyConnection(String Name, DatagramSocket dgramSocket) {
+/*
+	static private void UDPBroadcast_NotifyConnection(final String Name, final DatagramSocket dgramSocket) {
 		String[] unpacked = { ONLINE_SIG, Name };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
@@ -334,5 +334,5 @@ public abstract class DistributedDataController {
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
 
-
+*/
 }
