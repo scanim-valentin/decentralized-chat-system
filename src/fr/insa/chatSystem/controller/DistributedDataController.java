@@ -83,7 +83,7 @@ public abstract class DistributedDataController {
 	}
 
 	//Notifie les autres utilisateur d'une connection
-	//A APPELER DES QUE LE NOM 
+	//A APPELER DES QUE LE NOM A ETE DEFINI
 	static public void notifyConnection() {
 		String[] unpacked = { ONLINE_SIG, MainController.username };
 		MainController.NO_GUI_debugPrint ("Notifying online status to everyone");

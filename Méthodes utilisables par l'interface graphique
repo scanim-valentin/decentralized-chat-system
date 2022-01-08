@@ -1,0 +1,24 @@
+MainController.java : 
+MainController.wait(int duree) : Permet d'attendre (duree en ms) 
+
+DistributedDataController.java : 
+DistributedDataController.start_deamon() : Lance le thread d'ecoute UDP
+DistributedDataController.updateUserList(String ancien_pseudo, String nouveau_pseudo) : Permet de changer un nom d'utilisateur dans la liste
+DistributedDataController.getUserList() : Retourne la liste d'utilisateurs (Utile pour l'afficher)
+DistributedDataController.setUsername(String pseudo) : Vérifie la validité du pseudo 
+														Retourne SUCCESS si le nom d'utilisateur est valide et a ete change
+														Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
+														Retourne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
+DistributedDataController.notifyConnection() : 	Notifie les autres utilisateur d'une connection
+DistributedDataController.notifyNewName(String newname) : 	Notifie les autres utilisateur d'un changement de pseudo
+
+ChattingSessionController.java : 
+ChattingSessionController.newChat(String other_user) : Cree une nouvelle session de chat avec l'utilisateur "other_user"
+														Retourne ALREADY_EXISTS si la session existe deja
+														Retourne INCORRECT_USERNAME si le nom d'utilisateur est incorect
+														Retourne SUCCESS si ca a marche
+ChattingSessionController.getChatList() : Retourne la liste des session de chat (Utile pour l'afficher)
+ChattingSessionController.sendMessage(String username, String message_content) : Envoie "message_content" a l'utilisateur de nom "username"
+ChattingSessionController.closeSession(String username) : Termine la session de chat avec l'utilisateur de nom "username"
+
+RemoteDatabaseController.java : pas fini
