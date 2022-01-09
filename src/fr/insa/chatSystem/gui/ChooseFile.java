@@ -1,21 +1,24 @@
 package fr.insa.chatSystem.gui;
 
+import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 public class ChooseFile {
-	
-	public static void SendFile () {
+
+	public static void SendFile(String[] args) {
 		JFileChooser choose = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		choose.setDialogTitle("Choose a file to send : ");
 
-		choose.setDialogTitle("Choisissez un fichier : ");
-		choose.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		// Ouvrez le fichier
+		int res = choose.showOpenDialog(null);
+		
+		// Enregistrez le fichier
+		// int res = choose.showSaveDialog(null);
 
-		int res = choose.showSaveDialog(null);
 		if (res == JFileChooser.APPROVE_OPTION) {
-			if (choose.getSelectedFile().isDirectory()) {
-				System.out.println("Vous avez selectionne le repertoire: " + choose.getSelectedFile());
-			}
+			File file = choose.getSelectedFile();
+			System.out.println("You have chosen : " + file.getAbsolutePath());
 		}
 	}
 }

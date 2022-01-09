@@ -107,8 +107,6 @@ public abstract class DistributedDataController {
 	}
 	//PARTIE PRIVEES
 
-
-
 	static private List<UserID> userlist = new ArrayList<UserID>(); // List of users to fill with other UsersID
 
 
@@ -318,21 +316,19 @@ public abstract class DistributedDataController {
 	static private void UDPBroadcast_IDRequest(DatagramSocket dgramSocket) {
 		UDPBroadcast(ID_REQUEST_SIG, dgramSocket);
 	}
-/*
+	
 	static private void UDPBroadcast_NotifyConnection(final String Name, final DatagramSocket dgramSocket) {
 		String[] unpacked = { ONLINE_SIG, Name };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
 
-	static private void UDPBroadcast_NotifyDisconnection(String Name, DatagramSocket dgramSocket) {
+	static private void UDPBroadcast_NotifyDisconnection(final String Name, final DatagramSocket dgramSocket) {
 		String[] unpacked = { OFFLINE_SIG, Name };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
 
-	static private void UDPBroadcast_NotifyNewName(String currentName, String newName, DatagramSocket dgramSocket) {
+	static private void UDPBroadcast_NotifyNewName(final String currentName, final String newName, final DatagramSocket dgramSocket) {
 		String[] unpacked = { NEW_NAME_SIG, currentName, newName };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
-
-*/
 }
