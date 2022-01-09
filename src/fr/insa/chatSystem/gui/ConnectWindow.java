@@ -19,7 +19,7 @@ import fr.insa.chatSystem.controller.MainController.result;
 public class ConnectWindow extends JFrame {
 
 	/**
-	 * 
+	 * Déclaration de variable
 	 */
 	private static final long serialVersionUID = 1L;
 	public static ChatWindow MainWindow;
@@ -31,8 +31,7 @@ public class ConnectWindow extends JFrame {
 	private JLabel ZoneResponse;
 
 	/**
-	 * Create the application.
-	 * 
+	 * Create the application
 	 * @param pseudo
 	 */
 	public ConnectWindow(String username) {
@@ -90,8 +89,13 @@ public class ConnectWindow extends JFrame {
 
 				default:
 					frame.dispose();
-					ConnectWindow.MainWindow = new ChatWindow(username);
+					new ChatWindow(username, null);
+					
+					// Lancement du client
 					ChattingSessionController.start_deamon();
+					
+					// Notifie les autres utilisateur d'une connection
+					DistributedDataController.notifyConnection();
 					break;
 				}
 			}

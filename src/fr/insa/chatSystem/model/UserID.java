@@ -8,9 +8,9 @@ public class UserID {
 	private InetAddress hostAddress;
 
 	// Definition de nom et de @IP
-	public UserID(String name, InetAddress addr ) {
+	public UserID(String name, InetAddress address) {
 		this.name = name;
-		this.hostAddress = addr;
+		this.hostAddress = address;
 	}
 
 	// Lire le nom dans le string GetNom

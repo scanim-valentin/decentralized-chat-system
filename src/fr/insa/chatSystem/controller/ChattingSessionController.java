@@ -63,14 +63,14 @@ public abstract class ChattingSessionController {
 	// Retourne SUCCESS si ca a marche
 	public static result newChat(String other_user) {
 		// First checking if username exists
-		UserID id = DistributedDataController.getIDByName(username);
+		UserID id = DistributedDataController.getIDByName(other_user);
 		if (!(id == null)) {
 			ChattingSession session = getSessionByID(id);
 			// Now checking if chatting session already exists
 			if (session == null) {
 				MainController.NO_GUI_debugPrint("Creating new chatting session . . . ");
-				String threadname = "CS " + username;
-				UserID user = DistributedDataController.getIDByName(username);
+				String threadname = "CS " + other_user;
+				UserID user = DistributedDataController.getIDByName(other_user);
 				session = new ChattingSession(user, threadname);
 				chatlist.add(session);
 				return result.SUCCESS;
@@ -272,9 +272,7 @@ public abstract class ChattingSessionController {
 								"Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
 						chatlist.add(new ChattingSession(usrid, new_sock, "Chat Thread " + chatlist.size()));
 					}
-
 				}
-
 			} catch (Exception E_sock) {
 				E_sock.printStackTrace();
 			}

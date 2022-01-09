@@ -87,7 +87,10 @@ public class ChangeNameWindow extends JFrame {
 
 				default:
 					frame.dispose();
-					pseudoLabel.setText(username); //Changer le nom de l'username dans la fenetre 
+					//Changer le nom de l'username dans la fenetre 
+					pseudoLabel.setText(username); 
+					//Notifie les autres utilisateur d'un changement de pseudo
+					DistributedDataController.notifyNewName(username);; 
 					break;
 				}
 			}
@@ -107,10 +110,11 @@ public class ChangeNameWindow extends JFrame {
 		JButton btnNewButton_1 = new JButton("CANCEL");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Fermer la fenetre Change Name
 				frame.dispose();
 			}
 		});
-		btnNewButton_1.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		btnNewButton_1.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
 		btnNewButton_1.setForeground(Color.RED);
 		btnNewButton_1.setBounds(164, 233, 117, 29);
 		contentPane.add(btnNewButton_1);
