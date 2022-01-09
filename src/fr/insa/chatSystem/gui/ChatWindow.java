@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -20,8 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import fr.insa.chatSystem.controller.*;
 import fr.insa.chatSystem.model.*;
-
-import javax.swing.JTextPane;
+import javax.swing.JMenuBar;
 
 public class ChatWindow extends JFrame {
 
@@ -30,24 +31,31 @@ public class ChatWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static JPanel contentPane;
-	private JTextArea textArea;
+	private JTextField text;
+	private JTextArea history_messages;
+	private JButton btnSend;
+	private JButton dataBase;
+	private JList<UserID> remoteList;
 	public JLabel nameUser;
 
 	DefaultListModel<UserID> remote_users_list;
-	JList<UserID> remote_users_jlist;
-	JTextPane history_messages;
-	private JButton btnSend;
 
 	/**
 	 * Create the frame.
 	 */
 	public ChatWindow(String username, String message_content) {
 
+		//Creating the Frame
 		JFrame window = new JFrame();
 		window.setResizable(false); // ne pas changer la taille de la fenetre
 		window.setTitle("Chat System V1.0");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setBounds(100, 100, 700, 500);
+		window.setBounds(100, 100, 700, 540);
+		
+		JMenuBar menuBar = new JMenuBar();
+		window.setJMenuBar(menuBar);
+		
+        //Creating the panel at bottom and adding components
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		window.setContentPane(contentPane);
@@ -55,7 +63,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnSendFile = new JButton("Send File");
 		btnSendFile.setForeground(new Color(0, 0, 255));
-		btnSendFile.setBounds(574, 389, 120, 29);
+		btnSendFile.setBounds(574, 439, 97, 29);
 		contentPane.add(btnSendFile);
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -66,12 +74,12 @@ public class ChatWindow extends JFrame {
 
 		btnSend = new JButton("Send");
 		btnSend.setForeground(new Color(0, 0, 128));
-		btnSend.setBounds(574, 421, 120, 38);
+		btnSend.setBounds(574, 388, 97, 38);
 		contentPane.add(btnSend);
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie "message_content" a l'utilisateur de nom "username"
-				ChattingSessionController.sendMessage(username, message_content);
+				sendMessage(text.getText());
 			}
 		});
 
@@ -105,27 +113,29 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnNewButton_3);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ChangeNameWindow(username, nameUser); // Changement du nom
+				// Changement du nom
+				new ChangeNameWindow(username, nameUser);
 			}
 		});
 
-		textArea = new JTextArea();
-		textArea.setForeground(new Color(255, 204, 0));
-		textArea.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
-		textArea.setBackground(UIManager.getColor("EditorPane.inactiveForeground"));
-		textArea.setBounds(259, 389, 313, 66);
-		contentPane.add(textArea);
-		textArea.setColumns(10);
+		text = new JTextField();
+		text.setForeground(new Color(255, 204, 0));
+		text.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		text.setBackground(UIManager.getColor("EditorPane.inactiveForeground"));
+		text.setBounds(241, 389, 313, 79);
+		contentPane.add(text);
+		text.setColumns(10);
 
 		remote_users_list = new DefaultListModel<UserID>();
-		JList<UserID> remoteList = new JList<UserID>(remote_users_list);
+		// créer la liste user_list
+		remoteList = new JList<UserID>(remote_users_list);
 		remoteList.setCellRenderer(new CellRenderer());
 		remoteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		remoteList.setBackground(Color.LIGHT_GRAY);
 		remoteList.setBounds(17, 53, 117, 306);
 		contentPane.add(remoteList);
 
-		history_messages = new JTextPane();
+		history_messages = new JTextArea();
 		history_messages.setEditable(false);
 		history_messages.setBackground(Color.LIGHT_GRAY);
 		history_messages.setBounds(167, 53, 504, 306);
@@ -133,7 +143,7 @@ public class ChatWindow extends JFrame {
 
 		JLabel lblNewLabel = new JLabel("Message :");
 		lblNewLabel.setForeground(new Color(153, 51, 0));
-		lblNewLabel.setBounds(185, 394, 62, 24);
+		lblNewLabel.setBounds(167, 394, 62, 24);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("User list :");
@@ -143,36 +153,44 @@ public class ChatWindow extends JFrame {
 
 		JButton btnHelp = new JButton("Help");
 		btnHelp.setForeground(UIManager.getColor("RadioButton.select"));
-		btnHelp.setBounds(17, 430, 117, 29);
+		btnHelp.setBounds(17, 439, 117, 29);
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Ouvrir une fentre avec une image help
+				// Ouvrir une fentre avec une image help
 				new HelpWindow();
 			}
 		});
 		contentPane.add(btnHelp);
-		
-		//Ettquette avec le pseudo sur la fenetre de tchat
+
+		// Ettquette avec le pseudo sur la fenetre de tchat
 		nameUser = new JLabel("");
 		nameUser.setBounds(16, 388, 139, 29);
 		contentPane.add(nameUser);
 		nameUser.setText(username);
 
-		JButton DataBase = new JButton("Connect DB");
-		DataBase.setForeground(Color.BLUE);
-		DataBase.setBounds(298, 12, 117, 29);
-		DataBase.addActionListener(new ActionListener() {
+		// Volet pour ce connexion à DB
+		dataBase = new JButton("Connect DB");
+		dataBase.setForeground(Color.BLUE);
+		dataBase.setBounds(298, 12, 117, 29);
+		dataBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Ouvrir une fenetre pour se connecter à la Database
+				// Ouvrir une fenetre pour se connecter à la Database
 				new ConnectDBWindow();
 			}
 		});
-		contentPane.add(DataBase);
+		contentPane.add(dataBase);
 
 		// Display the widow
 		window.setVisible(true);
 
-		// Retourne la liste des session de chat
+		// Return the list session of chat
 		ChattingSessionController.getChatList();
+	}
+
+	// Method executed when the user click on send
+	public void sendMessage(String content) {
+		this.text.setText("");
+		// show sent message on text area
+		this.history_messages.append("[" + this.nameUser + " at " + LocalDateTime.now().withNano(0) + "]> " + content + "\n");
 	}
 }
