@@ -88,18 +88,18 @@ public class ConnectWindow extends JFrame {
 
 				default:
 					ZoneResponse.setText("Username OK !");
-				
-				//	MainController.wait(3000);
 					
-					//Close frame
+					//MainController.wait(2000);
+
+					// Close frame
 					frame.dispose();
-					
-					//Open le chat window
+
+					// Open le chat window
 					new ChatWindow(username, null);
-									
+
 					break;
 				}
-				
+
 			}
 		});
 

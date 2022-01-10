@@ -9,13 +9,12 @@ import fr.insa.chatSystem.model.UserID;
 
 public abstract class DistributedDataController {
 
-	//PARTIE PUBLIQUES
+	// PARTIE PUBLIQUES
 
-
-	//Lance le thread d'ecoute UDP
-	//A APPELER DES LE DEBUT
+	// Lance le thread d'ecoute UDP
+	// A APPELER DES LE DEBUT
 	public static void start_deamon() {
-		MainController.NO_GUI_debugPrint ("Starting deamon . . .");
+		MainController.NO_GUI_debugPrint("Starting deamon . . .");
 		DDM_Deamon ddm_deamon = new DDM_Deamon("DDM_Deamon");
 		ddm_deamon.start();
 	}
@@ -23,49 +22,50 @@ public abstract class DistributedDataController {
 	// Permet de changer le nom d'utilisateur
 	public static void updateUserList(String oldname, String newname) {
 		for (UserID id : userlist) {
-			if(id.getName().equals(oldname)) 
+			if (id.getName().equals(oldname))
 				id.setName(newname);
 		}
 	}
 
-	//Retourne la liste d'utilisateurs
-	//Utile pour l'afficher
+	// Retourne la liste d'utilisateurs
+	// Utile pour l'afficher
 	public static List<UserID> getUserList() {
-		return userlist ; 
+		return userlist;
 	}
 
-	public static UserID getIDByName(String name){
-		MainController.NO_GUI_debugPrint("Looking for username . . .") ; 
+	public static UserID getIDByName(String name) {
+		MainController.NO_GUI_debugPrint("Looking for username . . .");
 		for (UserID id : userlist) {
-			if(id.getName().equals(name)){
-				MainController.NO_GUI_debugPrint("Found user with address "+id.getAddress()+" for name "+name) ; 
-				return id ; 
+			if (id.getName().equals(name)) {
+				MainController.NO_GUI_debugPrint("Found user with address " + id.getAddress() + " for name " + name);
+				return id;
 			}
 		}
-		return null; 
+		return null;
 	}
 
-	public static UserID getIDByIP(InetAddress IP){
-		MainController.NO_GUI_debugPrint("Looking for IP adress . . .") ; 
+	public static UserID getIDByIP(InetAddress IP) {
+		MainController.NO_GUI_debugPrint("Looking for IP adress . . .");
 		for (UserID id : userlist) {
-			if(id.getAddress().equals(IP)) {
-				MainController.NO_GUI_debugPrint("Found user with name "+id.getName()+" for address "+IP.toString()) ; 
-				return id ; 
+			if (id.getAddress().equals(IP)) {
+				MainController
+						.NO_GUI_debugPrint("Found user with name " + id.getName() + " for address " + IP.toString());
+				return id;
 			}
 		}
-		return null; 
+		return null;
 	}
 
-
-	//Checks the username validity and changes username if it is valid
-	//Retourne SUCCESS si le nom d'utilisateur est valide et a ete change
-	//Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
-	//Retourne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
+	// Checks the username validity and changes username if it is valid
+	// Retourne SUCCESS si le nom d'utilisateur est valide et a ete change
+	// Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il
+	// est vide
+	// Retourne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
 	public static result setUsername(String username) {
-		result R = isValid(username) ; 
+		result R = isValid(username);
 		try {
 			// Reading data using readLine
-			if(R == result.SUCCESS) {
+			if (R == result.SUCCESS) {
 				// Notifying everyone on the local network
 				if (MainController.username.isEmpty()) {
 					MainController.username = username;
@@ -79,36 +79,37 @@ public abstract class DistributedDataController {
 		} catch (Exception E) {
 			E.printStackTrace();
 		}
-		return R ; 
+		return R;
 	}
 
-	//Notifie les autres utilisateur d'une connection
-	//A APPELER DES QUE LE NOM A ETE DEFINI
+	// Notifie les autres utilisateur d'une connection
+	// A APPELER DES QUE LE NOM A ETE DEFINI
 	static public void notifyConnection() {
 		String[] unpacked = { ONLINE_SIG, MainController.username };
-		MainController.NO_GUI_debugPrint ("Notifying online status to everyone");
+		MainController.NO_GUI_debugPrint("Notifying online status to everyone");
 		UDPBroadcast(pack(unpacked), dgramSocket_TX);
 	}
 
 	static public void notifyDisconnection() {
 		String[] unpacked = { OFFLINE_SIG, MainController.username };
-		MainController.NO_GUI_debugPrint ("Notifying offline status to everyone");
+		MainController.NO_GUI_debugPrint("Notifying offline status to everyone");
 		UDPBroadcast(pack(unpacked), dgramSocket_TX);
 	}
 
 	static public void notifyNewName(String newname) {
 		String[] unpacked = { NEW_NAME_SIG, MainController.username, newname };
-		MainController.NO_GUI_debugPrint ("Notifying change of username (" + MainController.username + "->" + newname + ") to everyone");
+		MainController.NO_GUI_debugPrint(
+				"Notifying change of username (" + MainController.username + "->" + newname + ") to everyone");
 		UDPBroadcast(pack(unpacked), dgramSocket_TX);
 	}
 
 	static public String getIllegalContent() {
-		return SEP ; 
+		return SEP;
 	}
-	//PARTIE PRIVEES
+	
+	// PARTIE PRIVEES
 
 	static private List<UserID> userlist = new ArrayList<UserID>(); // List of users to fill with other UsersID
-
 
 	static final private int DGRAM_PORT_RX = 1238;
 	static final private int DGRAM_PORT_TX = 1239;
@@ -128,10 +129,12 @@ public abstract class DistributedDataController {
 
 	static DatagramSocket dgramSocket_RX;
 	static DatagramSocket dgramSocket_TX;
-	
-	//Retourne SUCCESS si le nom d'utilisateur est valide (non utilise par quelqu'un d'autre et n'utilise pas le charactere interdit et n'est pas vide)
-	//Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
-	//Reoturne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
+
+	// Retourne SUCCESS si le nom d'utilisateur est valide (non utilise par
+	// quelqu'un d'autre et n'utilise pas le charactere interdit et n'est pas vide)
+	// Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il
+	// est vide
+	// Reoturne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
 	private static result isValid(String S) {
 
 		if (S.isBlank() || S.contains(DistributedDataController.SEP))
@@ -145,23 +148,25 @@ public abstract class DistributedDataController {
 		return result.SUCCESS;
 	}
 
-
 	// Continuously listen on DGRAM_PORT for incoming UPD notifications
 	static class DDM_Deamon extends Thread {
 		DDM_Deamon(String name) {
 			super(name);
 			try {
 
-				if(MainController.addr == null) {
-						dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX); // Socket to receive notifications
-						dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX); // Socket to send notifications
-				}else {
-					dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX,MainController.addr); // Socket to receive notifications
-					dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX,MainController.addr); // Socket to send notifications
+				if (MainController.addr == null) {
+					dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX); // Socket to receive notifications
+					dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX); // Socket to send notifications
+				} else {
+					dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX, MainController.addr); // Socket to receive
+																								// notifications
+					dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX, MainController.addr); // Socket to send
+																								// notifications
 				}
 			} catch (Exception E) {
 				E.printStackTrace();
-				while(true);
+				while (true)
+					;
 			}
 		}
 
@@ -187,76 +192,77 @@ public abstract class DistributedDataController {
 				DatagramPacket inPacket = new DatagramPacket(buffer, buffer.length); // Incoming dgram packet
 				String packed;
 				String[] unpacked;
-				MainController.NO_GUI_debugPrint ("Requesting IDs to establish user list");
+				MainController.NO_GUI_debugPrint("Requesting IDs to establish user list");
 				UDPBroadcast_IDRequest(dgramSocket_TX); // Will request everyone's ID
-				
+
 				while (true) {
 					try {
-						MainController.NO_GUI_debugPrint ("Waiting for incoming signal . . .");
+						MainController.NO_GUI_debugPrint("Waiting for incoming signal . . .");
 						dgramSocket_RX.receive(inPacket); // Receiving UDP answer
 						packed = new String(inPacket.getData(), 0, inPacket.getLength());
-						MainController.NO_GUI_debugPrint (
+						MainController.NO_GUI_debugPrint(
 								" Received packet data: " + packed + " from user " + inPacket.getAddress().toString());
 						unpacked = unpack(packed);
-						MainController.NO_GUI_debugPrint ("unpacked packet len=" + unpacked.length + ": " + unpacked.toString());
-						
-						if ( (MainController.addr != null && MainController.addr != inPacket.getAddress()) || (NetworkInterface.getByInetAddress(inPacket.getAddress()) == null)) { // Checks if received
+						MainController.NO_GUI_debugPrint(
+								"unpacked packet len=" + unpacked.length + ": " + unpacked.toString());
+
+						if ((MainController.addr != null && MainController.addr != inPacket.getAddress())
+								|| (NetworkInterface.getByInetAddress(inPacket.getAddress()) == null)) { // Checks if
+																											// received
 							// packet is from any
 							// local interface ...
-							// Important : always checking if debug mode is activated (testing on a single machine with a SPECIFIED address bound to an agent)
+							// Important : always checking if debug mode is activated (testing on a single
+							// machine with a SPECIFIED address bound to an agent)
 							switch (unpacked[0]) { // First element of the array is the datagram type
 
 							case ID_REQUEST_SIG: // In the case someone on the network request everyone's identity, the
 								// agent answers with username
-								if (!MainController.username.isEmpty()) { // An empty string as a username is forbidden and
+								if (!MainController.username.isEmpty()) { // An empty string as a username is forbidden
+																			// and
 									// should only happen if the user has yet to
 									// choose a name
-									MainController.NO_GUI_debugPrint ("Sending username \"" + MainController.username + "\" to "
-											+ inPacket.getAddress().toString());
+									MainController.NO_GUI_debugPrint("Sending username \"" + MainController.username
+											+ "\" to " + inPacket.getAddress().toString());
 									InetAddress sender_addr = inPacket.getAddress();
 									String[] unpacked_answer = { ONLINE_SIG, MainController.username };
 									UDPUnicast(sender_addr, pack(unpacked_answer), dgramSocket_TX);
 								} else {
-									MainController.NO_GUI_debugPrint ("Not connected yet! Not answering");
+									MainController.NO_GUI_debugPrint("Not connected yet! Not answering");
 								}
 								break;
 							case ONLINE_SIG:
-								MainController.NO_GUI_debugPrint ("Identified " + ONLINE_SIG + " from " + inPacket.getAddress().toString()
-										+ "(\"" + unpacked[1] + "\")");
-								userlist.add(new UserID(unpacked[1],inPacket.getAddress())); // In the case
-								// of an online
-								// signal the
-								// second
-								// element of
-								// the array is
-								// the username
-								// of the sender
-								MainController.NO_GUI_debugPrint ("Added name in userlist : " + userlist.toString());// To be added
-								// to the list
+								MainController.NO_GUI_debugPrint("Identified " + ONLINE_SIG + " from "
+										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\")");
+								userlist.add(new UserID(unpacked[1], inPacket.getAddress())); 
+								// In the case of an online signal the second element of the array is the username of the sender
+								MainController.NO_GUI_debugPrint("Added name in userlist : " + userlist.toString());
+								// To be added to the list
 								break;
 
 							case OFFLINE_SIG:
-								MainController.NO_GUI_debugPrint ("Identified " + OFFLINE_SIG + " from " + inPacket.getAddress().toString()
-										+ "(\"" + unpacked[1] + "\")");
-								userlist.remove(new UserID(unpacked[1],inPacket.getAddress())); 
-								// In the case of an offline signal the second element of the array is the username of the sender
+								MainController.NO_GUI_debugPrint("Identified " + OFFLINE_SIG + " from "
+										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\")");
+								userlist.remove(new UserID(unpacked[1], inPacket.getAddress()));
+								// In the case of an offline signal the second element of the array is the
+								// username of the sender
 
-								MainController.NO_GUI_debugPrint ("Removed name in userlist : " + userlist.toString()); // To be
+								MainController.NO_GUI_debugPrint("Removed name in userlist : " + userlist.toString()); // To
+																														// be
 								// removed
 								// from the
 								// list
 								break;
 
 							case NEW_NAME_SIG:
-								MainController.NO_GUI_debugPrint ("Identified " + NEW_NAME_SIG + " from " + inPacket.getAddress().toString()
-										+ "(prev. \"" + unpacked[1] + "\", now \"" + unpacked[2] + "\")");
+								MainController.NO_GUI_debugPrint(
+										"Identified " + NEW_NAME_SIG + " from " + inPacket.getAddress().toString()
+												+ "(prev. \"" + unpacked[1] + "\", now \"" + unpacked[2] + "\")");
 								updateUserList(unpacked[1], unpacked[2]);
 								break;
-
 							}
 						} else {
-							MainController.NO_GUI_debugPrint ("Identified sender as localhost (" + InetAddress.getLocalHost()
-							+ ") , ignoring packet");
+							MainController.NO_GUI_debugPrint("Identified sender as localhost ("
+									+ InetAddress.getLocalHost() + ") , ignoring packet");
 						}
 					} catch (Exception E_rec) {
 						E_rec.printStackTrace();
@@ -283,7 +289,6 @@ public abstract class DistributedDataController {
 		return dgram;
 	}
 
-
 	// Broadcast a notification on the local network
 	static private void UDPBroadcast(String sig, DatagramSocket dgramSocket) {
 		try {
@@ -297,15 +302,8 @@ public abstract class DistributedDataController {
 	// Sends a datagram to a unique recipient
 	static private void UDPUnicast(InetAddress dest_addr, String sig, DatagramSocket dgramSocket) {
 		try {
-			DatagramPacket outPacket = new DatagramPacket(sig.getBytes(), sig.length(), dest_addr, DGRAM_PORT_RX); // A
-			// packet
-			// containing
-			// only
-			// the
-			// signal
-			// to
-			// be
-			// broadcasted
+			DatagramPacket outPacket = new DatagramPacket(sig.getBytes(), sig.length(), dest_addr, DGRAM_PORT_RX);
+			// A packet containing only the signal to be broadcasted
 			dgramSocket.send(outPacket); // Broadcast ID request on the local network
 		} catch (Exception E_bc) {
 			E_bc.printStackTrace();
@@ -315,7 +313,7 @@ public abstract class DistributedDataController {
 	static private void UDPBroadcast_IDRequest(DatagramSocket dgramSocket) {
 		UDPBroadcast(ID_REQUEST_SIG, dgramSocket);
 	}
-	
+
 	@SuppressWarnings("unused")
 	static private void UDPBroadcast_NotifyConnection(final String Name, final DatagramSocket dgramSocket) {
 		String[] unpacked = { ONLINE_SIG, Name };
@@ -329,7 +327,8 @@ public abstract class DistributedDataController {
 	}
 
 	@SuppressWarnings("unused")
-	static private void UDPBroadcast_NotifyNewName(final String currentName, final String newName, final DatagramSocket dgramSocket) {
+	static private void UDPBroadcast_NotifyNewName(final String currentName, final String newName,
+			final DatagramSocket dgramSocket) {
 		String[] unpacked = { NEW_NAME_SIG, currentName, newName };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}

@@ -183,7 +183,7 @@ public class ChatWindow extends JFrame {
 
 	// Method executed when the user click on send
 	public void sendMessages(String content) {
-		this.textArea.getText();
+		content = textArea.getText();
 		// show sent message on text area
 		this.history_messages.append(
 				"[" + UserID.class.getName() + " at " + LocalDateTime.now().withNano(0) + "]> " + content + "\n");
