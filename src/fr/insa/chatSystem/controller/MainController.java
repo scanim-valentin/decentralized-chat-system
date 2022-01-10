@@ -15,7 +15,7 @@ public class MainController {
 	}
 
 	// A simple method to wait a certain amount of time (ms)
-	private static void wait(int ms) {
+	public static void wait(int ms) {
 		try {
 			Thread.sleep(ms);
 		} catch (InterruptedException ex) {

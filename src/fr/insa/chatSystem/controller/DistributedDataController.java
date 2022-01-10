@@ -333,4 +333,5 @@ public abstract class DistributedDataController {
 		String[] unpacked = { NEW_NAME_SIG, currentName, newName };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
+
 }

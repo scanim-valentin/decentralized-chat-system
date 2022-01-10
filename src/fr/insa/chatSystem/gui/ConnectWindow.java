@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import fr.insa.chatSystem.controller.ChattingSessionController;
 import fr.insa.chatSystem.controller.DistributedDataController;
 import fr.insa.chatSystem.controller.MainController.result;
 
@@ -89,21 +88,18 @@ public class ConnectWindow extends JFrame {
 
 				default:
 					ZoneResponse.setText("Username OK !");
+				
+				//	MainController.wait(3000);
 					
 					//Close frame
 					frame.dispose();
-					//Vérifier le username
 					
 					//Open le chat window
 					new ChatWindow(username, null);
-					
-					// Lancement du client
-					ChattingSessionController.start_deamon();
-					
-					// Notifie les autres utilisateur d'une connection
-					DistributedDataController.notifyConnection();
+									
 					break;
 				}
+				
 			}
 		});
 

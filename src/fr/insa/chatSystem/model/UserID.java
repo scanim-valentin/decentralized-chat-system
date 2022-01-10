@@ -28,9 +28,7 @@ public class UserID {
 		return this.hostAddress; // hostAddress prend l'@IP
 	}
 
-	// Afficher le nom et l'adresse IP de l'utilisateur & @Override controle la
-	// classe parente
-	@Override
+	// Afficher le nom et l'adresse IP de l'utilisateur
 	public String toString() {
 		return this.getName() + " : " + this.getAddress().toString();
 	}

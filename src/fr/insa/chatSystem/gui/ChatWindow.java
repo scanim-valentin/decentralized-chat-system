@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import fr.insa.chatSystem.controller.*;
 import fr.insa.chatSystem.model.*;
+import javax.swing.JScrollPane;
 
 public class ChatWindow extends JFrame {
 
@@ -47,11 +48,12 @@ public class ChatWindow extends JFrame {
 		window.setTitle("Chat System V1.0");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setBounds(100, 100, 700, 500);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		window.setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		window.setContentPane(contentPane);
+		
 		JButton btnSendFile = new JButton("Send File");
 		btnSendFile.setForeground(new Color(0, 0, 255));
 		btnSendFile.setBounds(574, 389, 120, 29);
@@ -70,7 +72,7 @@ public class ChatWindow extends JFrame {
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie "message_content" a l'utilisateur de nom "username"
-				//ChattingSessionController.sendMessage(username, textArea.getText());
+				// ChattingSessionController.sendMessage(username, textArea.getText());
 				sendMessages(message_content);
 			}
 		});
@@ -124,12 +126,15 @@ public class ChatWindow extends JFrame {
 		remoteUserList.setBackground(Color.LIGHT_GRAY);
 		remoteUserList.setBounds(17, 53, 117, 306);
 		contentPane.add(remoteUserList);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(167, 53, 504, 306);
+		contentPane.add(scrollPane);
 
 		history_messages = new JTextArea();
+		scrollPane.setViewportView(history_messages);
 		history_messages.setEditable(false);
 		history_messages.setBackground(Color.LIGHT_GRAY);
-		history_messages.setBounds(167, 53, 504, 306);
-		contentPane.add(history_messages);
 
 		JLabel lblNewLabel = new JLabel("Message :");
 		lblNewLabel.setForeground(new Color(153, 51, 0));
@@ -146,13 +151,13 @@ public class ChatWindow extends JFrame {
 		btnHelp.setBounds(17, 430, 117, 29);
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Ouvrir une fentre avec une image help
+				// Ouvrir une fentre avec une image help
 				new HelpWindow();
 			}
 		});
 		contentPane.add(btnHelp);
-		
-		//Ettquette avec le pseudo sur la fenetre de tchat
+
+		// Ettquette avec le pseudo sur la fenetre de tchat
 		nameUser = new JLabel("");
 		nameUser.setBounds(16, 388, 139, 29);
 		contentPane.add(nameUser);
@@ -163,7 +168,7 @@ public class ChatWindow extends JFrame {
 		btnDataBase.setBounds(298, 12, 117, 29);
 		btnDataBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Ouvrir une fenetre pour se connecter à la Database
+				// Ouvrir une fenetre pour se connecter à la Database
 				new ConnectDBWindow();
 			}
 		});
@@ -175,12 +180,14 @@ public class ChatWindow extends JFrame {
 		// Retourne la liste des session de chat
 		ChattingSessionController.getChatList();
 	}
+
 	// Method executed when the user click on send
-    public void sendMessages(String content) {
-        this.textArea.getText();
-        // show sent message on text area
-        this.history_messages.append("[" + UserID.class.getName() + 
-        		" at " + LocalDateTime.now().withNano(0) + "]> " + content + "\n");
-        this.textArea.setText("");
-    }
+	public void sendMessages(String content) {
+		this.textArea.getText();
+		// show sent message on text area
+		this.history_messages.append(
+				"[" + UserID.class.getName() + " at " + LocalDateTime.now().withNano(0) + "]> " + content + "\n");
+		this.textArea.setText("");
+	}
+	
 }
