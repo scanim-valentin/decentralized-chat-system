@@ -88,6 +88,8 @@ public class ConnectWindow extends JFrame {
 					break;
 
 				default:
+					ZoneResponse.setText("Username OK !");
+					
 					//Close frame
 					frame.dispose();
 					//Vérifier le username

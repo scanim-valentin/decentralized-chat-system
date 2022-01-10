@@ -284,7 +284,6 @@ public abstract class DistributedDataController {
 	}
 
 
-
 	// Broadcast a notification on the local network
 	static private void UDPBroadcast(String sig, DatagramSocket dgramSocket) {
 		try {
@@ -317,16 +316,19 @@ public abstract class DistributedDataController {
 		UDPBroadcast(ID_REQUEST_SIG, dgramSocket);
 	}
 	
+	@SuppressWarnings("unused")
 	static private void UDPBroadcast_NotifyConnection(final String Name, final DatagramSocket dgramSocket) {
 		String[] unpacked = { ONLINE_SIG, Name };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
 
+	@SuppressWarnings("unused")
 	static private void UDPBroadcast_NotifyDisconnection(final String Name, final DatagramSocket dgramSocket) {
 		String[] unpacked = { OFFLINE_SIG, Name };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
 
+	@SuppressWarnings("unused")
 	static private void UDPBroadcast_NotifyNewName(final String currentName, final String newName, final DatagramSocket dgramSocket) {
 		String[] unpacked = { NEW_NAME_SIG, currentName, newName };
 		UDPBroadcast(pack(unpacked), dgramSocket);
