@@ -88,7 +88,11 @@ public class ConnectWindow extends JFrame {
 					break;
 
 				default:
+					//Close frame
 					frame.dispose();
+					//Vérifier le username
+					
+					//Open le chat window
 					new ChatWindow(username, null);
 					
 					// Lancement du client

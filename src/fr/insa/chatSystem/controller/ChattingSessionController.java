@@ -110,7 +110,7 @@ public abstract class ChattingSessionController {
 	private static class ChattingSession extends Thread {
 
 		private UserID other_user; // Other participant to the conversation
-		private List<Message> message_list = new ArrayList<Message>(); // List of messages (history)
+	//	private List<Message> message_list = new ArrayList<Message>(); // List of messages (history)
 
 		private Socket socket = null;
 		private PrintWriter output = null;

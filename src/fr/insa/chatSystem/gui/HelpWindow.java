@@ -3,13 +3,11 @@ package fr.insa.chatSystem.gui;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Color;
 
 public class HelpWindow extends JFrame {
 
 	/**
-	 * 
+	 * Déclarations
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -27,21 +25,13 @@ public class HelpWindow extends JFrame {
 	 */
 	private void initialize() {
 		
-		frame = new JFrame();
-		frame.setTitle("Chat System V1.0");
-		frame.getContentPane().setEnabled(false);
-		frame.getContentPane().setBackground(new Color(153, 255, 51));
-		frame.setBounds(800, 50, 620, 840);
+		frame = new JFrame("Chat System V1.0 - Help");
+		ImageIcon icon = new ImageIcon("./Images/helpchat.png");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		JLabel HelpImage = new JLabel("");
-		HelpImage.setHorizontalAlignment(SwingConstants.CENTER);
-		HelpImage.setIcon(new ImageIcon("/Users/lauricmarthrin-john/GitHub/decentralized-chat-system/Images/helpchat.png"));
-		HelpImage.setBounds(6, 6, 607, 805);
-		frame.getContentPane().add(HelpImage);
-		
-		// Display the windon
+		frame.add(new JLabel(icon));
+
+		// Display the windon	
+		frame.pack();
 		frame.setVisible(true);
 	}
 }

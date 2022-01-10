@@ -18,6 +18,7 @@ public class ChooseFile {
 
 		if (res == JFileChooser.APPROVE_OPTION) {
 			File file = choose.getSelectedFile();
+			//Optionnel à prendre et faire du tftp avec le remoteUser si OK
 			System.out.println("You have chosen : " + file.getAbsolutePath());
 		}
 	}
