@@ -53,7 +53,7 @@ public class ChatWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		window.setContentPane(contentPane);
-		
+
 		JButton btnSendFile = new JButton("Send File");
 		btnSendFile.setForeground(new Color(0, 0, 255));
 		btnSendFile.setBounds(574, 389, 120, 29);
@@ -61,7 +61,7 @@ public class ChatWindow extends JFrame {
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie du fichier
-				ChooseFile.SendFile(null);
+				ChooseFile.SendFile();
 			}
 		});
 
@@ -69,11 +69,11 @@ public class ChatWindow extends JFrame {
 		btnSend.setForeground(new Color(0, 0, 128));
 		btnSend.setBounds(574, 421, 120, 38);
 		contentPane.add(btnSend);
-		btnSendFile.addActionListener(new ActionListener() {
+		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie "message_content" a l'utilisateur de nom "username"
 				// ChattingSessionController.sendMessage(username, textArea.getText());
-				sendMessages(message_content);
+				sendMessages(username);
 			}
 		});
 
@@ -110,8 +110,12 @@ public class ChatWindow extends JFrame {
 				new ChangeNameWindow(username, nameUser); // Changement du nom
 			}
 		});
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(167, 53, 504, 306);
+		contentPane.add(scrollPane_2);
 
 		textArea = new JTextArea();
+		scrollPane_2.setViewportView(textArea);
 		textArea.setForeground(new Color(255, 204, 0));
 		textArea.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		textArea.setBackground(UIManager.getColor("EditorPane.inactiveForeground"));
@@ -126,7 +130,7 @@ public class ChatWindow extends JFrame {
 		remoteUserList.setBackground(Color.LIGHT_GRAY);
 		remoteUserList.setBounds(17, 53, 117, 306);
 		contentPane.add(remoteUserList);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(167, 53, 504, 306);
 		contentPane.add(scrollPane);
@@ -184,10 +188,12 @@ public class ChatWindow extends JFrame {
 	// Method executed when the user click on send
 	public void sendMessages(String content) {
 		content = textArea.getText();
-		// show sent message on text area
-		this.history_messages.append(
-				"[" + UserID.class.getName() + " at " + LocalDateTime.now().withNano(0) + "]> " + content + "\n");
-		this.textArea.setText("");
+		if (!(content == null)) {
+			// show sent message on text area
+			this.history_messages.append(
+					"[" + nameUser.getText() + " at " + LocalDateTime.now().withNano(0) + "]=> " + content + "\n");
+			this.textArea.setText("");
+		}
 	}
-	
+
 }
