@@ -1,6 +1,7 @@
 package fr.insa.chatSystem.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +32,7 @@ public class ConnectWindow extends JFrame {
 
 	/**
 	 * Create the application
+	 * 
 	 * @param pseudo
 	 */
 	public ConnectWindow(String username) {
@@ -55,7 +57,6 @@ public class ConnectWindow extends JFrame {
 		Label.setHorizontalAlignment(SwingConstants.CENTER);
 		Label.setForeground(new Color(153, 0, 255));
 		Label.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
-		frame.getContentPane().add(Label);
 
 		ButtonExit = new JButton("Exit");
 		ButtonExit.setBounds(332, 225, 105, 30);
@@ -76,6 +77,7 @@ public class ConnectWindow extends JFrame {
 		ButtonConnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = textFieldName.getText();
+				// Fonction de vérification du username
 				result R = DistributedDataController.setUsername(username);
 				switch (R) {
 				case INVALID_CONTENT:
@@ -88,15 +90,14 @@ public class ConnectWindow extends JFrame {
 
 				default:
 					ZoneResponse.setText("Username OK !");
-					
-					//MainController.wait(2000);
+
+					// MainController.wait(2000);
 
 					// Close frame
 					frame.dispose();
 
 					// Open le chat window
 					new ChatWindow(username, null);
-
 					break;
 				}
 
@@ -107,28 +108,32 @@ public class ConnectWindow extends JFrame {
 		LabelLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		LabelLogin.setBounds(22, 149, 65, 26);
 		LabelLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-		frame.getContentPane().add(LabelLogin);
 
 		textFieldName = new JTextField(); // Zone texte avec le login
 		textFieldName.setBounds(93, 151, 242, 26);
 		textFieldName.setColumns(30);
-		frame.getContentPane().add(textFieldName);
-		frame.getContentPane().add(ButtonConnexion);
-		frame.getContentPane().add(ButtonExit);
 
 		JLabel Logo = new JLabel("");
 		Logo.setHorizontalAlignment(SwingConstants.CENTER);
 		Logo.setIcon(new ImageIcon("./Images/MSN-icon.png"));
 		Logo.setBounds(332, 11, 112, 126);
-		frame.getContentPane().add(Logo);
 
 		ZoneResponse = new JLabel("Entrer login");
 		ZoneResponse.setForeground(Color.GRAY);
 		ZoneResponse.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
 		ZoneResponse.setHorizontalAlignment(SwingConstants.CENTER);
 		ZoneResponse.setBounds(99, 118, 221, 32);
-		frame.getContentPane().add(ZoneResponse);
 
+		// Tous les frames add
+		// frame.add(Box.createVerticalGlue());
+		frame.setMinimumSize(new Dimension(450, 300));
+		frame.getContentPane().add(Label);
+		frame.getContentPane().add(textFieldName);
+		frame.getContentPane().add(ButtonConnexion);
+		frame.getContentPane().add(ButtonExit);
+		frame.getContentPane().add(Logo);
+		frame.getContentPane().add(ZoneResponse);
+		frame.getContentPane().add(LabelLogin);
 		// Display the window
 		frame.setVisible(true);
 	}

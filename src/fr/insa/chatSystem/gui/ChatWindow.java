@@ -33,7 +33,7 @@ public class ChatWindow extends JFrame {
 	private JTextArea history_messages;
 	private JButton btnSend;
 	private JTextArea textArea;
-	public JLabel nameUser;
+	public static JLabel nameUser;
 
 	DefaultListModel<UserID> remote_users_list;
 	JList<UserID> remote_users_jlist;
@@ -73,7 +73,8 @@ public class ChatWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie "message_content" a l'utilisateur de nom "username"
 				// ChattingSessionController.sendMessage(username, textArea.getText());
-				sendMessages(username);
+				// Envoie de message
+				sendMessage(username);
 			}
 		});
 
@@ -186,14 +187,15 @@ public class ChatWindow extends JFrame {
 	}
 
 	// Method executed when the user click on send
-	public void sendMessages(String content) {
+	public void sendMessage(String content) {
 		content = textArea.getText();
 		if (!(content == null)) {
 			// show sent message on text area
 			this.history_messages.append(
 					"[" + nameUser.getText() + " at " + LocalDateTime.now().withNano(0) + "]=> " + content + "\n");
 			this.textArea.setText("");
+			content = null;
 		}
+		;
 	}
-
 }
