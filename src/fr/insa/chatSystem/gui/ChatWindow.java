@@ -18,11 +18,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
 import java.time.format.DateTimeFormatter;
 
 import fr.insa.chatSystem.controller.*;
 import fr.insa.chatSystem.Model.*;
-import javax.swing.JScrollPane;
 
 public class ChatWindow extends JFrame {
 
@@ -123,8 +123,8 @@ public class ChatWindow extends JFrame {
 		textArea.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		textArea.setBackground(UIManager.getColor("EditorPane.inactiveForeground"));
 		textArea.setBounds(259, 389, 313, 66);
-		contentPane.add(textArea);
 		textArea.setColumns(5);
+		contentPane.add(textArea);
 
 		remote_users_list = new DefaultListModel<UserID>();
 		JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
@@ -191,12 +191,14 @@ public class ChatWindow extends JFrame {
 
 	// Method executed when the user click on send
 	public void sendMessage(String content) {
-		content = textArea.getText();
+		LocalDateTime date = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
+		String timeText = date.format(formatter);
 
+		content = textArea.getText();
 		if (!content.isBlank()) {
 			// show sent message on text area
-			this.history_messages
-					.append("[" + nameUser.getText() + " at " + Message.class.time() + "]=> " + content + "\n");
+			this.history_messages.append("[" + nameUser.getText() + " at " + timeText + "]=> " + content + "\n");
 			this.textArea.setText("");
 			content = null;
 		}

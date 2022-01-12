@@ -6,7 +6,7 @@ import fr.insa.chatSystem.controller.MainController;
 public class Message {
 	private String sender;
 	private String content;
-	private LocalDateTime time;
+	private LocalDateTime time = java.time.LocalDateTime.now();
 
 	public Message(String content) {
 		this.content = content;
@@ -29,4 +29,5 @@ public class Message {
 	public LocalDateTime getTime() {
 		return time;
 	}
+
 }
