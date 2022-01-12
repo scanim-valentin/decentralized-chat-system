@@ -14,7 +14,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -37,22 +36,20 @@ public class ChangeNameWindow extends JFrame {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100, 450, 300);
-		frame.setTitle("Chat System V1.0");
-		frame.setContentPane(contentPane);
-
 		contentPane = new JPanel();
+		frame.setTitle("Chat System V1.0");
 		contentPane.setBackground(new Color(255, 215, 0));
 		contentPane.setForeground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel zoneResponse = new JLabel("");
-		zoneResponse.setIgnoreRepaint(true);
-		zoneResponse.setHorizontalAlignment(SwingConstants.CENTER);
-		zoneResponse.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
-		zoneResponse.setForeground(Color.RED);
-		zoneResponse.setBounds(116, 64, 209, 36);
-		contentPane.add(zoneResponse);
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+		lblNewLabel_1.setForeground(Color.RED);
+		lblNewLabel_1.setBounds(116, 64, 209, 36);
+		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setBounds(16, 6, 78, 71);
@@ -81,22 +78,20 @@ public class ChangeNameWindow extends JFrame {
 				result R = DistributedDataController.setUsername(username);
 				switch (R) {
 				case INVALID_CONTENT:
-					zoneResponse.setText("Empty field !");
+					lblNewLabel_1.setText("Empty field !");
 					break;
 
 				case ALREADY_EXISTS:
-					zoneResponse.setText("Username already exists !");
+					lblNewLabel_1.setText("Username already exists !");
 					break;
 
 				default:
-					zoneResponse.setText("Username OK !");
-
-					// Changer le nom de l'username dans la fenetre
-					pseudoLabel.setText(username);
-					// Notifie les autres utilisateur d'un changement de pseudo
-					DistributedDataController.notifyNewName(username);
-					// Fermer la fenetre change name
+					
 					frame.dispose();
+					//Changer le nom de l'username dans la fenetre 
+					pseudoLabel.setText(username); 
+					//Notifie les autres utilisateur d'un changement de pseudo
+					DistributedDataController.notifyNewName(username);; 
 					break;
 				}
 			}
@@ -116,7 +111,7 @@ public class ChangeNameWindow extends JFrame {
 		JButton btnNewButton_1 = new JButton("CANCEL");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Fermer la fenetre Change Name
+				//Fermer la fenetre Change Name
 				frame.dispose();
 			}
 		});
@@ -129,8 +124,6 @@ public class ChangeNameWindow extends JFrame {
 		textField.setBounds(106, 103, 229, 46);
 		contentPane.add(textField);
 		textField.setColumns(20);
-
-		frame.setMinimumSize(new Dimension(450, 300));
 
 		// Display the frame
 		frame.setVisible(true);

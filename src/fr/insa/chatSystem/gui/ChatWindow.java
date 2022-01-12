@@ -110,7 +110,8 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnChangeName);
 		btnChangeName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ChangeNameWindow(username, nameUser); // Changement du nom
+				// Changement du nom
+				new ChangeNameWindow(username, nameUser);
 			}
 		});
 
