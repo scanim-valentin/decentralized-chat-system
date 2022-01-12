@@ -13,7 +13,7 @@ public class TCPSend extends Thread {
 
 	private final int clientPort; // IP du Client
 	private final String IPServer; // IP du Serveur
-	private final File fileToSend;
+	private final File fileToSend; // Fichier à envoyer
 	private Socket connectionSocket;
 	private BufferedOutputStream outToClient;
 

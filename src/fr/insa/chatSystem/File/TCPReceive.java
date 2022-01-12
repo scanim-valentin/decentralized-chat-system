@@ -7,7 +7,7 @@ import java.net.*;
 public class TCPReceive extends Thread {
 
 	private final int serverPort; // IP du Server
-	private final String fileOutput; // Lien du fichier
+	private final String fileOutput; // Lien du fichier à recevoir
 	private ServerSocket serverSocket; // Connexion Port
 	private Socket connectionSocket; // Port de connexion
 

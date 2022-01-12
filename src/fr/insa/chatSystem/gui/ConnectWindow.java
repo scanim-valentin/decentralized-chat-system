@@ -90,7 +90,7 @@ public class ConnectWindow extends JFrame {
 
 				default:
 					ZoneResponse.setText("Username OK !");
-
+					// Attendre 2sec pour voir le message OK pour le pseudo
 					// MainController.wait(2000);
 
 					// Close frame
@@ -100,7 +100,6 @@ public class ConnectWindow extends JFrame {
 					new ChatWindow(username, null);
 					break;
 				}
-
 			}
 		});
 
@@ -125,7 +124,6 @@ public class ConnectWindow extends JFrame {
 		ZoneResponse.setBounds(99, 118, 221, 32);
 
 		// Tous les frames add
-		// frame.add(Box.createVerticalGlue());
 		frame.setMinimumSize(new Dimension(450, 300));
 		frame.getContentPane().add(Label);
 		frame.getContentPane().add(textFieldName);
