@@ -18,9 +18,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import java.time.format.DateTimeFormatter;
 
 import fr.insa.chatSystem.controller.*;
-import fr.insa.chatSystem.model.*;
+import fr.insa.chatSystem.Model.*;
 import javax.swing.JScrollPane;
 
 public class ChatWindow extends JFrame {
@@ -71,10 +72,11 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnSend);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String content = null;
 				// Envoie "message_content" a l'utilisateur de nom "username"
 				// ChattingSessionController.sendMessage(username, textArea.getText());
 				// Envoie de message
-				sendMessage(username);
+				sendMessage(content);
 			}
 		});
 
@@ -184,15 +186,17 @@ public class ChatWindow extends JFrame {
 
 		// Retourne la liste des session de chat
 		ChattingSessionController.getChatList();
+
 	}
 
 	// Method executed when the user click on send
 	public void sendMessage(String content) {
 		content = textArea.getText();
-		if (!(content == null)) {
+
+		if (!content.isBlank()) {
 			// show sent message on text area
-			this.history_messages.append(
-					"[" + nameUser.getText() + " at " + LocalDateTime.now().withNano(0) + "]=> " + content + "\n");
+			this.history_messages
+					.append("[" + nameUser.getText() + " at " + Message.class.time() + "]=> " + content + "\n");
 			this.textArea.setText("");
 			content = null;
 		}

@@ -1,19 +1,17 @@
-package fr.insa.chatSystem.model;
+package fr.insa.chatSystem.Model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import fr.insa.chatSystem.controller.MainController;
 
 public class Message {
-	public String sender;
-	public String content;
-	public Date time;    
-    private LocalDateTime sendTime;
+	private String sender;
+	private String content;
+	private LocalDateTime time;
 
 	public Message(String content) {
 		this.content = content;
 		sender = MainController.username;
-		time = new Date();
+		time = java.time.LocalDateTime.now();
 	}
 
 	public String toString() {
@@ -27,8 +25,8 @@ public class Message {
 	public String getText() {
 		return this.content;
 	}
-	
-    public LocalDateTime getTimeStamp(){
-        return this.sendTime;
-    }
+
+	public LocalDateTime getTime() {
+		return time;
+	}
 }

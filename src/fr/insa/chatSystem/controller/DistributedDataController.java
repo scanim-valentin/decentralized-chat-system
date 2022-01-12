@@ -4,8 +4,8 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.insa.chatSystem.Model.UserID;
 import fr.insa.chatSystem.controller.MainController.result;
-import fr.insa.chatSystem.model.UserID;
 
 public abstract class DistributedDataController {
 
