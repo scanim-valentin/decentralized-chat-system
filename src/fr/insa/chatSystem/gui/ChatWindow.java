@@ -113,12 +113,8 @@ public class ChatWindow extends JFrame {
 				new ChangeNameWindow(username, nameUser); // Changement du nom
 			}
 		});
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(167, 53, 504, 306);
-		contentPane.add(scrollPane_2);
 
 		textArea = new JTextArea();
-		scrollPane_2.setViewportView(textArea);
 		textArea.setForeground(new Color(255, 204, 0));
 		textArea.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		textArea.setBackground(UIManager.getColor("EditorPane.inactiveForeground"));
@@ -198,10 +194,9 @@ public class ChatWindow extends JFrame {
 		content = textArea.getText();
 		if (!content.isBlank()) {
 			// show sent message on text area
-			this.history_messages.append("[" + nameUser.getText() + " at " + timeText + "]=> " + content + "\n");
+			this.history_messages.append("[" + nameUser.getText() + " at " + timeText + "] send : " + content + "\n");
 			this.textArea.setText("");
 			content = null;
 		}
-		;
 	}
 }

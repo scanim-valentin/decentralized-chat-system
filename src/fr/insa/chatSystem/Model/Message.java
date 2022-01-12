@@ -1,21 +1,24 @@
 package fr.insa.chatSystem.Model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import fr.insa.chatSystem.controller.MainController;
 
 public class Message {
 	private String sender;
 	private String content;
-	private LocalDateTime time = java.time.LocalDateTime.now();
+	private LocalDateTime time = LocalDateTime.now();
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
+	String timeText = time.format(formatter);
 
 	public Message(String content) {
 		this.content = content;
 		sender = MainController.username;
-		time = java.time.LocalDateTime.now();
 	}
 
 	public String toString() {
-		return "[" + time.toString() + "] " + sender + ": " + content.toString();
+		return "[" + timeText + "] " + sender + ": " + content.toString();
 	}
 
 	public String getSender() {
