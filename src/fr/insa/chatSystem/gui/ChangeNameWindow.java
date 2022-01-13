@@ -33,15 +33,15 @@ public class ChangeNameWindow extends JFrame {
 	 */
 	public ChangeNameWindow(String username, JLabel pseudoLabel) {
 
-		frame = new JFrame();
+		frame = new JFrame("Chat System V1.0");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100, 450, 300);
+		frame.setContentPane(contentPane);
 		contentPane = new JPanel();
-		frame.setTitle("Chat System V1.0");
+		contentPane.setVerifyInputWhenFocusTarget(false);
 		contentPane.setBackground(new Color(255, 215, 0));
 		contentPane.setForeground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("");
@@ -86,12 +86,13 @@ public class ChangeNameWindow extends JFrame {
 					break;
 
 				default:
-					
+
 					frame.dispose();
-					//Changer le nom de l'username dans la fenetre 
-					pseudoLabel.setText(username); 
-					//Notifie les autres utilisateur d'un changement de pseudo
-					DistributedDataController.notifyNewName(username);; 
+					// Changer le nom de l'username dans la fenetre
+					pseudoLabel.setText(username);
+					// Notifie les autres utilisateur d'un changement de pseudo
+					DistributedDataController.notifyNewName(username);
+					;
 					break;
 				}
 			}
@@ -111,7 +112,7 @@ public class ChangeNameWindow extends JFrame {
 		JButton btnNewButton_1 = new JButton("CANCEL");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Fermer la fenetre Change Name
+				// Fermer la fenetre Change Name
 				frame.dispose();
 			}
 		});

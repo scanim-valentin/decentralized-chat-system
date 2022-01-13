@@ -2,6 +2,7 @@ package fr.insa.chatSystem.gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
@@ -57,7 +58,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnSendFile = new JButton("Send File");
 		btnSendFile.setForeground(new Color(0, 0, 255));
-		btnSendFile.setBounds(574, 389, 120, 29);
+		btnSendFile.setBounds(580, 385, 110, 35);
 		contentPane.add(btnSendFile);
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,7 +69,7 @@ public class ChatWindow extends JFrame {
 
 		btnSend = new JButton("Send");
 		btnSend.setForeground(new Color(0, 0, 128));
-		btnSend.setBounds(574, 421, 120, 38);
+		btnSend.setBounds(580, 420, 110, 40);
 		contentPane.add(btnSend);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,28 +116,47 @@ public class ChatWindow extends JFrame {
 			}
 		});
 
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setAutoscrolls(true);
+		scrollPane_2.setBounds(259, 389, 313, 66);
+		contentPane.add(scrollPane_2);
+
 		textArea = new JTextArea();
-		textArea.setForeground(new Color(255, 204, 0));
-		textArea.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
-		textArea.setBackground(UIManager.getColor("EditorPane.inactiveForeground"));
-		textArea.setBounds(259, 389, 313, 66);
-		textArea.setColumns(5);
-		contentPane.add(textArea);
+		scrollPane_2.setViewportView(textArea);
+		textArea.setLineWrap(true);
+		textArea.setFocusTraversalPolicyProvider(true);
+		textArea.setForeground(SystemColor.text);
+		textArea.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 14));
+		textArea.setBackground(SystemColor.windowText);
+		textArea.setColumns(10);
 
 		remote_users_list = new DefaultListModel<UserID>();
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setAutoscrolls(true);
+		scrollPane_1.setBounds(17, 53, 117, 306);
+		contentPane.add(scrollPane_1);
 		JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
+		remoteUserList.setSelectionBackground(SystemColor.controlHighlight);
+		scrollPane_1.setViewportView(remoteUserList);
+		remoteUserList.setFocusCycleRoot(true);
+		remoteUserList.setFocusTraversalPolicyProvider(true);
 		remoteUserList.setCellRenderer(new CellRenderer());
 		remoteUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		remoteUserList.setBackground(Color.LIGHT_GRAY);
-		remoteUserList.setBounds(17, 53, 117, 306);
-		contentPane.add(remoteUserList);
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setAutoscrolls(true);
 		scrollPane.setBounds(167, 53, 504, 306);
 		contentPane.add(scrollPane);
 
 		history_messages = new JTextArea();
+		history_messages.setColumns(10);
+		history_messages.setFocusTraversalPolicyProvider(true);
+		history_messages.setFocusCycleRoot(true);
+		history_messages.setLineWrap(true);
 		scrollPane.setViewportView(history_messages);
+		history_messages.setAutoscrolls(true);
 		history_messages.setEditable(false);
 		history_messages.setBackground(Color.LIGHT_GRAY);
 
@@ -152,7 +172,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnHelp = new JButton("Help");
 		btnHelp.setForeground(UIManager.getColor("RadioButton.select"));
-		btnHelp.setBounds(17, 430, 117, 29);
+		btnHelp.setBounds(17, 430, 117, 30);
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Ouvrir une fentre avec une image help
@@ -163,7 +183,8 @@ public class ChatWindow extends JFrame {
 
 		// Ettquette avec le pseudo sur la fenetre de tchat
 		nameUser = new JLabel("");
-		nameUser.setBounds(16, 388, 139, 29);
+		nameUser.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+		nameUser.setBounds(16, 388, 157, 35);
 		contentPane.add(nameUser);
 		nameUser.setText(username);
 

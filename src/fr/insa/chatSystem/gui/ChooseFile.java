@@ -6,9 +6,6 @@ import javax.swing.filechooser.FileSystemView;
 
 public class ChooseFile {
 
-	/**
-	 * @wbp.parser.entryPoint
-	 */
 	public static void SendFile() {
 		JFileChooser choose = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		choose.setAutoscrolls(true);
