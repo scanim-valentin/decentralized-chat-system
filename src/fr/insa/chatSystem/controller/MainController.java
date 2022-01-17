@@ -40,6 +40,7 @@ public class MainController {
 	static final public String HELP_IN = "help";
 	static final public String DBCONNECT_IN = "dbconnect" ;
 	static final public String DBCLOSE_IN = "dbclose" ;
+	static final public String DBGETID_IN = "dbgetid" ; 
 
 	// Waits for an input, checks the username validity and changes username if it
 	// is valid
@@ -165,6 +166,20 @@ public class MainController {
 		}
 
 	}
+	
+	private static void NO_GUI_getIDfromDB() {
+		NO_GUI_debugPrint("\n Enter the username of whose you seek their unique identifier:");
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(System.in));
+		String name_input = "" ;
+		try {
+			name_input = reader.readLine();			
+			RemoteDatabaseController.getIDNumber(name_input) ;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	//NE PAS SUPPRIMER
 	//FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
@@ -242,8 +257,11 @@ public class MainController {
 					case DBCONNECT_IN :
 						NO_GUI_getDBAuth() ;
 						break;
-
-
+					
+					case DBGETID_IN : 
+						NO_GUI_getIDfromDB() ;
+						break;
+						
 					default :
 						NO_GUI_debugPrint("Unidentified input."+help);
 				}
