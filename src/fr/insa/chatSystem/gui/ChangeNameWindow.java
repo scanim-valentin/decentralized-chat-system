@@ -46,7 +46,7 @@ public class ChangeNameWindow extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_1.setForeground(Color.RED);
 		lblNewLabel_1.setBounds(116, 64, 209, 36);
 		contentPane.add(lblNewLabel_1);
@@ -96,14 +96,14 @@ public class ChangeNameWindow extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnNewButton.setForeground(Color.BLUE);
 		btnNewButton.setBounds(154, 175, 136, 46);
 		contentPane.add(btnNewButton);
 
 		JLabel lblNewLabel = new JLabel("Enter new username :");
 		lblNewLabel.setForeground(SystemColor.controlHighlight);
-		lblNewLabel.setFont(new Font("Noto Sans Oriya", Font.BOLD, 15));
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(106, 22, 229, 53);
 		contentPane.add(lblNewLabel);
@@ -115,7 +115,7 @@ public class ChangeNameWindow extends JFrame {
 				frame.dispose();
 			}
 		});
-		btnNewButton_1.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
+		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnNewButton_1.setForeground(Color.RED);
 		btnNewButton_1.setBounds(164, 233, 117, 29);
 		contentPane.add(btnNewButton_1);

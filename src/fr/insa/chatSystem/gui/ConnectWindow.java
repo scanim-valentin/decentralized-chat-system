@@ -60,12 +60,12 @@ public class ConnectWindow extends JFrame {
 		Label.setBounds(18, 11, 331, 107);
 		Label.setHorizontalAlignment(SwingConstants.CENTER);
 		Label.setForeground(new Color(153, 0, 255));
-		Label.setFont(new Font("Noto Sans Oriya", Font.BOLD, 59));
+		Label.setFont(new Font("Times New Roman", Font.BOLD, 56));
 
 		ButtonExit = new JButton("Exit");
 		ButtonExit.setBounds(332, 225, 105, 30);
 		ButtonExit.setForeground(new Color(255, 0, 0));
-		ButtonExit.setFont(new Font("Noto Sans Oriya", Font.BOLD, 14));
+		ButtonExit.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		ButtonExit.setBackground(Color.CYAN);
 		ButtonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -75,7 +75,7 @@ public class ConnectWindow extends JFrame {
 
 		JButton ButtonConnexion = new JButton("Connexion");
 		ButtonConnexion.setBounds(151, 189, 123, 32);
-		ButtonConnexion.setFont(new Font("Noto Sans Oriya", Font.BOLD, 14));
+		ButtonConnexion.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		ButtonConnexion.setForeground(new Color(51, 0, 255));
 		ButtonConnexion.setHorizontalAlignment(SwingConstants.LEFT);
 		ButtonConnexion.addActionListener(new ActionListener() {
@@ -110,7 +110,7 @@ public class ConnectWindow extends JFrame {
 		LabelLogin = new JLabel("Login :");
 		LabelLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		LabelLogin.setBounds(22, 149, 65, 26);
-		LabelLogin.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
+		LabelLogin.setFont(new Font("Times New Roman", Font.BOLD, 13));
 
 		textFieldName = new JTextField(); // Zone texte avec le login
 		textFieldName.setBounds(93, 151, 242, 26);
@@ -123,7 +123,7 @@ public class ConnectWindow extends JFrame {
 
 		ZoneResponse = new JLabel("Entrer login");
 		ZoneResponse.setForeground(Color.GRAY);
-		ZoneResponse.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
+		ZoneResponse.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		ZoneResponse.setHorizontalAlignment(SwingConstants.CENTER);
 		ZoneResponse.setBounds(99, 118, 221, 32);
 

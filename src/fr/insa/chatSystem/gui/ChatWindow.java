@@ -183,7 +183,7 @@ public class ChatWindow extends JFrame {
 
 		// Ettquette avec le pseudo sur la fenetre de tchat
 		nameUser = new JLabel("");
-		nameUser.setFont(new Font("Noto Sans Oriya", Font.BOLD, 12));
+		nameUser.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		nameUser.setBounds(16, 388, 157, 35);
 		contentPane.add(nameUser);
 		nameUser.setText(username);
