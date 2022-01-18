@@ -14,11 +14,10 @@ public class TCPSend extends Thread {
 	private final int clientPort; // IP du Client
 	private final String IPServer; // IP du Serveur
 	private final File fileToSend; // Fichier à envoyer
-	private Socket connectionSocket;
-	private BufferedOutputStream outToClient;
+	private Socket connectionSocket;// Port de connexion vide
+	private BufferedOutputStream outToClient; //
 
 	public TCPSend(File fileTx, int port, String IP) {
-		super();
 		clientPort = port;
 		fileToSend = fileTx;
 		IPServer = IP;
@@ -28,14 +27,11 @@ public class TCPSend extends Thread {
 
 	@Override
 	public void run() {
-
 		while (true) {
-
 			try {
-
 				System.out.println("The file is ready to send :" + fileToSend.getName());
 				this.connectionSocket = new Socket(IPServer, clientPort);
-				this.outToClient = new BufferedOutputStream(this.connectionSocket.getOutputStream());
+				this.outToClient = new BufferedOutputStream(connectionSocket.getOutputStream());
 			} catch (IOException ex) {
 				// Do exception handling
 			}
@@ -49,7 +45,6 @@ public class TCPSend extends Thread {
 					System.exit(1);
 				}
 				byte[] mybytearray = new byte[(int) myFile.length()];
-
 				FileInputStream fis = null;
 
 				try {
@@ -66,9 +61,7 @@ public class TCPSend extends Thread {
 					outToClient.close();
 					connectionSocket.close();
 					System.out.println("File sended : " + fileToSend.getName());
-					System.out.println("The Thread TCP send closed.");
-
-					// File sent, exit the main method
+					System.out.println("The thread TCP send closed.");
 					return;
 				} catch (IOException ex) {
 					// Do exception handling

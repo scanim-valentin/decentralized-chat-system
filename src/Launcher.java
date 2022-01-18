@@ -1,4 +1,3 @@
-import fr.insa.chatSystem.controller.ChattingSessionController;
 import fr.insa.chatSystem.controller.MainController;
 import fr.insa.chatSystem.gui.ConnectWindow;
 
@@ -11,8 +10,6 @@ public class Launcher {
 		if (args.length == 0) // If no argument as been provided, regular execution
 
 		{
-			// Lancement du client
-			ChattingSessionController.start_deamon();
 			// Ouvrir la premier page
 			new ConnectWindow(username);
 		}

@@ -106,7 +106,7 @@ public abstract class DistributedDataController {
 	static public String getIllegalContent() {
 		return SEP;
 	}
-	
+
 	// PARTIE PRIVEES
 
 	static private List<UserID> userlist = new ArrayList<UserID>(); // List of users to fill with other UsersID
@@ -233,8 +233,9 @@ public abstract class DistributedDataController {
 							case ONLINE_SIG:
 								MainController.NO_GUI_debugPrint("Identified " + ONLINE_SIG + " from "
 										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\")");
-								userlist.add(new UserID(unpacked[1], inPacket.getAddress())); 
-								// In the case of an online signal the second element of the array is the username of the sender
+								userlist.add(new UserID(unpacked[1], inPacket.getAddress()));
+								// In the case of an online signal the second element of the array is the
+								// username of the sender
 								MainController.NO_GUI_debugPrint("Added name in userlist : " + userlist.toString());
 								// To be added to the list
 								break;
@@ -332,5 +333,4 @@ public abstract class DistributedDataController {
 		String[] unpacked = { NEW_NAME_SIG, currentName, newName };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
-
 }

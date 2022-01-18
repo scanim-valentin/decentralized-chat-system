@@ -33,20 +33,20 @@ public class ChangeNameWindow extends JFrame {
 	 */
 	public ChangeNameWindow(String username, JLabel pseudoLabel) {
 
-		frame = new JFrame("Chat System V1.0");
+		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100, 450, 300);
-		frame.setContentPane(contentPane);
 		contentPane = new JPanel();
-		contentPane.setVerifyInputWhenFocusTarget(false);
+		frame.setTitle("Chat System V1.0");
 		contentPane.setBackground(new Color(255, 215, 0));
 		contentPane.setForeground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+		lblNewLabel_1.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
 		lblNewLabel_1.setForeground(Color.RED);
 		lblNewLabel_1.setBounds(116, 64, 209, 36);
 		contentPane.add(lblNewLabel_1);
@@ -86,7 +86,6 @@ public class ChangeNameWindow extends JFrame {
 					break;
 
 				default:
-
 					frame.dispose();
 					// Changer le nom de l'username dans la fenetre
 					pseudoLabel.setText(username);
@@ -97,14 +96,14 @@ public class ChangeNameWindow extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		btnNewButton.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
 		btnNewButton.setForeground(Color.BLUE);
 		btnNewButton.setBounds(154, 175, 136, 46);
 		contentPane.add(btnNewButton);
 
 		JLabel lblNewLabel = new JLabel("Enter new username :");
 		lblNewLabel.setForeground(SystemColor.controlHighlight);
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		lblNewLabel.setFont(new Font("Noto Sans Oriya", Font.BOLD, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(106, 22, 229, 53);
 		contentPane.add(lblNewLabel);
@@ -116,7 +115,7 @@ public class ChangeNameWindow extends JFrame {
 				frame.dispose();
 			}
 		});
-		btnNewButton_1.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+		btnNewButton_1.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
 		btnNewButton_1.setForeground(Color.RED);
 		btnNewButton_1.setBounds(164, 233, 117, 29);
 		contentPane.add(btnNewButton_1);

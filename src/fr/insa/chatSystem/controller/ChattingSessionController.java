@@ -110,7 +110,8 @@ public abstract class ChattingSessionController {
 	private static class ChattingSession extends Thread {
 
 		private UserID other_user; // Other participant to the conversation
-	//	private List<Message> message_list = new ArrayList<Message>(); // List of messages (history)
+		// private List<Message> message_list = new ArrayList<Message>(); // List of
+		// messages (history)
 
 		private Socket socket = null;
 		private PrintWriter output = null;
@@ -154,7 +155,7 @@ public abstract class ChattingSessionController {
 					this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					this.start();
 				}
-				Message msg = new Message(M);
+				Message msg = new Message(M, null);
 				MainController.NO_GUI_debugPrint("Sent " + msg.toString());
 				this.output.println(msg);
 
@@ -223,8 +224,8 @@ public abstract class ChattingSessionController {
 		CSM_Deamon(String name) {
 			super(name);
 			try {
-				chat_socket_generator = new ServerSocket(CHAT_PORT); // Socket to receive incoming chat request
-
+				// Socket to receive incoming chat request
+				chat_socket_generator = new ServerSocket(CHAT_PORT);
 			} catch (Exception E) {
 				E.printStackTrace();
 			}

@@ -7,12 +7,11 @@ import java.net.*;
 public class TCPReceive extends Thread {
 
 	private final int serverPort; // IP du Server
-	private final String fileOutput; // Lien du fichier à recevoir
-	private ServerSocket serverSocket; // Connexion Port
+	private final String fileOutput; // Lien du fichier à envoyer
+	private ServerSocket serverSocket; // Connexion server au Port
 	private Socket connectionSocket; // Port de connexion
 
 	public TCPReceive(int port, String fileRx) throws IOException {
-		super();
 		serverPort = port;
 		fileOutput = fileRx;
 		serverSocket = null;
@@ -21,7 +20,7 @@ public class TCPReceive extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("The File is ready to be received : " + fileOutput);
+		System.out.println("The file's ready to be received : " + fileOutput);
 		byte[] aByte = new byte[1];
 		int bytesRead;
 
@@ -56,7 +55,7 @@ public class TCPReceive extends Thread {
 				bos.close();
 				serverSocket.close();
 				System.out.println("File received : " + fileOutput);
-				System.out.println("The thread TCP Receive closed.");
+				System.out.println("The thread TCP receive closed.");
 			} catch (IOException ex) {
 				// Do exception handling
 			}

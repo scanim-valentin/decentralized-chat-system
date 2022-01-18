@@ -40,7 +40,7 @@ public class ConnectDBWindow extends JFrame {
 
 		JButton btnNewButton = new JButton("Connect DB");
 		btnNewButton.setForeground(Color.DARK_GRAY);
-		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		btnNewButton.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
 		btnNewButton.setBounds(153, 191, 192, 39);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

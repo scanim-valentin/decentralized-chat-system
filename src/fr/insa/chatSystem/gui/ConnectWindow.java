@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import fr.insa.chatSystem.controller.ChattingSessionController;
 import fr.insa.chatSystem.controller.DistributedDataController;
 import fr.insa.chatSystem.controller.MainController.result;
 
@@ -36,7 +37,10 @@ public class ConnectWindow extends JFrame {
 	 * @param pseudo
 	 */
 	public ConnectWindow(String username) {
-		initialize(); // fenetre de connexion
+		// Lancement de la fenetre de connexion
+		initialize();
+		// Lancement du client
+		ChattingSessionController.start_deamon();
 	}
 
 	/**
@@ -56,12 +60,12 @@ public class ConnectWindow extends JFrame {
 		Label.setBounds(18, 11, 331, 107);
 		Label.setHorizontalAlignment(SwingConstants.CENTER);
 		Label.setForeground(new Color(153, 0, 255));
-		Label.setFont(new Font("Comic Sans MS", Font.BOLD, 60));
+		Label.setFont(new Font("Noto Sans Oriya", Font.BOLD, 59));
 
 		ButtonExit = new JButton("Exit");
 		ButtonExit.setBounds(332, 225, 105, 30);
 		ButtonExit.setForeground(new Color(255, 0, 0));
-		ButtonExit.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		ButtonExit.setFont(new Font("Noto Sans Oriya", Font.BOLD, 14));
 		ButtonExit.setBackground(Color.CYAN);
 		ButtonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -71,7 +75,7 @@ public class ConnectWindow extends JFrame {
 
 		JButton ButtonConnexion = new JButton("Connexion");
 		ButtonConnexion.setBounds(151, 189, 123, 32);
-		ButtonConnexion.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		ButtonConnexion.setFont(new Font("Noto Sans Oriya", Font.BOLD, 14));
 		ButtonConnexion.setForeground(new Color(51, 0, 255));
 		ButtonConnexion.setHorizontalAlignment(SwingConstants.LEFT);
 		ButtonConnexion.addActionListener(new ActionListener() {
@@ -106,7 +110,7 @@ public class ConnectWindow extends JFrame {
 		LabelLogin = new JLabel("Login :");
 		LabelLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		LabelLogin.setBounds(22, 149, 65, 26);
-		LabelLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		LabelLogin.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
 
 		textFieldName = new JTextField(); // Zone texte avec le login
 		textFieldName.setBounds(93, 151, 242, 26);
@@ -119,7 +123,7 @@ public class ConnectWindow extends JFrame {
 
 		ZoneResponse = new JLabel("Entrer login");
 		ZoneResponse.setForeground(Color.GRAY);
-		ZoneResponse.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		ZoneResponse.setFont(new Font("Noto Sans Oriya", Font.BOLD, 13));
 		ZoneResponse.setHorizontalAlignment(SwingConstants.CENTER);
 		ZoneResponse.setBounds(99, 118, 221, 32);
 

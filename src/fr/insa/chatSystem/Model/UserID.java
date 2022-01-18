@@ -6,6 +6,7 @@ public class UserID {
 	// Déclaration des strings depuis cette classe seulement
 	private String name;
 	private InetAddress hostAddress;
+	private String id = null;
 
 	// Definition de nom et de @IP
 	public UserID(String name, InetAddress address) {
@@ -31,6 +32,16 @@ public class UserID {
 	// Afficher le nom et l'adresse IP de l'utilisateur
 	public String toString() {
 		return this.getName() + " : " + this.getAddress().toString();
+	}
+
+	// Ecrire l'identifiant de l'utilisateur
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	// Obtenir l'identifiant de l'utilisateur
+	public String getId() {
+		return id;
 	}
 
 	// @Override controle de la classe parente (arg type de retour)
