@@ -162,7 +162,7 @@ public class ChatWindow extends JFrame {
 
 		JLabel lblNewLabel = new JLabel("Message :");
 		lblNewLabel.setForeground(new Color(153, 51, 0));
-		lblNewLabel.setBounds(185, 394, 62, 24);
+		lblNewLabel.setBounds(167, 394, 80, 24);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("User list :");
