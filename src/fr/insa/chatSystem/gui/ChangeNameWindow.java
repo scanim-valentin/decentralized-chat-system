@@ -98,12 +98,12 @@ public class ChangeNameWindow extends JFrame {
 		});
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnNewButton.setForeground(Color.BLUE);
-		btnNewButton.setBounds(154, 175, 136, 46);
+		btnNewButton.setBounds(133, 175, 171, 46);
 		contentPane.add(btnNewButton);
 
 		JLabel lblNewLabel = new JLabel("Enter new username :");
-		lblNewLabel.setForeground(SystemColor.controlHighlight);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lblNewLabel.setForeground(Color.BLUE);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(106, 22, 229, 53);
 		contentPane.add(lblNewLabel);
