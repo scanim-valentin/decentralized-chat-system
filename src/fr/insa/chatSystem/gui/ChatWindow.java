@@ -107,7 +107,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnChangeName = new JButton("Change Name");
 		btnChangeName.setForeground(new Color(51, 204, 0));
-		btnChangeName.setBounds(180, 12, 117, 29);
+		btnChangeName.setBounds(180, 12, 160, 29);
 		contentPane.add(btnChangeName);
 		btnChangeName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -190,7 +190,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnDataBase = new JButton("Connect DB");
 		btnDataBase.setForeground(Color.BLUE);
-		btnDataBase.setBounds(298, 12, 117, 29);
+		btnDataBase.setBounds(341, 12, 117, 29);
 		btnDataBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Ouvrir une fenetre pour se connecter à la Database
