@@ -39,8 +39,6 @@ public class ConnectWindow extends JFrame {
 	public ConnectWindow(String username) {
 		// Lancement de la fenetre de connexion
 		initialize();
-		// Lancement du client
-		ChattingSessionController.start_deamon();
 	}
 
 	/**
