@@ -171,7 +171,7 @@ public class ChatWindow extends JFrame {
 		contentPane.add(lblNewLabel_1);
 
 		JButton btnHelp = new JButton("Help");
-		btnHelp.setForeground(Color.GREEN);
+		btnHelp.setForeground(Color.MAGENTA);
 		btnHelp.setBounds(17, 430, 117, 30);
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
