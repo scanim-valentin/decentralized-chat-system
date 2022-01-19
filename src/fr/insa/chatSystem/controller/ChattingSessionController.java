@@ -9,8 +9,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.insa.chatSystem.Model.Message;
-import fr.insa.chatSystem.Model.UserID;
+import fr.insa.chatSystem.model.Message;
+import fr.insa.chatSystem.model.UserID;
 import fr.insa.chatSystem.controller.MainController.result;
 
 public abstract class ChattingSessionController {

@@ -1,4 +1,4 @@
-package fr.insa.chatSystem.Model;
+package fr.insa.chatSystem.model;
 
 import java.net.*;
 

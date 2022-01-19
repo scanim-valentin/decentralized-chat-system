@@ -165,19 +165,19 @@ public class MainController {
 		}
 
 	}
-
+	/*
 	private static void NO_GUI_getIDfromDB() {
 		NO_GUI_debugPrint("\n Enter the username of whose you seek their unique identifier:");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		String name_input = "";
 		try {
 			name_input = reader.readLine();
-			RemoteDatabaseController.getIDNumber(name_input);
+			RemoteDatabaseController.SQL_getIDNumber(name_input);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-	}
+	}*/
 
 	// NE PAS SUPPRIMER
 	// FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
@@ -257,7 +257,7 @@ public class MainController {
 					break;
 
 				case DBGETID_IN:
-					NO_GUI_getIDfromDB();
+					//NO_GUI_getIDfromDB();
 					break;
 
 				default:

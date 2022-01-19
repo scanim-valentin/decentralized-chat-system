@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 import java.time.format.DateTimeFormatter;
 
 import fr.insa.chatSystem.controller.*;
-import fr.insa.chatSystem.Model.*;
+import fr.insa.chatSystem.model.*;
 
 public class ChatWindow extends JFrame {
 
