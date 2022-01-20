@@ -13,7 +13,7 @@ import java.util.List;
 public class MainController {
 
 	static public String username = "";
-
+	static public String unique_id = "0" ;
 	public static enum result {
 		SUCCESS, ALREADY_EXISTS, INVALID_USERNAME, SESSION_DOES_NOT_EXIST, INVALID_CONTENT
 	}
@@ -174,13 +174,21 @@ public class MainController {
 
 	private static void NO_GUI_test_history() {
 		NO_GUI_getDBAuth() ;
+		if(RemoteDatabaseController.AuthCheck(unique_id,"MOT_DE_PASSE_FORT")){
+			NO_GUI_debugPrint("utilisateur trouvé, bienvenue");
+		}else{
+			NO_GUI_debugPrint("utilisateur pas trouvé, inscription");
+			unique_id = RemoteDatabaseController.signUp(username,"MOT_DE_PASSE_FORT") + "";
+			NO_GUI_debugPrint("votre ID unique = "+unique_id);
+		}
 		List<Message> messages = new ArrayList<Message>();
 		for (int i = 0; i < 50; i++) {
-			messages.add(new Message("Message numéro " + i, "utilisateur quelconque")) ;
+			messages.add(new Message("Message numéro " + i, "USER_1")) ;
 		}
 		MainController.NO_GUI_debugPrint("TEST ENVOI DE 50 MESSAGES A LA BDD");
-		RemoteDatabaseController.addHistory("utilisateur quelconque", messages);
-		MainController.NO_GUI_debugPrint("TEST EFFECTUE");
+		RemoteDatabaseController.addHistory("USER_1", messages);
+		MainController.NO_GUI_debugPrint("TEST EFFECTUE, TEST LECTURE DE L'HISTORIQUE");
+		RemoteDatabaseController.getHistory("USER_1");
 	}
 
 	// NE PAS SUPPRIMER

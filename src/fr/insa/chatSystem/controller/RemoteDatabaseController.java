@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.sun.tools.javac.Main;
 import fr.insa.chatSystem.model.Message;
 
 
@@ -58,7 +59,7 @@ public abstract class RemoteDatabaseController {
 	//Obtention de l'historique (liste de messages) � partir du pseudo de la personne � qui l'utilisateur parle
 	public static String getHistory(String other_user) {
 		try {
-			ResultSet rs = statement.executeQuery("SELECT message FROM histories WHERE (source='"+user_id+"' AND dest="+SQL_getIDNumber(other_user)+") OR (source='"+SQL_getIDNumber(other_user)+"' AND dest="+user_id+");");
+			ResultSet rs = statement.executeQuery("SELECT * FROM histories WHERE ((source="+user_id+" AND destination="+getid(other_user)+") OR (destination="+user_id+" AND source="+getid(other_user)+"));");
 			while (rs.next()) {
 				MainController.NO_GUI_debugPrint(rs.getString(1) + ":");
 				MainController.NO_GUI_debugPrint("" + rs.getInt("history"));
@@ -69,16 +70,15 @@ public abstract class RemoteDatabaseController {
 		return null;
 	}
 	
-	//Une m�thode priv�e pour g�n�rer une requ�te SQL d'obtention d'ID � partir du pseudo
-	private static String SQL_getIDNumber(String name_input) {
-		return "(SELECT id FROM IDs WHERE username='"+name_input+"';)";
-	}
+
 	
 	//V�rifie l'identit� de l'utilisateur pour pouvoir acc�der � ses donn�es
 	public static boolean AuthCheck(String id, String password) {
 		boolean R = false ;
 		try {
-			R = statement.executeQuery("SELECT * FROM IDs WHERE id='"+id+"' AND password='"+password+"';").next();
+			ResultSet RS = statement.executeQuery("SELECT * FROM IDs WHERE id='"+id+"' AND password='"+password+"';");
+			R =	RS.next();
+			MainController.NO_GUI_debugPrint(R+"");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -89,9 +89,11 @@ public abstract class RemoteDatabaseController {
 	public static int signUp(String pseudo, String pswd) {
 		int R = 0 ; 
 		try {
-			int affected_rows = statement.executeUpdate("INSERT INTO IDs(password,username) VALUES ('"+pswd+"','"+pseudo+"') ; ");  
-			R = statement.executeQuery("SELECT LAST_INSERT_ID() FROM IDs ;").getInt(0) ; 
-			
+			int affected_rows = statement.executeUpdate("INSERT INTO IDs(password,username) VALUES ('"+pswd+"','"+pseudo+"') ; ");
+			MainController.NO_GUI_debugPrint("Affected rows = "+affected_rows);
+			ResultSet RS = statement.executeQuery("SELECT LAST_INSERT_ID() FROM IDs ;") ;
+			RS.next();
+			R = RS.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -106,12 +108,32 @@ public abstract class RemoteDatabaseController {
 			e.printStackTrace();
 		}
 	}
+
+	//Une m�thode priv�e pour g�n�rer une requ�te SQL d'obtention d'ID � partir du pseudo
+	private static String SQL_getIDNumber(String name_input) {
+		return "SELECT id FROM IDs WHERE username='"+name_input+"';";
+	}
+
+	//A suprimer
+	private static int getid(String name){
+		int R = -1 ;
+		try {
+			ResultSet RS = statement.executeQuery(SQL_getIDNumber(name)) ;
+
+			RS.next() ;
+			R = RS.getInt(1) ;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return R ;
+	}
 	
 	//Permet d'ajouter un message � l'historique de conversation dans la BDD
 	public static void addHistory(String destination, List<Message> messages) {
 		try {
 			for (Message message : messages) {
-				statement.executeUpdate("INSERT INTO histories(source,destination,time,content) VALUES ('"+MainController.username+"','"+destination+"','"+message.getTime()+"','"+message.getText()+"'); ");
+				statement.executeUpdate("INSERT INTO histories(source,destination,time,content) VALUES ("+getid(MainController.username)+","+getid(destination)+",'"+message.getTime()+"','"+message.getText()+"'); ");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
