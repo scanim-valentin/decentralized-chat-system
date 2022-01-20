@@ -24,8 +24,15 @@ public abstract class RemoteDatabaseController {
 	static private Connection connection = null;
 	static private Statement statement = null;
 
-	public static void initializeConnection(String username, String password) {
+	//Initialisation de la liaison avec la BDD avec en paramï¿½tre l'URL, le nom de la base de donnï¿½e et le mot de passe pour y accï¿½der (que l'administrarteur doit renseigner)
+	public static void initializeConnection(String URL, String NOM, String MDP) {
 		try {
+			//POUR FACILITER LES TESTS ET EVITER DE TOUT TAPER A CHAQUE FOIS
+			if(!URL.isBlank() || !NOM.isBlank() || !MDP.isBlank()) {
+				DB_URL = URL;
+				DB_USER = NOM;
+				DB_PASSWORD = MDP;
+			}
 			MainController.NO_GUI_debugPrint("Connecting to " + DB_URL);
 			// connection = DriverManager.getConnection(DATABASE,username,password);
 			connection = DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);
@@ -38,6 +45,7 @@ public abstract class RemoteDatabaseController {
 
 	}
 
+	//Termine la liaison ï¿½ la BDD
 	public static void endConnection() {
 		try {
 			connection.close();
@@ -47,7 +55,7 @@ public abstract class RemoteDatabaseController {
 		}
 	}
 	
-	
+	//Obtention de l'historique (liste de messages) ï¿½ partir du pseudo de la personne ï¿½ qui l'utilisateur parle
 	public static String getHistory(String other_user) {
 		try {
 			ResultSet rs = statement.executeQuery("SELECT message FROM histories WHERE (source='"+user_id+"' AND dest="+SQL_getIDNumber(other_user)+") OR (source='"+SQL_getIDNumber(other_user)+"' AND dest="+user_id+");");
@@ -60,12 +68,13 @@ public abstract class RemoteDatabaseController {
 		}
 		return null;
 	}
-
+	
+	//Une mï¿½thode privï¿½e pour gï¿½nï¿½rer une requï¿½te SQL d'obtention d'ID ï¿½ partir du pseudo
 	private static String SQL_getIDNumber(String name_input) {
 		return "(SELECT id FROM IDs WHERE username='"+name_input+"';)";
 	}
 	
-	//Vérifie l'identité de l'utilisateur pour pouvoir accéder à ses données
+	//Vï¿½rifie l'identitï¿½ de l'utilisateur pour pouvoir accï¿½der ï¿½ ses donnï¿½es
 	public static boolean AuthCheck(String id, String password) {
 		boolean R = false ;
 		try {
@@ -76,7 +85,7 @@ public abstract class RemoteDatabaseController {
 		return R ; 
 	}
 	
-	// Permet de s'incrire dans la base de donnée avec un pseudo et un mdp et retourne l'identifiant unique (int)
+	// Permet de s'incrire dans la base de donnï¿½e avec un pseudo et un mdp et retourne l'identifiant unique (int)
 	public static int signUp(String pseudo, String pswd) {
 		int R = 0 ; 
 		try {
@@ -89,7 +98,7 @@ public abstract class RemoteDatabaseController {
 		return R ;
 	}
 	
-	//Permet de mettre à jour le pseudo dans la base de donnée 
+	//Permet de mettre ï¿½ jour le pseudo dans la base de donnï¿½e 
 	public static void updateName(String new_name) {
 		try {
 			statement.executeUpdate("UPDATE IDs SET username='"+new_name+"' WHERE id='"+user_id+"'; ");  
@@ -97,18 +106,18 @@ public abstract class RemoteDatabaseController {
 			e.printStackTrace();
 		}
 	}
-	/*
-	//Permet de mettre à jour le pseudo dans la base de donnée 
-	private static void addMessage(List<Message> messages) {
+	
+	//Permet d'ajouter un message ï¿½ l'historique de conversation dans la BDD
+	public static void addHistory(String destination, List<Message> messages) {
 		try {
 			for (Message message : messages) {
-				Timestamp timestamp = new Timestamp(message.getTime().);
-				
+				statement.executeUpdate("INSERT INTO histories(source,destination,time,content) VALUES ('"+MainController.username+"','"+destination+"','"+message.getTime()+"','"+message.getText()+"'); ");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-		*/
+	
+	//addFileLink???b
 		
 }

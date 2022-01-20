@@ -1,10 +1,14 @@
 package fr.insa.chatSystem.controller;
 
+import fr.insa.chatSystem.model.Message;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
 
@@ -43,6 +47,7 @@ public class MainController {
 	static final public String DBCONNECT_IN = "dbconnect";
 	static final public String DBCLOSE_IN = "dbclose";
 	static final public String DBGETID_IN = "dbgetid";
+	static final public String DBTEST_IN = "dbtest";
 
 	// Waits for an input, checks the username validity and changes username if it
 	// is valid
@@ -152,32 +157,31 @@ public class MainController {
 	}
 
 	private static void NO_GUI_getDBAuth() {
-		NO_GUI_debugPrint("Please authenticate to access remote chat history database. \n Enter username:");
+		NO_GUI_debugPrint("\nPre completed database info.");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		String name_input = "";
 		try {
-			name_input = reader.readLine();
+			String url_input = reader.readLine();
+			NO_GUI_debugPrint("Enter database name:");
+			String name_input  = reader.readLine();
 			NO_GUI_debugPrint("Enter password:");
 			String password_input = reader.readLine();
-			RemoteDatabaseController.initializeConnection(name_input, password_input);
+			RemoteDatabaseController.initializeConnection(url_input, name_input, password_input);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-	/*
-	private static void NO_GUI_getIDfromDB() {
-		NO_GUI_debugPrint("\n Enter the username of whose you seek their unique identifier:");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		String name_input = "";
-		try {
-			name_input = reader.readLine();
-			RemoteDatabaseController.SQL_getIDNumber(name_input);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-	}*/
+	private static void NO_GUI_test_history() {
+		NO_GUI_getDBAuth() ;
+		List<Message> messages = new ArrayList<Message>();
+		for (int i = 0; i < 50; i++) {
+			messages.add(new Message("Message numéro " + i, "utilisateur quelconque")) ;
+		}
+		MainController.NO_GUI_debugPrint("TEST ENVOI DE 50 MESSAGES A LA BDD");
+		RemoteDatabaseController.addHistory("utilisateur quelconque", messages);
+		MainController.NO_GUI_debugPrint("TEST EFFECTUE");
+	}
 
 	// NE PAS SUPPRIMER
 	// FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
@@ -259,6 +263,10 @@ public class MainController {
 				case DBGETID_IN:
 					//NO_GUI_getIDfromDB();
 					break;
+
+					case DBTEST_IN:
+						NO_GUI_test_history();
+						break;
 
 				default:
 					NO_GUI_debugPrint("Unidentified input." + help);

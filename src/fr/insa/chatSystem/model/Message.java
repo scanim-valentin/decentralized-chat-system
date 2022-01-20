@@ -1,5 +1,6 @@
 package fr.insa.chatSystem.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,9 +9,7 @@ import fr.insa.chatSystem.controller.MainController;
 public class Message {
 	private String sender;
 	private String textMessage;
-	private LocalDateTime time = LocalDateTime.now();
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
-	String timeText = time.format(formatter);
+	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 	public Message(String textMessage, String sender) {
 		this.textMessage = textMessage;
@@ -22,7 +21,7 @@ public class Message {
 	}
 
 	public String toString() {
-		return "[" + time + "] " + sender + ": " + textMessage.toString();
+		return "[" + timestamp.toString() + "] " + sender + ": " + textMessage.toString();
 	}
 
 	public String getSender() {
@@ -33,8 +32,8 @@ public class Message {
 		return this.textMessage;
 	}
 
-	public LocalDateTime getTime() {
-		return time;
+	public Timestamp getTime() {
+		return timestamp;
 	}
 
 }
