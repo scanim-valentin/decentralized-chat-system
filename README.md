@@ -1,4 +1,50 @@
-# decentralized-chat-system
+# Decentralized-chat-system
+
+Cette application a pour objectif la communication sur des réseaux informatiques internes ou externes à une entreprise de manière décentralisée donc avec une base de donnée commune requise pour l'authentification ainsi que la récupération des messages échangés lors d'une ancienne session de clavardage.
+
+La messagerie permet l'envoi et la réception de messages en connexion TCP ainsi que leur affichage sur un historique. L'utilisateur peut échanger avec n'importe quel autre utilisateur connecté sur le même réseau et récupérer un historique des anciens messages à sa connexion. L'utilisateur choisit également un pseudo personnel unique et modifiable qui est l'identitée qui sera présentée aux autres utilisateurs.
+
+La connexion ainsi que déconnexion et le changement de pseudo,le choix d'un identifiant unique de chaque utilisateur est signalée via des envoies de trames broadcast UDP.
+
+Pour l'utilisation de ce programme, il n'y a pas de connaissance à avoir en informatique.
+
+#NOTICE D'UTILISATION DU CHAT SYSTEME
+
+Pour envoyer un message : 
+
+Ouvrir une conversation avec un autre utilisateur :
+
+	1. Selectionner un contact dans liste des utilisateurs
+	2. Ecrire votre message dans la zone de texte
+	3. Cliquer sur "Send" pour établir la connexion et envoyer le message
+ 	
+Pour envoyer un fichier :
+
+Se rendre dans la fenetre de conservation avec un autre utilisateur :
+
+	1. Selectionner un contact dans liste des utilisateurs
+	2. Cliquer sur "Send file"
+	3. Choisir le fichier à envoyer
+	4. Cliquer sur ouvrir
+ 
+Pour changer de pseudo :
+
+	1. Cliquer sur "Change name"
+	2. Entrer un nouveau pseudo valide
+	3. Cliquer sur "Change name"
+  
+Pour se déconncter :
+
+	1. Cliquer sur "Disconnct" pour retourner à la page de connexion
+  
+Pour fermer l'application de chat :
+ 
+	1. Cliquer sur Exit dans la fenêtre de connexion
+  
+ Si vous avez besoin de plus d'aide, appeler le service informatique au 3838.
+
+
+
 
 Use Case Diagram : 
 ![usecase](PlantUML/usecase.svg)
@@ -16,3 +62,5 @@ Pour tester :
 https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking#bonded_interface
 https://unix.stackexchange.com/questions/152331/how-can-i-create-a-virtual-ethernet-interface-on-a-machine-without-a-physical-ad
 https://www.baeldung.com/java-network-interfaces
+
+

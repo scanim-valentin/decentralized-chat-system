@@ -44,10 +44,7 @@ public class ConnectDBWindow extends JFrame {
 		btnNewButton.setBounds(153, 191, 192, 39);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// URI: mysql://srv-bdens.insa-toulouse.fr
-				// Port: 3306
-				// login : tp_servlet_004 password : ish6uo2U
-				// mysql -h srv-bdens.insa-toulouse.fr –P 3306 –u login1 –p pwd1
+
 			}
 		});
 		contentPane.setLayout(null);
