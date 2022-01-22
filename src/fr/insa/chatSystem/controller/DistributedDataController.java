@@ -243,10 +243,14 @@ public abstract class DistributedDataController {
 							case OFFLINE_SIG:
 								MainController.NO_GUI_debugPrint("Identified " + OFFLINE_SIG + " from "
 										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\")");
-								for(UserID user: userlist ){
+								MainController.NO_GUI_debugPrint("userlist = "+userlist.toString()) ;
+								UserID usr = null ;
+								for(UserID user: userlist){
 									if(user.getName().equals(unpacked[1]))
-										userlist.remove(user) ;
+										usr = user ;
 								}
+								if(usr != null)
+									userlist.remove(usr) ;
 								// In the case of an offline signal the second element of the array is the
 								// username of the sender
 
