@@ -2,8 +2,6 @@ package fr.insa.chatSystem.model;
 
 import java.sql.Timestamp;
 
-import fr.insa.chatSystem.controller.MainController;
-
 public class Message {
 	private String sender;
 	private String textMessage;
@@ -17,7 +15,7 @@ public class Message {
 	public Message(String textMessage, String sender, Timestamp timestamp) {
 		this.textMessage = textMessage;
 		this.sender = sender;
-		this.timestamp = timestamp ;
+		this.timestamp = timestamp;
 	}
 
 	public void setTextMessage(String textMessage) {
@@ -25,7 +23,7 @@ public class Message {
 	}
 
 	public String toString() {
-		return "[" + timestamp.toString() + "] " + sender + ": " + textMessage.toString()+"\n";
+		return "[" + timestamp.toString() + "] " + sender + ": " + textMessage.toString() + "\n";
 	}
 
 	public String getSender() {

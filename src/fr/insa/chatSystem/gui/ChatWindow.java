@@ -25,9 +25,7 @@ public class ChatWindow extends JFrame {
 	private JButton btnSend;
 	private JTextArea textArea;
 	public static JLabel nameUser;
-	public static JList<UserID> remoteUserList ;
-
-
+	public static JList<UserID> remoteUserList;
 
 	/**
 	 * Create the frame.
@@ -119,16 +117,14 @@ public class ChatWindow extends JFrame {
 		textArea.setBackground(SystemColor.windowText);
 		textArea.setColumns(10);
 
-
-
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setAutoscrolls(true);
 		scrollPane_1.setBounds(17, 53, 117, 306);
 		contentPane.add(scrollPane_1);
 
-		//JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
+		// JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
 
-		remoteUserList = new JList(DistributedDataController.getUserList().toArray());
+		remoteUserList = new JList<UserID>((UserID[]) DistributedDataController.getUserList().toArray());
 
 		remoteUserList.setSelectionBackground(SystemColor.controlHighlight);
 		scrollPane_1.setViewportView(remoteUserList);

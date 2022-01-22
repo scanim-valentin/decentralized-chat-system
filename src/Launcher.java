@@ -1,4 +1,3 @@
-import fr.insa.chatSystem.controller.ChattingSessionController;
 import fr.insa.chatSystem.controller.DistributedDataController;
 import fr.insa.chatSystem.controller.MainController;
 import fr.insa.chatSystem.gui.ConnectWindow;

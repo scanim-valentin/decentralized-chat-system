@@ -4,7 +4,6 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.insa.chatSystem.gui.ChatWindow;
 import fr.insa.chatSystem.model.UserID;
 import fr.insa.chatSystem.controller.MainController.result;
 
@@ -225,17 +224,20 @@ public abstract class DistributedDataController {
 									MainController.NO_GUI_debugPrint("Sending username \"" + MainController.username
 											+ "\" to " + inPacket.getAddress().toString());
 									InetAddress sender_addr = inPacket.getAddress();
-									String[] unpacked_answer = { ONLINE_SIG, MainController.username, RemoteDatabaseController.getDB_ID() };
+									String[] unpacked_answer = { ONLINE_SIG, MainController.username,
+											RemoteDatabaseController.getDB_ID() };
 									UDPUnicast(sender_addr, pack(unpacked_answer), dgramSocket_TX);
 								} else {
 									MainController.NO_GUI_debugPrint("Not connected yet! Not answering");
 								}
 								break;
 							case ONLINE_SIG:
-								MainController.NO_GUI_debugPrint("Identified " + ONLINE_SIG + " from "
-										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\") with database ID "+unpacked[2]);
-								userlist.add(new UserID(unpacked[1], inPacket.getAddress(),unpacked[2]));
-								//ChatWindow.remoteUserList.add(new UserID(unpacked[1], inPacket.getAddress(),unpacked[2])) ;
+								MainController.NO_GUI_debugPrint(
+										"Identified " + ONLINE_SIG + " from " + inPacket.getAddress().toString() + "(\""
+												+ unpacked[1] + "\") with database ID " + unpacked[2]);
+								userlist.add(new UserID(unpacked[1], inPacket.getAddress(), unpacked[2]));
+								// ChatWindow.remoteUserList.add(new UserID(unpacked[1],
+								// inPacket.getAddress(),unpacked[2])) ;
 								// In the case of an online signal the second element of the array is the
 								// username of the sender
 								MainController.NO_GUI_debugPrint("Added name in userlist : " + userlist.toString());
@@ -245,14 +247,14 @@ public abstract class DistributedDataController {
 							case OFFLINE_SIG:
 								MainController.NO_GUI_debugPrint("Identified " + OFFLINE_SIG + " from "
 										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\")");
-								MainController.NO_GUI_debugPrint("userlist = "+userlist.toString()) ;
-								UserID usr = null ;
-								for(UserID user: userlist){
-									if(user.getName().equals(unpacked[1]))
-										usr = user ;
+								MainController.NO_GUI_debugPrint("userlist = " + userlist.toString());
+								UserID usr = null;
+								for (UserID user : userlist) {
+									if (user.getName().equals(unpacked[1]))
+										usr = user;
 								}
-								if(usr != null)
-									userlist.remove(usr) ;
+								if (usr != null)
+									userlist.remove(usr);
 								// In the case of an offline signal the second element of the array is the
 								// username of the sender
 
