@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -30,13 +31,16 @@ public class ChatWindow extends JFrame {
 	public static JLabel nameUser;
 	public static JList<UserID> remoteUserList;
 	public static UserID current_user = null ; 
+	public static DefaultListModel<UserID> model_list = new DefaultListModel<UserID>();
 	/**
 	 * Create the frame.
 	 */
 	
 	//Refreshes the list
 	static public void refreshList() {
-		remoteUserList = new JList(DistributedDataController.getUserList().toArray());
+		model_list.clear() ; 
+		for(UserID user: DistributedDataController.getUserList())
+			 model_list.addElement(user) ; 
 	}
 
 		
@@ -75,7 +79,8 @@ public class ChatWindow extends JFrame {
 				// Envoie "message_content" a l'utilisateur de nom "username"
 				// ChattingSessionController.sendMessage(username, textArea.getText());
 				// Envoie de message
-				ChattingSessionController.sendMessage(message_field.getText(),current_user.getName());
+				if(current_user != null)
+					ChattingSessionController.sendMessage(message_field.getText(),current_user.getName());
 			}
 		});
 
@@ -135,7 +140,7 @@ public class ChatWindow extends JFrame {
 
 		// JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
 
-		remoteUserList = new JList(DistributedDataController.getUserList().toArray());
+		remoteUserList = new JList<UserID>(model_list);
 
 		remoteUserList.setSelectionBackground(SystemColor.controlHighlight);
 		scrollPane_1.setViewportView(remoteUserList);
