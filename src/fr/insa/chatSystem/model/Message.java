@@ -11,7 +11,13 @@ public class Message {
 
 	public Message(String textMessage, String sender) {
 		this.textMessage = textMessage;
-		sender = MainController.username;
+		this.sender = sender;
+	}
+
+	public Message(String textMessage, String sender, Timestamp timestamp) {
+		this.textMessage = textMessage;
+		this.sender = sender;
+		this.timestamp = timestamp ;
 	}
 
 	public void setTextMessage(String textMessage) {
@@ -19,7 +25,7 @@ public class Message {
 	}
 
 	public String toString() {
-		return "[" + timestamp.toString() + "] " + sender + ": " + textMessage.toString();
+		return "[" + timestamp.toString() + "] " + sender + ": " + textMessage.toString()+"\n";
 	}
 
 	public String getSender() {

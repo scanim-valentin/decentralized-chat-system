@@ -1,14 +1,11 @@
 package fr.insa.chatSystem.controller;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-
-import com.sun.tools.javac.Main;
 import fr.insa.chatSystem.model.Message;
 
 
@@ -16,7 +13,6 @@ import fr.insa.chatSystem.model.Message;
 public abstract class RemoteDatabaseController {
 	
 	static private String user_id = null ;
-	static private String user_password = null ;
 	
 	static private String DB_URL = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/tp_servlet_004";
 	static private String DB_PASSWORD =  "ish6uo2U" ; 
@@ -51,6 +47,32 @@ public abstract class RemoteDatabaseController {
 
 	}
 
+	//Obtention de l'historique (liste de messages) � partir du pseudo de la personne � qui l'utilisateur parle
+	public static List<Message> getHistory(String other_user) {
+		List<Message> messages = new ArrayList<Message>();
+		try {
+			String other_id ;
+			//TODO supprimer ça à la fin
+			//if(other_user.equals("USER_1"))
+			//	other_id = "19" ;
+			//else
+				other_id = DistributedDataController.getIDByName(other_user).getDB_ID() ;
+			ResultSet rs = statement.executeQuery("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+other_id+") OR (destination="+user_id+" AND source="+other_id+");");
+			while (rs.next()) {
+				if(rs.getString("source").equals(getDB_ID())) {
+					messages.add(new Message(rs.getString("content"), MainController.username, rs.getTimestamp("time")));
+				}else{
+					String name = getNameFromDB_ID(rs.getString("source")) ;
+					messages.add(new Message(rs.getString("content"), name, rs.getTimestamp("time")));
+				}
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return messages;
+	}
+
 	//Termine la liaison � la BDD
 	public static void endConnection() {
 		try {
@@ -60,21 +82,41 @@ public abstract class RemoteDatabaseController {
 			e.printStackTrace();
 		}
 	}
-	
-	//Obtention de l'historique (liste de messages) � partir du pseudo de la personne � qui l'utilisateur parle
-	public static String getHistory(String other_user) {
+
+	private static String getNameFromDB_ID(String other_id) {
+		String other_user = "" ;
 		try {
-			String other_id = DistributedDataController.getIDByName(other_user).getDB_ID() ;
-			MainController.NO_GUI_debugPrint("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+other_id+") OR (destination="+user_id+" AND source="+getid(other_user)+");");
-			ResultSet rs = statement.executeQuery("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+other_id+") OR (destination="+user_id+" AND source="+other_id+");");
-			while (rs.next()) {
-				MainController.NO_GUI_debugPrint(rs.getString(1) + ":");
-				MainController.NO_GUI_debugPrint("" + rs.getInt("history"));
+			//TODO supprimer ça à la fin
+			//if(other_id.equals("19"))
+			//	other_user = "19" ;
+			//else{
+				ResultSet rs = statement.executeQuery("SELECT username FROM IDs WHERE id="+user_id+";");
+				while (rs.next()) {
+					other_user = rs.getString("username") ;
+				}
+				rs.close() ;
+			//}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return other_user ;
+	}
+
+	//Permet d'ajouter un message � l'historique de conversation dans la BDD
+	public static void addHistory(String other_user, List<Message> messages) {
+		try {
+			String other_id ;
+			if(other_user.equals("USER_1"))
+				other_id = "19" ;
+			else
+				other_id = DistributedDataController.getIDByName(other_user).getDB_ID() ;
+			for (Message message : messages) {
+				statement.executeUpdate("INSERT INTO histories(source,destination,time,content) VALUES (" + getDB_ID() + "," + other_id + ",'" + message.getTime() + "','" + message.getText() + "'); ");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 	
 	public static void setDB_ID(String id){
@@ -121,32 +163,4 @@ public abstract class RemoteDatabaseController {
 		return "SELECT id FROM IDs WHERE username='"+name_input+"';";
 	}
 
-	//A suprimer
-	private static int getid(String name){
-		int R = -1 ;
-		try {
-			ResultSet RS = statement.executeQuery(SQL_getIDNumber(name)) ;
-
-			RS.next() ;
-			R = RS.getInt(1) ;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return R ;
-	}
-	
-	//Permet d'ajouter un message � l'historique de conversation dans la BDD
-	public static void addHistory(String destination, List<Message> messages) {
-		try {
-			for (Message message : messages) {
-				statement.executeUpdate("INSERT INTO histories(source,destination,time,content) VALUES ("+getid(MainController.username)+","+getid(destination)+",'"+message.getTime()+"','"+message.getText()+"'); ");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//addFileLink???b
-		
 }

@@ -1,5 +1,16 @@
 MainController.java : 
 MainController.wait(int duree) : Permet d'attendre (duree en ms) 
+MainController.useDatabaseSignUp(String db_URL, String db_name, String db_password, String Name, String Password) : Permet d'inscrire l'utilisateur dans la base de donnée
+														Retourne SUCCESS si le nom d'utilisateur est valide et a ete change
+														Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
+														Retourne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
+
+MainController.useDatabaseSignIn(String db_URL, String db_name, String db_password, String Name, String Password) : Permet d'authentifier un utilisateur dans la base de donnée
+														Retourne SUCCESS si le nom d'utilisateur est valide et a ete change
+														Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il est vide
+														Retourne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
+														Retourne INVALID_DB_AUTH si l'ID unique ou le MDP est incorrect
+
 
 DistributedDataController.java : 
 DistributedDataController.start_deamon() : Lance le thread d'ecoute UDP
@@ -21,4 +32,5 @@ ChattingSessionController.getChatList() : Retourne la liste des session de chat 
 ChattingSessionController.sendMessage(String username, String message_content) : Envoie "message_content" a l'utilisateur de nom "username"
 ChattingSessionController.closeSession(String username) : Termine la session de chat avec l'utilisateur de nom "username"
 
-RemoteDatabaseController.java : pas fini
+RemoteDatabaseController.java :
+RemoteDatabaseController.getHistory(String pseudo) : Obtention de l'historique (liste de messages) � partir du pseudo de la personne � qui l'utilisateur parle
