@@ -26,7 +26,7 @@ public abstract class RemoteDatabaseController {
 	static private Statement statement = null;
 
 
-	public static String getUniqueDB_ID(){
+	public static String getDB_ID(){
 		return user_id ;
 	}
 
@@ -64,8 +64,9 @@ public abstract class RemoteDatabaseController {
 	//Obtention de l'historique (liste de messages) � partir du pseudo de la personne � qui l'utilisateur parle
 	public static String getHistory(String other_user) {
 		try {
-			MainController.NO_GUI_debugPrint("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+getid(other_user)+") OR (destination="+user_id+" AND source="+getid(other_user)+");");
-			ResultSet rs = statement.executeQuery("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+getid(other_user)+") OR (destination="+user_id+" AND source="+getid(other_user)+");");
+			String other_id = DistributedDataController.getIDByName(other_user).getDB_ID() ;
+			MainController.NO_GUI_debugPrint("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+other_id+") OR (destination="+user_id+" AND source="+getid(other_user)+");");
+			ResultSet rs = statement.executeQuery("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+other_id+") OR (destination="+user_id+" AND source="+other_id+");");
 			while (rs.next()) {
 				MainController.NO_GUI_debugPrint(rs.getString(1) + ":");
 				MainController.NO_GUI_debugPrint("" + rs.getInt("history"));
@@ -76,7 +77,9 @@ public abstract class RemoteDatabaseController {
 		return null;
 	}
 	
-
+	public static void setDB_ID(String id){
+		user_id = id ;
+	}
 	
 	//V�rifie l'identit� de l'utilisateur pour pouvoir acc�der � ses donn�es
 	public static boolean AuthCheck(String id, String password) {
@@ -92,18 +95,16 @@ public abstract class RemoteDatabaseController {
 	}
 	
 	// Permet de s'incrire dans la base de donn�e avec un pseudo et un mdp et retourne l'identifiant unique (int)
-	public static int signUp(String pseudo, String pswd) {
-		int R = 0 ; 
+	public static void signUp(String pseudo, String pswd) {
 		try {
 			int affected_rows = statement.executeUpdate("INSERT INTO IDs(password,username) VALUES ('"+pswd+"','"+pseudo+"') ; ");
 			MainController.NO_GUI_debugPrint("Affected rows = "+affected_rows);
 			ResultSet RS = statement.executeQuery("SELECT LAST_INSERT_ID() FROM IDs ;") ;
 			RS.next();
-			R = RS.getInt(1);
+			setDB_ID(""+RS.getInt(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return R ;
 	}
 	
 	//Permet de mettre � jour le pseudo dans la base de donn�e 

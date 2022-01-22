@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class MainController {
 	static public String username = "";
 	static public String unique_id = "0" ;
 	public static enum result {
-		SUCCESS, ALREADY_EXISTS, INVALID_USERNAME, SESSION_DOES_NOT_EXIST, INVALID_CONTENT
+		SUCCESS, ALREADY_EXISTS, INVALID_USERNAME, SESSION_DOES_NOT_EXIST, INVALID_CONTENT, INVALID_DB_AUTH
 	}
 
 	// A simple method to wait a certain amount of time (ms)
@@ -25,6 +24,52 @@ public class MainController {
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
+	}
+
+	public static result useDatabaseSignUp(String db_URL, String db_name, String db_password, String Name, String Password){
+
+		result R = DistributedDataController.isValid(Name);
+		try {
+			//Nom d'utilisateur unique et correct
+			if (R == result.SUCCESS) {
+				//Connection à la BDD
+				RemoteDatabaseController.initializeConnection(db_URL,db_name,db_password);
+				//On s'inscrit dans la BDD avec le pseudo et le MDP choisit
+				RemoteDatabaseController.signUp(Name,Password) ;
+
+				// On notifie tout le monde sur le réseau local
+				MainController.username = Name;
+				DistributedDataController.notifyConnection();
+			}
+
+		} catch (Exception E) {
+			E.printStackTrace();
+		}
+		return R;
+	}
+
+	public static result useDatabaseSignIn(String db_URL, String db_name, String db_password, String Name, String DB_ID, String Password){
+		result R = DistributedDataController.isValid(Name);
+		try {
+			//Nom d'utilisateur unique et correct
+			if (R == result.SUCCESS) {
+				//Connection à la BDD
+				RemoteDatabaseController.initializeConnection(db_URL,db_name,db_password);
+
+				//On vérifie l'existence de l'utilisateur dans la BDD avec l'ID unique et le MDP
+				if(!RemoteDatabaseController.AuthCheck(DB_ID,Password)){
+					return result.INVALID_DB_AUTH ;
+				}
+				RemoteDatabaseController.setDB_ID(DB_ID);
+				// On notifie tout le monde sur le réseau local
+				MainController.username = Name;
+				DistributedDataController.notifyConnection();
+			}
+
+		} catch (Exception E) {
+			E.printStackTrace();
+		}
+		return R;
 	}
 
 	// -------------------------------------------------------------------------------
@@ -61,18 +106,18 @@ public class MainController {
 			name_input = reader.readLine();
 			result R = DistributedDataController.setUsername(name_input);
 			switch (R) {
-			case INVALID_CONTENT:
-				MainController.NO_GUI_debugPrint(
-						"Username contains illegal character " + DistributedDataController.getIllegalContent());
-				break;
+				case INVALID_CONTENT:
+					MainController.NO_GUI_debugPrint(
+							"Username contains illegal character " + DistributedDataController.getIllegalContent());
+					break;
 
-			case ALREADY_EXISTS:
-				MainController.NO_GUI_debugPrint("Username already exists in userlist!");
-				break;
+				case ALREADY_EXISTS:
+					MainController.NO_GUI_debugPrint("Username already exists in userlist!");
+					break;
 
-			default:
-				MainController.NO_GUI_debugPrint("Successfully changed username to" + name_input);
-				break;
+				default:
+					MainController.NO_GUI_debugPrint("Successfully changed username to" + name_input);
+					break;
 			}
 		} catch (Exception E) {
 			E.printStackTrace();
@@ -178,7 +223,7 @@ public class MainController {
 			NO_GUI_debugPrint("utilisateur trouvé, bienvenue");
 		}else{
 			NO_GUI_debugPrint("utilisateur pas trouvé, inscription");
-			unique_id = RemoteDatabaseController.signUp(username,"MOT_DE_PASSE_FORT") + "";
+			RemoteDatabaseController.signUp(username,"MOT_DE_PASSE_FORT");
 			NO_GUI_debugPrint("votre ID unique = "+unique_id);
 		}
 		List<Message> messages = new ArrayList<Message>();
@@ -195,16 +240,7 @@ public class MainController {
 	// FONCTION DÉDIÉE AU DEBUG SANS INTERFACE GRAPHIQUE
 	public static void NO_GUI_agent(String[] args) {
 
-		debug_mode = true;
-		NO_GUI_debugPrint("Args = " + args[0]);
-		if (args[0].equals("ip")) {
-			try {
-				NO_GUI_debugPrint("Specified IP " + args[1]);
-				addr = InetAddress.getByName(args[1]);
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			}
-		}
+		debug_mode = true ;
 
 		NO_GUI_debugPrint("Starting DDC deamon . . .");
 		DistributedDataController.start_deamon();
@@ -215,10 +251,63 @@ public class MainController {
 		// Waits 3 seconds to gather all of the usernames from the local network
 		NO_GUI_formatedDelay(3);
 
-		// Asks the user to choose a valid username
-		while (username == "") {
-			NO_GUI_debugPrint("Please enter a valid username.");
-			NO_GUI_changeUsername();
+
+
+		NO_GUI_debugPrint("Args = " + args[0]);
+		if (args[0].equals("sign")) {
+			if(args[1].equals("up")) {
+				NO_GUI_debugPrint("Signing up with name " + args[2] + " and password " + args[3]);
+				result R = useDatabaseSignUp("", "", "", args[2], args[3]);
+				switch (R) {
+					case INVALID_CONTENT:
+						MainController.NO_GUI_debugPrint(
+								"Username contains illegal character " + DistributedDataController.getIllegalContent());
+						System.exit(1);
+						break;
+
+					case ALREADY_EXISTS:
+						MainController.NO_GUI_debugPrint("Username already exists in userlist!");
+						System.exit(1);
+						break;
+
+					default:
+						MainController.NO_GUI_debugPrint("Successfully signed up with username " + args[2]+" and unique database ID "+RemoteDatabaseController.getDB_ID());
+						break;
+
+				}
+			}
+			if(args[1].equals("in")) {
+				NO_GUI_debugPrint("Signing in with unique DB ID " + args[3] + " and password " + args[4]);
+				result R = useDatabaseSignIn("", "", "", args[2], args[3], args[4]);
+				switch (R) {
+					case INVALID_CONTENT:
+						MainController.NO_GUI_debugPrint(
+								"Username contains illegal character " + DistributedDataController.getIllegalContent());
+						System.exit(1);
+						break;
+
+					case ALREADY_EXISTS:
+						MainController.NO_GUI_debugPrint("Username already exists in userlist!");
+						System.exit(1);
+						break;
+
+					case INVALID_DB_AUTH:
+						MainController.NO_GUI_debugPrint("Database authentication failed!");
+						System.exit(1);
+						break;
+
+					default:
+						MainController.NO_GUI_debugPrint("Successfully signed in with username " + args[3]+" and unique database ID "+RemoteDatabaseController.getDB_ID());
+						break;
+
+				}
+			}
+		}else{
+			// Asks the user to choose a valid username
+			while (username == "") {
+				NO_GUI_debugPrint("Please enter a valid username.");
+				NO_GUI_changeUsername();
+			}
 		}
 
 		NO_GUI_debugPrint("Starting CSC deamon . . .");

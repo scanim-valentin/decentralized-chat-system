@@ -85,7 +85,7 @@ public abstract class DistributedDataController {
 	// Notifie les autres utilisateur d'une connection
 	// A APPELER DES QUE LE NOM A ETE DEFINI
 	static public void notifyConnection() {
-		String[] unpacked = { ONLINE_SIG, MainController.username, RemoteDatabaseController.getUniqueDB_ID() };
+		String[] unpacked = { ONLINE_SIG, MainController.username, RemoteDatabaseController.getDB_ID() };
 		MainController.NO_GUI_debugPrint("Notifying online status to everyone");
 		UDPBroadcast(pack(unpacked), dgramSocket_TX);
 	}
@@ -135,7 +135,7 @@ public abstract class DistributedDataController {
 	// Retourne INVALID_CONTENT si le nom contient des charactere interdits ou si il
 	// est vide
 	// Reoturne ALREADY_EXISTS si le nom existe deja dans la liste d'utilisateur
-	private static result isValid(String S) {
+	public static result isValid(String S) {
 
 		if (S.isBlank() || S.contains(DistributedDataController.SEP))
 			return result.INVALID_CONTENT;
@@ -224,7 +224,7 @@ public abstract class DistributedDataController {
 									MainController.NO_GUI_debugPrint("Sending username \"" + MainController.username
 											+ "\" to " + inPacket.getAddress().toString());
 									InetAddress sender_addr = inPacket.getAddress();
-									String[] unpacked_answer = { ONLINE_SIG, MainController.username, RemoteDatabaseController.getUniqueDB_ID() };
+									String[] unpacked_answer = { ONLINE_SIG, MainController.username, RemoteDatabaseController.getDB_ID() };
 									UDPUnicast(sender_addr, pack(unpacked_answer), dgramSocket_TX);
 								} else {
 									MainController.NO_GUI_debugPrint("Not connected yet! Not answering");
