@@ -85,7 +85,7 @@ public abstract class DistributedDataController {
 	// Notifie les autres utilisateur d'une connection
 	// A APPELER DES QUE LE NOM A ETE DEFINI
 	static public void notifyConnection() {
-		String[] unpacked = { ONLINE_SIG, MainController.username };
+		String[] unpacked = { ONLINE_SIG, MainController.username, RemoteDatabaseController.getUniqueDB_ID() };
 		MainController.NO_GUI_debugPrint("Notifying online status to everyone");
 		UDPBroadcast(pack(unpacked), dgramSocket_TX);
 	}
@@ -119,11 +119,11 @@ public abstract class DistributedDataController {
 	static final private String ID_REQUEST_SIG = "ID_REQUEST"; // Indicates that someone on the network is willing to
 	// update its userlist
 	static final private String ONLINE_SIG = "ONLINE"; // Indicates that someone went online and is follow by its
-	// username
+	// username, then its unique DB ID
 	static final private String OFFLINE_SIG = "OFFLINE"; // Indicates that someone went offline and is follow by its
-	// username
+	// username, then its unique DB ID
 	static final private String NEW_NAME_SIG = "NEW_NAME"; // Indicates that someone changed their name and is followed
-	// by their old name and their new name
+	// by their old name and their new name, then its unique DB ID
 
 	static final private String SEP = "|"; // Separator, forbidden character in username choice
 
@@ -232,8 +232,8 @@ public abstract class DistributedDataController {
 								break;
 							case ONLINE_SIG:
 								MainController.NO_GUI_debugPrint("Identified " + ONLINE_SIG + " from "
-										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\")");
-								userlist.add(new UserID(unpacked[1], inPacket.getAddress()));
+										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\") with database ID "+unpacked[2]);
+								userlist.add(new UserID(unpacked[1], inPacket.getAddress(),unpacked[2]));
 								// In the case of an online signal the second element of the array is the
 								// username of the sender
 								MainController.NO_GUI_debugPrint("Added name in userlist : " + userlist.toString());
@@ -243,7 +243,10 @@ public abstract class DistributedDataController {
 							case OFFLINE_SIG:
 								MainController.NO_GUI_debugPrint("Identified " + OFFLINE_SIG + " from "
 										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\")");
-								userlist.remove(new UserID(unpacked[1], inPacket.getAddress()));
+								for(UserID user: userlist ){
+									if(user.getName().equals(unpacked[1]))
+										userlist.remove(user) ;
+								}
 								// In the case of an offline signal the second element of the array is the
 								// username of the sender
 

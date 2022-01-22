@@ -25,6 +25,11 @@ public abstract class RemoteDatabaseController {
 	static private Connection connection = null;
 	static private Statement statement = null;
 
+
+	public static String getUniqueDB_ID(){
+		return user_id ;
+	}
+
 	//Initialisation de la liaison avec la BDD avec en param�tre l'URL, le nom de la base de donn�e et le mot de passe pour y acc�der (que l'administrarteur doit renseigner)
 	public static void initializeConnection(String URL, String NOM, String MDP) {
 		try {
@@ -59,7 +64,8 @@ public abstract class RemoteDatabaseController {
 	//Obtention de l'historique (liste de messages) � partir du pseudo de la personne � qui l'utilisateur parle
 	public static String getHistory(String other_user) {
 		try {
-			ResultSet rs = statement.executeQuery("SELECT * FROM histories WHERE ((source="+user_id+" AND destination="+getid(other_user)+") OR (destination="+user_id+" AND source="+getid(other_user)+"));");
+			MainController.NO_GUI_debugPrint("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+getid(other_user)+") OR (destination="+user_id+" AND source="+getid(other_user)+");");
+			ResultSet rs = statement.executeQuery("SELECT * FROM histories WHERE (source="+user_id+" AND destination="+getid(other_user)+") OR (destination="+user_id+" AND source="+getid(other_user)+");");
 			while (rs.next()) {
 				MainController.NO_GUI_debugPrint(rs.getString(1) + ":");
 				MainController.NO_GUI_debugPrint("" + rs.getInt("history"));
