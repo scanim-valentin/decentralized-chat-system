@@ -224,7 +224,7 @@ public abstract class DistributedDataController {
 									MainController.NO_GUI_debugPrint("Sending username \"" + MainController.username
 											+ "\" to " + inPacket.getAddress().toString());
 									InetAddress sender_addr = inPacket.getAddress();
-									String[] unpacked_answer = { ONLINE_SIG, MainController.username };
+									String[] unpacked_answer = { ONLINE_SIG, MainController.username, RemoteDatabaseController.getUniqueDB_ID() };
 									UDPUnicast(sender_addr, pack(unpacked_answer), dgramSocket_TX);
 								} else {
 									MainController.NO_GUI_debugPrint("Not connected yet! Not answering");
