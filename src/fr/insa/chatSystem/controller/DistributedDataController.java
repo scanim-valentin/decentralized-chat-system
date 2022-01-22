@@ -4,6 +4,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.insa.chatSystem.gui.ChatWindow;
 import fr.insa.chatSystem.model.UserID;
 import fr.insa.chatSystem.controller.MainController.result;
 
@@ -234,6 +235,7 @@ public abstract class DistributedDataController {
 								MainController.NO_GUI_debugPrint("Identified " + ONLINE_SIG + " from "
 										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\") with database ID "+unpacked[2]);
 								userlist.add(new UserID(unpacked[1], inPacket.getAddress(),unpacked[2]));
+								//ChatWindow.remoteUserList.add(new UserID(unpacked[1], inPacket.getAddress(),unpacked[2])) ;
 								// In the case of an online signal the second element of the array is the
 								// username of the sender
 								MainController.NO_GUI_debugPrint("Added name in userlist : " + userlist.toString());

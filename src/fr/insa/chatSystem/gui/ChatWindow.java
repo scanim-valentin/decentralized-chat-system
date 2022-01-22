@@ -7,18 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JScrollPane;
 import java.time.format.DateTimeFormatter;
 
 import fr.insa.chatSystem.controller.*;
@@ -35,9 +25,9 @@ public class ChatWindow extends JFrame {
 	private JButton btnSend;
 	private JTextArea textArea;
 	public static JLabel nameUser;
+	public static JList<UserID> remoteUserList ;
 
-	DefaultListModel<UserID> remote_users_list;
-	JList<UserID> remote_users_jlist;
+
 
 	/**
 	 * Create the frame.
@@ -129,13 +119,17 @@ public class ChatWindow extends JFrame {
 		textArea.setBackground(SystemColor.windowText);
 		textArea.setColumns(10);
 
-		remote_users_list = new DefaultListModel<UserID>();
+
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setAutoscrolls(true);
 		scrollPane_1.setBounds(17, 53, 117, 306);
 		contentPane.add(scrollPane_1);
-		JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
+
+		//JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
+
+		remoteUserList = new JList(DistributedDataController.getUserList().toArray());
+
 		remoteUserList.setSelectionBackground(SystemColor.controlHighlight);
 		scrollPane_1.setViewportView(remoteUserList);
 		remoteUserList.setFocusCycleRoot(true);
