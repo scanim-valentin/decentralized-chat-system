@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.insa.chatSystem.model.UserID;
 import fr.insa.chatSystem.controller.MainController.result;
+import fr.insa.chatSystem.gui.ChatWindow;
 
 public abstract class DistributedDataController {
 
@@ -241,6 +242,7 @@ public abstract class DistributedDataController {
 								// In the case of an online signal the second element of the array is the
 								// username of the sender
 								MainController.NO_GUI_debugPrint("Added name in userlist : " + userlist.toString());
+								ChatWindow.refreshList() ; 
 								// To be added to the list
 								break;
 
@@ -260,6 +262,7 @@ public abstract class DistributedDataController {
 
 								MainController.NO_GUI_debugPrint("Removed name in userlist : " + userlist.toString());
 								// To be removed from the list
+								ChatWindow.refreshList() ; 
 								break;
 
 							case NEW_NAME_SIG:
@@ -267,6 +270,7 @@ public abstract class DistributedDataController {
 										"Identified " + NEW_NAME_SIG + " from " + inPacket.getAddress().toString()
 												+ "(prev. \"" + unpacked[1] + "\", now \"" + unpacked[2] + "\")");
 								updateUserList(unpacked[1], unpacked[2]);
+								ChatWindow.refreshList() ; 
 								break;
 							}
 						} else {

@@ -33,6 +33,13 @@ public class ChatWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	//Refreshes the list
+	static public void refreshList() {
+		remoteUserList = new JList(DistributedDataController.getUserList().toArray());
+	}
+
+		
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ChatWindow(String username, String message_content) {
 
@@ -138,10 +145,9 @@ public class ChatWindow extends JFrame {
 		remoteUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		remoteUserList.setBackground(Color.LIGHT_GRAY);
 		remoteUserList.addListSelectionListener(new ListSelectionListener() {
-			@SuppressWarnings("unused")
 			public void valueChanged(ListSelectionEvent e) {
-				// Changement du nom
 				current_user = remoteUserList.getSelectedValue() ; 
+				ChattingSessionController.newChat(current_user.getName()) ; 
 			}
 		});
 		JScrollPane scrollPane = new JScrollPane();
@@ -205,6 +211,7 @@ public class ChatWindow extends JFrame {
 		ChattingSessionController.getChatList();
 	}
 
+	
 	// Method executed when the user click on send
 	public void sendMessage(String content) {
 		LocalDateTime date = LocalDateTime.now();
