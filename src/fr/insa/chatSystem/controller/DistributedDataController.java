@@ -250,11 +250,8 @@ public abstract class DistributedDataController {
 								// In the case of an offline signal the second element of the array is the
 								// username of the sender
 
-								MainController.NO_GUI_debugPrint("Removed name in userlist : " + userlist.toString()); // To
-																														// be
-								// removed
-								// from the
-								// list
+								MainController.NO_GUI_debugPrint("Removed name in userlist : " + userlist.toString());
+								// To be removed from the list
 								break;
 
 							case NEW_NAME_SIG:

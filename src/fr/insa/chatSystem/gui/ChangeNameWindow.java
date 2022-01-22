@@ -14,7 +14,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

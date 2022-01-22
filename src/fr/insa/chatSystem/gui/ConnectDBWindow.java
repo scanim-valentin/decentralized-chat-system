@@ -21,8 +21,8 @@ public class ConnectDBWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_2;
+	private JTextField textField_Name;
+	private JTextField textField_URL;
 	private JPasswordField passwordField;
 
 	/**
@@ -44,24 +44,28 @@ public class ConnectDBWindow extends JFrame {
 		btnNewButton.setBounds(153, 191, 192, 39);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// URI: mysql://srv-bdens.insa-toulouse.fr
-				// Port: 3306
-				// login : tp_servlet_004 password : ish6uo2U
-				// mysql -h srv-bdens.insa-toulouse.fr –P 3306 –u login1 –p pwd1
+
 			}
 		});
 		contentPane.setLayout(null);
 		contentPane.add(btnNewButton);
 
-		textField = new JTextField();
-		textField.setBounds(167, 81, 164, 40);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textField_Name = new JTextField();
+		textField_Name.setBounds(167, 81, 164, 40);
+		textField_Name.setText("tp_servlet_004");
+		contentPane.add(textField_Name);
+		textField_Name.setColumns(10);
 
-		textField_2 = new JTextField();
-		textField_2.setBounds(167, 33, 164, 40);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		textField_URL = new JTextField();
+		textField_URL.setBounds(167, 33, 164, 40);
+		textField_URL.setText("jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/tp_servlet_004");
+		contentPane.add(textField_URL);
+		textField_URL.setColumns(10);
+
+		passwordField = new JPasswordField();
+		passwordField.setBounds(167, 126, 164, 40);
+		passwordField.setText("ish6uo2U");
+		contentPane.add(passwordField);
 
 		JLabel lblNewLabel = new JLabel("Username :");
 		lblNewLabel.setBounds(73, 87, 82, 29);
@@ -74,10 +78,6 @@ public class ConnectDBWindow extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("URL DataBase :");
 		lblNewLabel_2.setBounds(48, 40, 107, 26);
 		contentPane.add(lblNewLabel_2);
-
-		passwordField = new JPasswordField();
-		passwordField.setBounds(167, 126, 164, 40);
-		contentPane.add(passwordField);
 
 		JLabel Logo = new JLabel("");
 		Logo.setHorizontalAlignment(SwingConstants.CENTER);
