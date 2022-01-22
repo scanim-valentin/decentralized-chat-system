@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.time.format.DateTimeFormatter;
 
 import fr.insa.chatSystem.controller.*;
@@ -23,10 +26,10 @@ public class ChatWindow extends JFrame {
 	private static JPanel contentPane;
 	private JTextArea history_messages;
 	private JButton btnSend;
-	private JTextArea textArea;
+	private JTextArea message_field;
 	public static JLabel nameUser;
 	public static JList<UserID> remoteUserList;
-
+	public static UserID current_user = null ; 
 	/**
 	 * Create the frame.
 	 */
@@ -65,7 +68,7 @@ public class ChatWindow extends JFrame {
 				// Envoie "message_content" a l'utilisateur de nom "username"
 				// ChattingSessionController.sendMessage(username, textArea.getText());
 				// Envoie de message
-				sendMessage(content);
+				ChattingSessionController.sendMessage(message_field.getText(),current_user.getName());
 			}
 		});
 
@@ -109,14 +112,14 @@ public class ChatWindow extends JFrame {
 		scrollPane_2.setBounds(259, 389, 313, 66);
 		contentPane.add(scrollPane_2);
 
-		textArea = new JTextArea();
-		scrollPane_2.setViewportView(textArea);
-		textArea.setLineWrap(true);
-		textArea.setFocusTraversalPolicyProvider(true);
-		textArea.setForeground(SystemColor.text);
-		textArea.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 14));
-		textArea.setBackground(SystemColor.windowText);
-		textArea.setColumns(10);
+		message_field = new JTextArea();
+		scrollPane_2.setViewportView(message_field);
+		message_field.setLineWrap(true);
+		message_field.setFocusTraversalPolicyProvider(true);
+		message_field.setForeground(SystemColor.text);
+		message_field.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 14));
+		message_field.setBackground(SystemColor.windowText);
+		message_field.setColumns(10);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setAutoscrolls(true);
@@ -134,7 +137,13 @@ public class ChatWindow extends JFrame {
 		remoteUserList.setCellRenderer(new CellRenderer());
 		remoteUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		remoteUserList.setBackground(Color.LIGHT_GRAY);
-
+		remoteUserList.addListSelectionListener(new ListSelectionListener() {
+			@SuppressWarnings("unused")
+			public void valueChanged(ListSelectionEvent e) {
+				// Changement du nom
+				current_user = remoteUserList.getSelectedValue() ; 
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setAutoscrolls(true);
 		scrollPane.setBounds(167, 53, 504, 306);
@@ -150,15 +159,15 @@ public class ChatWindow extends JFrame {
 		history_messages.setEditable(false);
 		history_messages.setBackground(Color.LIGHT_GRAY);
 
-		JLabel lblNewLabel = new JLabel("Message :");
-		lblNewLabel.setForeground(new Color(153, 51, 0));
-		lblNewLabel.setBounds(167, 394, 80, 24);
-		contentPane.add(lblNewLabel);
+		JLabel lblMessage = new JLabel("Message :");
+		lblMessage.setForeground(new Color(153, 51, 0));
+		lblMessage.setBounds(167, 394, 80, 24);
+		contentPane.add(lblMessage);
 
-		JLabel lblNewLabel_1 = new JLabel("User list :");
-		lblNewLabel_1.setForeground(new Color(0, 102, 255));
-		lblNewLabel_1.setBounds(17, 12, 105, 24);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblUserList = new JLabel("User list :");
+		lblUserList.setForeground(new Color(0, 102, 255));
+		lblUserList.setBounds(17, 12, 105, 24);
+		contentPane.add(lblUserList);
 
 		JButton btnHelp = new JButton("Help");
 		btnHelp.setForeground(Color.MAGENTA);
@@ -202,11 +211,11 @@ public class ChatWindow extends JFrame {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
 		String timeText = date.format(formatter);
 
-		content = textArea.getText();
+		content = message_field.getText();
 		if (!content.isBlank()) {
 			// show sent message on text area
 			this.history_messages.append("[" + nameUser.getText() + " at " + timeText + "] send : " + content + "\n");
-			this.textArea.setText("");
+			this.message_field.setText("");
 			content = null;
 		}
 	}
