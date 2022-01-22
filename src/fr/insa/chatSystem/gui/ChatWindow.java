@@ -30,6 +30,7 @@ public class ChatWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ChatWindow(String username, String message_content) {
 
 		JFrame window = new JFrame();
@@ -124,7 +125,7 @@ public class ChatWindow extends JFrame {
 
 		// JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
 
-		remoteUserList = new JList<UserID>((UserID[]) DistributedDataController.getUserList().toArray());
+		remoteUserList = new JList(DistributedDataController.getUserList().toArray());
 
 		remoteUserList.setSelectionBackground(SystemColor.controlHighlight);
 		scrollPane_1.setViewportView(remoteUserList);
