@@ -12,6 +12,7 @@ import java.util.List;
 import fr.insa.chatSystem.model.Message;
 import fr.insa.chatSystem.model.UserID;
 import fr.insa.chatSystem.controller.MainController.result;
+import fr.insa.chatSystem.gui.ChatWindow;
 
 public abstract class ChattingSessionController {
 	// METHODES PUBLIQUES AVEC INTERFACE
@@ -56,7 +57,8 @@ public abstract class ChattingSessionController {
 		session.send(message_content);
 		return result.SUCCESS;
 	}
-
+	
+	
 	// Cree une nouvelle session de chat avec l'utilisateur "other_user"
 	// Retourne ALREADY_EXISTS si la session existe deja
 	// Retourne INCORRECT_USERNAME si le nom d'utilisateur est incorect
@@ -117,9 +119,7 @@ public abstract class ChattingSessionController {
 
 		private String conversation = "Conversation :" ; 
 		private UserID other_user; // Other participant to the conversation
-		// private List<Message> message_list = new ArrayList<Message>(); // List of
-		// messages (history)
-
+		
 		private Socket socket = null;
 		private PrintWriter output = null;
 		BufferedReader input = null;
@@ -165,10 +165,12 @@ public abstract class ChattingSessionController {
 					this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					this.start();
 				}
-				Message msg = new Message(M, null);
+				Message msg = new Message(M, MainController.username);
 				MainController.NO_GUI_debugPrint("Sent " + msg.toString());
 				//Adding message to conversation
 				this.conversation += msg.toString() ; 
+				if( !MainController.debug_mode && ChatWindow.currentUser.equals(this.other_user))
+					ChatWindow.refreshMessages();
 				this.output.println(msg);
 
 			} catch (Exception e) {
@@ -215,7 +217,9 @@ public abstract class ChattingSessionController {
 						this.socket.close();
 					} else {
 						MainController.NO_GUI_debugPrint("Received: " + input_msg);
-						this.conversation += input_msg ; 
+						this.conversation += input_msg ;
+						if(ChatWindow.currentUser.equals(this.other_user))
+							ChatWindow.refreshMessages();
 					}
 
 				} catch (IOException e) {

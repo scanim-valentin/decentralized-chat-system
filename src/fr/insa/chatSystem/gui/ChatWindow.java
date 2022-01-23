@@ -25,14 +25,16 @@ public class ChatWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static JPanel contentPane;
-	private JTextArea history_messages;
-	private JButton btnSend;
-	private JTextArea message_field;
+	private static JTextArea history_messages;
+	private static JButton btnSend;
+	private static JTextArea message_field;
 	public static JLabel nameUser;
 	public static JList<UserID> remoteUserList;
 	public static UserID currentUser = null ; 
 	public static DefaultListModel<UserID> model_list = new DefaultListModel<UserID>();
 	JLabel currentUserLbl = new JLabel("*");
+	
+
 	/**
 	 * Create the frame.
 	 */
@@ -43,7 +45,10 @@ public class ChatWindow extends JFrame {
 		for(UserID user: DistributedDataController.getUserList())
 			 model_list.addElement(user) ; 
 	}
-
+	
+	static public void refreshMessages() {
+		history_messages.setText(ChattingSessionController.getConversation(currentUser.getName())) ; 
+	}
 		
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ChatWindow(String username, String message_content) {
@@ -66,7 +71,7 @@ public class ChatWindow extends JFrame {
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie du fichier
-				ChooseFile.SendFile();
+				//ChooseFile.SendFile();
 			}
 		});
 
@@ -81,7 +86,20 @@ public class ChatWindow extends JFrame {
 				// ChattingSessionController.sendMessage(username, textArea.getText());
 				// Envoie de message
 				if(currentUser != null) {
-					ChattingSessionController.sendMessage(message_field.getText(),currentUser.getName());
+					switch(ChattingSessionController.sendMessage(currentUser.getName(),message_field.getText())) {
+					case INVALID_CONTENT : 
+						message_field.setBackground(Color.RED);
+						break ; 
+					case SUCCESS :
+						message_field.setBackground(Color.WHITE);
+						break ; 
+					case SESSION_DOES_NOT_EXIST :
+						message_field.setBackground(Color.YELLOW);
+						break ; 
+					case INVALID_USERNAME :
+						message_field.setBackground(Color.PINK);
+						break ; 
+					}
 				}
 			}
 		});
@@ -156,6 +174,7 @@ public class ChatWindow extends JFrame {
 				currentUser = remoteUserList.getSelectedValue() ; 
 				currentUserLbl.setText(currentUser.getName());
 				ChattingSessionController.newChat(currentUser.getName()) ; 
+				refreshMessages();
 			}
 		});
 		JScrollPane scrollPane = new JScrollPane();
@@ -223,19 +242,4 @@ public class ChatWindow extends JFrame {
 		ChattingSessionController.getChatList();
 	}
 
-	
-	// Method executed when the user click on send
-	public void sendMessage(String content) {
-		LocalDateTime date = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
-		String timeText = date.format(formatter);
-
-		content = message_field.getText();
-		if (!content.isBlank()) {
-			// show sent message on text area
-			this.history_messages.append("[" + nameUser.getText() + " at " + timeText + "] send : " + content + "\n");
-			this.message_field.setText("");
-			content = null;
-		}
-	}
 }
