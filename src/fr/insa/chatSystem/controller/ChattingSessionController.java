@@ -217,7 +217,8 @@ public abstract class ChattingSessionController {
 						this.socket.close();
 					} else {
 						MainController.NO_GUI_debugPrint("Received: " + input_msg);
-						this.conversation += input_msg ;
+						this.conversation += input_msg+"\n" ;
+						//MainController.debugPrint(input_msg);
 						if(ChatWindow.currentUser.equals(this.other_user))
 							ChatWindow.refreshMessages();
 					}

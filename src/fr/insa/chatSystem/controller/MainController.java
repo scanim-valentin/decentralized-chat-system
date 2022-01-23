@@ -379,5 +379,12 @@ public class MainController {
 
 		}
 	}
+	
+	static public void debugPrint(String str) {
+		// dgram.split("\\" + SEP)
+		String[] info_file = Thread.currentThread().getStackTrace()[2].getFileName().split("\\.java");
+		System.out.println("[" + Thread.currentThread().getName() + "] " + info_file[0] + " : " + str);
+
+	}
 
 }
