@@ -30,8 +30,9 @@ public class ChatWindow extends JFrame {
 	private JTextArea message_field;
 	public static JLabel nameUser;
 	public static JList<UserID> remoteUserList;
-	public static UserID current_user = null ; 
+	public static UserID currentUser = null ; 
 	public static DefaultListModel<UserID> model_list = new DefaultListModel<UserID>();
+	JLabel currentUserLbl = new JLabel("*");
 	/**
 	 * Create the frame.
 	 */
@@ -60,7 +61,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnSendFile = new JButton("Send File");
 		btnSendFile.setForeground(new Color(0, 0, 255));
-		btnSendFile.setBounds(580, 385, 110, 35);
+		btnSendFile.setBounds(580, 385, 94, 35);
 		contentPane.add(btnSendFile);
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -71,7 +72,7 @@ public class ChatWindow extends JFrame {
 
 		btnSend = new JButton("Send");
 		btnSend.setForeground(new Color(0, 0, 128));
-		btnSend.setBounds(580, 420, 110, 40);
+		btnSend.setBounds(580, 425, 94, 30);
 		contentPane.add(btnSend);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -79,8 +80,9 @@ public class ChatWindow extends JFrame {
 				// Envoie "message_content" a l'utilisateur de nom "username"
 				// ChattingSessionController.sendMessage(username, textArea.getText());
 				// Envoie de message
-				if(current_user != null)
-					ChattingSessionController.sendMessage(message_field.getText(),current_user.getName());
+				if(currentUser != null) {
+					ChattingSessionController.sendMessage(message_field.getText(),currentUser.getName());
+				}
 			}
 		});
 
@@ -95,7 +97,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnDisco = new JButton("Disconnect");
 		btnDisco.setForeground(new Color(255, 51, 0));
-		btnDisco.setBounds(564, 12, 117, 29);
+		btnDisco.setBounds(561, 12, 110, 29);
 		contentPane.add(btnDisco);
 		btnDisco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -110,7 +112,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnChangeName = new JButton("Change Name");
 		btnChangeName.setForeground(new Color(51, 204, 0));
-		btnChangeName.setBounds(180, 12, 160, 29);
+		btnChangeName.setBounds(180, 12, 110, 29);
 		contentPane.add(btnChangeName);
 		btnChangeName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -151,8 +153,9 @@ public class ChatWindow extends JFrame {
 		remoteUserList.setBackground(Color.LIGHT_GRAY);
 		remoteUserList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				current_user = remoteUserList.getSelectedValue() ; 
-				ChattingSessionController.newChat(current_user.getName()) ; 
+				currentUser = remoteUserList.getSelectedValue() ; 
+				currentUserLbl.setText(currentUser.getName());
+				ChattingSessionController.newChat(currentUser.getName()) ; 
 			}
 		});
 		JScrollPane scrollPane = new JScrollPane();
@@ -182,7 +185,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnHelp = new JButton("Help");
 		btnHelp.setForeground(Color.MAGENTA);
-		btnHelp.setBounds(17, 430, 117, 30);
+		btnHelp.setBounds(6, 425, 117, 30);
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Ouvrir une fentre avec une image help
@@ -198,9 +201,9 @@ public class ChatWindow extends JFrame {
 		contentPane.add(nameUser);
 		nameUser.setText(username);
 
-		JButton btnDataBase = new JButton("Connect DB");
+		JButton btnDataBase = new JButton("DB");
 		btnDataBase.setForeground(Color.BLUE);
-		btnDataBase.setBounds(341, 12, 117, 29);
+		btnDataBase.setBounds(300, 12, 45, 29);
 		btnDataBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Ouvrir une fenetre pour se connecter à la Database
@@ -208,6 +211,10 @@ public class ChatWindow extends JFrame {
 			}
 		});
 		contentPane.add(btnDataBase);
+		
+		
+		currentUserLbl.setBounds(353, 12, 205, 29);
+		contentPane.add(currentUserLbl);
 
 		// Display the widow
 		window.setVisible(true);

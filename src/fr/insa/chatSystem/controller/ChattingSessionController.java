@@ -82,6 +82,12 @@ public abstract class ChattingSessionController {
 			return result.INVALID_USERNAME;
 		}
 	}
+	
+	public static String getConversation(String username) {
+		UserID id = DistributedDataController.getIDByName(username);
+		ChattingSession session = getSessionByID(id);
+		return session.getConversation();
+	}
 
 	// Retourne la liste des session de chat
 	// Utile pour l'afficher
@@ -109,6 +115,7 @@ public abstract class ChattingSessionController {
 
 	private static class ChattingSession extends Thread {
 
+		private String conversation = "Conversation :" ; 
 		private UserID other_user; // Other participant to the conversation
 		// private List<Message> message_list = new ArrayList<Message>(); // List of
 		// messages (history)
@@ -141,6 +148,10 @@ public abstract class ChattingSessionController {
 			this.start();
 			MainController.NO_GUI_debugPrint("Started thread");
 		}
+		
+		public String getConversation() {
+			return conversation ; 
+		}
 
 		// Will send a dated message and begin the TCP connection if it is the first
 		// message in the conversation (i.e. socket hasn't been instanciated yet)
@@ -156,6 +167,8 @@ public abstract class ChattingSessionController {
 				}
 				Message msg = new Message(M, null);
 				MainController.NO_GUI_debugPrint("Sent " + msg.toString());
+				//Adding message to conversation
+				this.conversation += msg.toString() ; 
 				this.output.println(msg);
 
 			} catch (Exception e) {
@@ -202,6 +215,7 @@ public abstract class ChattingSessionController {
 						this.socket.close();
 					} else {
 						MainController.NO_GUI_debugPrint("Received: " + input_msg);
+						this.conversation += input_msg ; 
 					}
 
 				} catch (IOException e) {
