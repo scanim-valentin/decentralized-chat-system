@@ -39,7 +39,8 @@ public class ChatWindow extends JFrame {
 		int select = 0;
 		if (remoteUserList != null)
 			select = remoteUserList.getSelectedIndex();
-		model_list.clear();
+		if(model_list != null)
+			model_list.clear();
 		for (UserID user : DistributedDataController.getUserList())
 			model_list.addElement(user);
 		if (remoteUserList != null)
