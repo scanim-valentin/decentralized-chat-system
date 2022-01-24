@@ -48,7 +48,8 @@ public class ChatWindow extends JFrame {
 	}
 
 	static public void refreshMessages() {
-		history_messages.setText(ChattingSessionController.getConversation(currentUser.getName()));
+		if(currentUser != null)
+			history_messages.setText(ChattingSessionController.getConversation(currentUser.getName()));
 	}
 
 	public ChatWindow(String username, String message_content) {
