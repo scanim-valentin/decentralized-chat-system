@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import fr.insa.chatSystem.controller.ChattingSessionController;
 import fr.insa.chatSystem.controller.DistributedDataController;
 import fr.insa.chatSystem.controller.MainController.result;
 
@@ -96,7 +97,7 @@ public class ConnectWindow extends JFrame {
 
 					// Close frame
 					frame.dispose();
-
+					ChattingSessionController.start_deamon(); 
 					// Open le chat window
 					new ChatWindow(username, null);
 					break;

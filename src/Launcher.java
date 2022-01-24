@@ -12,7 +12,7 @@ public class Launcher {
 
 		{
 			DistributedDataController.start_deamon();
-
+			
 			// Ouvrir la premier page
 			new ConnectWindow(username);
 

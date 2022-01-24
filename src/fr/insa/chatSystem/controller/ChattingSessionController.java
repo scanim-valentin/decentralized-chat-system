@@ -46,6 +46,7 @@ public abstract class ChattingSessionController {
 	// Retourne SUCCESS si le message a bien ete envoye
 	public static result sendMessage(String username, String message_content) {
 		UserID id = DistributedDataController.getIDByName(username);
+
 		if (id == null) {
 			return result.INVALID_USERNAME;
 		}
@@ -161,6 +162,7 @@ public abstract class ChattingSessionController {
 			try {
 
 				if (socket == null) {
+					System.out.println("OTHER USER "+other_user+" CHAT LIST "+getChatList().toString()) ; 
 					this.socket = new Socket(other_user.getAddress(), CHAT_PORT);
 					MainController.NO_GUI_debugPrint("Created socket to chat with " + other_user.toString());
 					this.output = new PrintWriter(this.socket.getOutputStream(), true);
