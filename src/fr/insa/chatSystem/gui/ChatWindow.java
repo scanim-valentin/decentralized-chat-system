@@ -108,6 +108,7 @@ public class ChatWindow extends JFrame {
 		contentPane.add(separator_1);
 
 		JButton btnDisco = new JButton("Disconnect");
+		btnDisco.setFont(new Font("Lucida Grande", Font.BOLD, 11));
 		btnDisco.setBounds(584, 12, 110, 29);
 		btnDisco.setForeground(new Color(255, 51, 0));
 		contentPane.add(btnDisco);
@@ -123,6 +124,7 @@ public class ChatWindow extends JFrame {
 		});
 
 		JButton btnChangeName = new JButton("Change Name");
+		btnChangeName.setFont(new Font("Lucida Grande", Font.BOLD, 12));
 		btnChangeName.setBounds(180, 12, 131, 29);
 		btnChangeName.setForeground(new Color(51, 204, 0));
 		contentPane.add(btnChangeName);
