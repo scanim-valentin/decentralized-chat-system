@@ -45,8 +45,6 @@ public class ConnectWindow extends JFrame {
 	public JRadioButton rdbtnSignUp = new JRadioButton("Sign Up");
 	public JCheckBox chckbxUseCentralizedHistory = new JCheckBox("Use centralized history database");
 	private JLabel ZoneResponse;
-	
-	
 
 	/**
 	 * Create the application
@@ -95,41 +93,41 @@ public class ConnectWindow extends JFrame {
 		ButtonConnexion.setHorizontalAlignment(SwingConstants.LEFT);
 		ButtonConnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(chckbxUseCentralizedHistory.isSelected()) {
+				if (chckbxUseCentralizedHistory.isSelected()) {
 					String username = textFieldUsername.getText();
 					String database = textFieldDatabase.getText();
 					String url = textFieldURL.getText();
 					String password_db = textFieldPasswordDB.getText();
 					String password = textFieldPassword.getText();
-					
-					if(rdbtnSignIn.isSelected()) {
+
+					if (rdbtnSignIn.isSelected()) {
 						String id = textFieldID.getText();
-						result R = MainController.useDatabaseSignIn(url,database,password_db,username,id,password);
+						result R = MainController.useDatabaseSignIn(url, database, password_db, username, id, password);
 						switch (R) {
-							case INVALID_CONTENT:
-								//ZoneResponse.setText("Username contains illegal character " + DistributedDataController.getIllegalContent());
-								break;
+						case INVALID_CONTENT:
+							// ZoneResponse.setText("Username contains illegal character " +
+							// DistributedDataController.getIllegalContent());
+							break;
 
-							case ALREADY_EXISTS:
-								//ZoneResponse.setText("Username already exists in userlist!");
-								break;
+						case ALREADY_EXISTS:
+							// ZoneResponse.setText("Username already exists in userlist!");
+							break;
 
-							case INVALID_DB_AUTH:
-								break;
+						case INVALID_DB_AUTH:
+							break;
 
-							default:
-								frame.dispose();
-								ChattingSessionController.start_deamon(); 
-								// Open le chat window
-								new ChatWindow(username, null);
-								break;
-								
+						default:
+							frame.dispose();
+							ChattingSessionController.start_deamon();
+							// Open le chat window
+							new ChatWindow(username, null);
+							break;
 
 						}
-					}else {
-						
+					} else {
+
 					}
-				}else {
+				} else {
 					String username = textFieldUsername.getText();
 					// Fonction de vérification du username
 					result R = DistributedDataController.setUsername(username);
@@ -137,31 +135,31 @@ public class ConnectWindow extends JFrame {
 					case INVALID_CONTENT:
 						ZoneResponse.setText("Empty field !");
 						break;
-	
+
 					case ALREADY_EXISTS:
 						ZoneResponse.setText("Username already exists !");
 						break;
-	
+
 					default:
 						ZoneResponse.setText("Username OK !");
 						// Attendre 2sec pour voir le message OK pour le pseudo
 						// MainController.wait(2000);
-	
+
 						// Close frame
 						frame.dispose();
-						ChattingSessionController.start_deamon(); 
+						ChattingSessionController.start_deamon();
 						// Open le chat window
 						new ChatWindow(username, null);
 						break;
 					}
-					}
+				}
 			}
 		});
 
 		LabelLogin = new JLabel("Username :");
 		LabelLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		LabelLogin.setBounds(22, 149, 84, 26);
-		LabelLogin.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		LabelLogin.setFont(new Font("Dialog", Font.BOLD, 13));
 
 		textFieldUsername = new JTextField(); // Zone texte avec le login
 		textFieldUsername.setBounds(124, 149, 242, 26);
@@ -180,8 +178,8 @@ public class ConnectWindow extends JFrame {
 		frame.getContentPane().add(ButtonExit);
 		frame.getContentPane().add(Logo);
 		frame.getContentPane().add(LabelLogin);
-		
-		//Activation du mode base de donnée si checked
+
+		// Activation du mode base de donnée si checked
 		chckbxUseCentralizedHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnSignUp.setEnabled(!rdbtnSignUp.isEnabled());
@@ -195,66 +193,66 @@ public class ConnectWindow extends JFrame {
 		});
 		chckbxUseCentralizedHistory.setBounds(32, 183, 334, 23);
 		frame.getContentPane().add(chckbxUseCentralizedHistory);
-		
+
 		JLabel lblUrl = new JLabel("URL :");
 		lblUrl.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUrl.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblUrl.setBounds(24, 249, 84, 26);
 		frame.getContentPane().add(lblUrl);
-		
+
 		textFieldURL = new JTextField();
 		textFieldURL.setEnabled(false);
 		textFieldURL.setColumns(30);
 		textFieldURL.setBounds(126, 249, 242, 26);
-		textFieldURL.setText(RemoteDatabaseController.DB_URL) ; 
+		textFieldURL.setText(RemoteDatabaseController.DB_URL);
 		frame.getContentPane().add(textFieldURL);
-		
+
 		JLabel lblDatabase = new JLabel("Database :");
 		lblDatabase.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDatabase.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblDatabase.setBounds(24, 277, 84, 26);
 		frame.getContentPane().add(lblDatabase);
-		
+
 		textFieldDatabase = new JTextField();
 		textFieldDatabase.setEnabled(false);
 		textFieldDatabase.setColumns(30);
 		textFieldDatabase.setBounds(126, 277, 242, 26);
-		textFieldDatabase.setText(RemoteDatabaseController.DB_USER) ; 
-		
+		textFieldDatabase.setText(RemoteDatabaseController.DB_USER);
+
 		frame.getContentPane().add(textFieldDatabase);
-		
+
 		JLabel lblPassword = new JLabel("Password :");
 		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPassword.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblPassword.setBounds(24, 307, 84, 26);
 		frame.getContentPane().add(lblPassword);
-		
+
 		textFieldPasswordDB = new JTextField();
 		textFieldPasswordDB.setEnabled(false);
 		textFieldPasswordDB.setColumns(30);
 		textFieldPasswordDB.setBounds(126, 307, 242, 26);
-		textFieldPasswordDB.setText(RemoteDatabaseController.DB_PASSWORD) ; 
-		
+		textFieldPasswordDB.setText(RemoteDatabaseController.DB_PASSWORD);
+
 		frame.getContentPane().add(textFieldPasswordDB);
-		
+
 		textFieldID = new JTextField();
 		textFieldID.setEnabled(false);
 		textFieldID.setColumns(30);
 		textFieldID.setBounds(124, 356, 242, 26);
 		frame.getContentPane().add(textFieldID);
-		
+
 		JLabel LabelLogin_3_1 = new JLabel("ID :");
 		LabelLogin_3_1.setHorizontalAlignment(SwingConstants.CENTER);
 		LabelLogin_3_1.setFont(new Font("Dialog", Font.BOLD, 13));
 		LabelLogin_3_1.setBounds(22, 356, 84, 26);
 		frame.getContentPane().add(LabelLogin_3_1);
-		
+
 		textFieldPassword = new JTextField();
 		textFieldPassword.setEnabled(false);
 		textFieldPassword.setColumns(30);
 		textFieldPassword.setBounds(124, 389, 242, 26);
 		frame.getContentPane().add(textFieldPassword);
-		
+
 		JLabel LabelLogin_3_1_1 = new JLabel("Password :");
 		LabelLogin_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		LabelLogin_3_1_1.setFont(new Font("Dialog", Font.BOLD, 13));
@@ -265,7 +263,7 @@ public class ConnectWindow extends JFrame {
 				rdbtnSignUp.setSelected(false);
 			}
 		});
-		
+
 		rdbtnSignIn.setEnabled(false);
 		rdbtnSignIn.setBounds(70, 218, 149, 23);
 		frame.getContentPane().add(rdbtnSignIn);
@@ -274,12 +272,12 @@ public class ConnectWindow extends JFrame {
 				rdbtnSignIn.setSelected(false);
 			}
 		});
-		
+
 		rdbtnSignUp.setEnabled(false);
 		rdbtnSignUp.setSelected(true);
 		rdbtnSignUp.setBounds(231, 218, 149, 23);
 		frame.getContentPane().add(rdbtnSignUp);
-		
+
 		ZoneResponse = new JLabel("This software will work as intended.");
 		ZoneResponse.setForeground(Color.RED);
 		ZoneResponse.setHorizontalAlignment(SwingConstants.CENTER);

@@ -30,76 +30,74 @@ public class ChatWindow extends JFrame {
 	private static JTextArea message_field;
 	public static JLabel nameUser;
 	public static JList<UserID> remoteUserList;
-	public static UserID currentUser = null ; 
+	public static UserID currentUser = null;
 	public static DefaultListModel<UserID> model_list = new DefaultListModel<UserID>();
 	JLabel currentUserLbl = new JLabel("*");
-	
 
 	/**
 	 * Create the frame.
 	 */
-	
-	//Refreshes the list
+
+	// Refreshes the list
 	static public void refreshList() {
-		model_list.clear() ; 
-		for(UserID user: DistributedDataController.getUserList())
-			 model_list.addElement(user) ; 
+		model_list.clear();
+		for (UserID user : DistributedDataController.getUserList())
+			model_list.addElement(user);
 	}
-	
+
 	static public void refreshMessages() {
-		history_messages.setText(ChattingSessionController.getConversation(currentUser.getName())) ; 
+		history_messages.setText(ChattingSessionController.getConversation(currentUser.getName()));
 	}
-		
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+
 	public ChatWindow(String username, String message_content) {
 
 		JFrame window = new JFrame();
 		window.setResizable(false); // ne pas changer la taille de la fenetre
 		window.setTitle("Chat System V1.0");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setBounds(100, 100, 700, 500);
+		window.setBounds(100, 100, 716, 509);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
 		window.setContentPane(contentPane);
+		contentPane.setLayout(null);
 
 		JButton btnSendFile = new JButton("Send File");
+		btnSendFile.setBounds(580, 385, 114, 35);
 		btnSendFile.setForeground(new Color(0, 0, 255));
-		btnSendFile.setBounds(580, 385, 94, 35);
 		contentPane.add(btnSendFile);
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie du fichier
-				//ChooseFile.SendFile();
+				// ChooseFile.SendFile();
 			}
 		});
 
 		btnSend = new JButton("Send");
+		btnSend.setBounds(580, 425, 114, 30);
 		btnSend.setForeground(new Color(0, 0, 128));
-		btnSend.setBounds(580, 425, 94, 30);
 		contentPane.add(btnSend);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie "message_content" a l'utilisateur de nom "username"
 				// ChattingSessionController.sendMessage(username, textArea.getText());
 				// Envoie de message
-				if(currentUser != null) {
-					switch(ChattingSessionController.sendMessage(currentUser.getName(),message_field.getText())) {
-					case INVALID_CONTENT : 
+				if (currentUser != null) {
+					switch (ChattingSessionController.sendMessage(currentUser.getName(), message_field.getText())) {
+					case INVALID_CONTENT:
 						message_field.setBackground(Color.BLUE);
-						break ; 
-					case SESSION_DOES_NOT_EXIST :
+						break;
+					case SESSION_DOES_NOT_EXIST:
 						message_field.setBackground(Color.RED);
-						break ; 
-					case INVALID_USERNAME :
+						break;
+					case INVALID_USERNAME:
 						message_field.setBackground(Color.GREEN);
-						break ; 
-					default :
-						message_field.setText("") ; 
-						break ; 
+						break;
+					default:
+						message_field.setText("");
+						break;
 					}
-					
+
 				}
 			}
 		});
@@ -109,13 +107,13 @@ public class ChatWindow extends JFrame {
 		contentPane.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(166, 12, 12, 367);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(146, 12, 12, 367);
 		contentPane.add(separator_1);
 
 		JButton btnDisco = new JButton("Disconnect");
+		btnDisco.setBounds(584, 12, 110, 29);
 		btnDisco.setForeground(new Color(255, 51, 0));
-		btnDisco.setBounds(561, 12, 110, 29);
 		contentPane.add(btnDisco);
 		btnDisco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,8 +127,8 @@ public class ChatWindow extends JFrame {
 		});
 
 		JButton btnChangeName = new JButton("Change Name");
+		btnChangeName.setBounds(180, 12, 131, 29);
 		btnChangeName.setForeground(new Color(51, 204, 0));
-		btnChangeName.setBounds(180, 12, 110, 29);
 		contentPane.add(btnChangeName);
 		btnChangeName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,8 +138,8 @@ public class ChatWindow extends JFrame {
 		});
 
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setAutoscrolls(true);
 		scrollPane_2.setBounds(259, 389, 313, 66);
+		scrollPane_2.setAutoscrolls(true);
 		contentPane.add(scrollPane_2);
 
 		message_field = new JTextArea();
@@ -154,8 +152,8 @@ public class ChatWindow extends JFrame {
 		message_field.setColumns(10);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(17, 53, 138, 306);
 		scrollPane_1.setAutoscrolls(true);
-		scrollPane_1.setBounds(17, 53, 117, 306);
 		contentPane.add(scrollPane_1);
 
 		// JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
@@ -171,15 +169,15 @@ public class ChatWindow extends JFrame {
 		remoteUserList.setBackground(Color.LIGHT_GRAY);
 		remoteUserList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				currentUser = remoteUserList.getSelectedValue() ; 
+				currentUser = remoteUserList.getSelectedValue();
 				currentUserLbl.setText(currentUser.getName());
-				ChattingSessionController.newChat(currentUser.getName()) ; 
+				ChattingSessionController.newChat(currentUser.getName());
 				refreshMessages();
 			}
 		});
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(190, 53, 504, 306);
 		scrollPane.setAutoscrolls(true);
-		scrollPane.setBounds(167, 53, 504, 306);
 		contentPane.add(scrollPane);
 
 		history_messages = new JTextArea();
@@ -193,18 +191,18 @@ public class ChatWindow extends JFrame {
 		history_messages.setBackground(Color.LIGHT_GRAY);
 
 		JLabel lblMessage = new JLabel("Message :");
-		lblMessage.setForeground(new Color(153, 51, 0));
 		lblMessage.setBounds(167, 394, 80, 24);
+		lblMessage.setForeground(new Color(153, 51, 0));
 		contentPane.add(lblMessage);
 
 		JLabel lblUserList = new JLabel("User list :");
-		lblUserList.setForeground(new Color(0, 102, 255));
 		lblUserList.setBounds(17, 12, 105, 24);
+		lblUserList.setForeground(new Color(0, 102, 255));
 		contentPane.add(lblUserList);
 
 		JButton btnHelp = new JButton("Help");
-		btnHelp.setForeground(Color.MAGENTA);
 		btnHelp.setBounds(6, 425, 117, 30);
+		btnHelp.setForeground(Color.MAGENTA);
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Ouvrir une fentre avec une image help
@@ -215,24 +213,11 @@ public class ChatWindow extends JFrame {
 
 		// Ettquette avec le pseudo sur la fenetre de tchat
 		nameUser = new JLabel("");
-		nameUser.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		nameUser.setBounds(16, 388, 157, 35);
+		nameUser.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(nameUser);
 		nameUser.setText(username);
-
-		JButton btnDataBase = new JButton("DB");
-		btnDataBase.setForeground(Color.BLUE);
-		btnDataBase.setBounds(300, 12, 45, 29);
-		btnDataBase.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Ouvrir une fenetre pour se connecter à la Database
-				new ConnectDBWindow();
-			}
-		});
-		contentPane.add(btnDataBase);
-		
-		
-		currentUserLbl.setBounds(353, 12, 205, 29);
+		currentUserLbl.setBounds(323, 11, 205, 29);
 		contentPane.add(currentUserLbl);
 
 		// Display the widow
