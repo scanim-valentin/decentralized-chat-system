@@ -21,8 +21,6 @@ import fr.insa.chatSystem.controller.RemoteDatabaseController;
 
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 public class ConnectWindow extends JFrame {
 
