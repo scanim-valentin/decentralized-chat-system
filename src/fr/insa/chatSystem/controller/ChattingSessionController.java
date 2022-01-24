@@ -226,7 +226,7 @@ public abstract class ChattingSessionController {
 							MainController.NO_GUI_debugPrint("Received: " + input_msg);
 							this.conversation += input_msg + "\n";
 							// MainController.debugPrint(input_msg);
-							if (!MainController.debug_mode)
+							if (!MainController.debug_mode && ChatWindow.currentUser != null)
 								if (ChatWindow.currentUser.equals(this.other_user))
 									ChatWindow.refreshMessages();
 						}
