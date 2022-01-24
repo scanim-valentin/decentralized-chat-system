@@ -22,6 +22,7 @@ public abstract class ChattingSessionController {
 	// Retourne SESSION_DOES_NOT_EXIST si la session de chat n'existe pas
 	// Retourne SUCCESS si la session s'est bien fermee
 	public static result closeSession(String username) {
+				
 		UserID id = DistributedDataController.getIDByName(username);
 		if (id == null) {
 			return result.INVALID_USERNAME;
@@ -35,6 +36,7 @@ public abstract class ChattingSessionController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		MainController.NO_GUI_debugPrint("Removed "+username+" from active chat session list"+chatlist) ; 
 		return result.SUCCESS;
 	}
 

@@ -258,8 +258,14 @@ public abstract class DistributedDataController {
 								}
 								if (usr != null)
 									userlist.remove(usr);
-							
-								ChattingSessionController.closeSession(unpacked[1]) ; 
+								switch(ChattingSessionController.closeSession(unpacked[1])) {
+									case INVALID_USERNAME : 
+										MainController.NO_GUI_debugPrint("USERNAME INVALID "+unpacked[1]);
+										break ; 
+									case SESSION_DOES_NOT_EXIST :
+										MainController.NO_GUI_debugPrint("SESSION DOES NOT EXIST "+unpacked[1]);
+										break ;
+								}
 								// In the case of an offline signal the second element of the array is the
 								// username of the sender
 
