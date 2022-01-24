@@ -109,7 +109,9 @@ public abstract class DistributedDataController {
 	}
 
 	// PARTIE PRIVEES
-
+	
+	static private int BROADCAST_REPETITION = 5 ; 
+	
 	static private List<UserID> userlist = new ArrayList<UserID>(); // List of users to fill with other UsersID
 
 	static final private int DGRAM_PORT_RX = 1238;
@@ -206,7 +208,7 @@ public abstract class DistributedDataController {
 						unpacked = unpack(packed);
 						MainController.NO_GUI_debugPrint(
 								"unpacked packet len=" + unpacked.length + ": " + unpacked.toString());
-
+						UserID usr = null ; 
 						if ((MainController.addr != null && MainController.addr != inPacket.getAddress())
 								|| (NetworkInterface.getByInetAddress(inPacket.getAddress()) == null)) { // Checks if
 																											// received
@@ -236,7 +238,9 @@ public abstract class DistributedDataController {
 								MainController.NO_GUI_debugPrint(
 										"Identified " + ONLINE_SIG + " from " + inPacket.getAddress().toString() + "(\""
 												+ unpacked[1] + "\") with database ID " + unpacked[2]);
-								userlist.add(new UserID(unpacked[1], inPacket.getAddress(), unpacked[2]));
+								usr = new UserID(unpacked[1], inPacket.getAddress(), unpacked[2]) ; 
+								if(!userlist.contains(usr))
+									userlist.add(usr);
 								// ChatWindow.remoteUserList.add(new UserID(unpacked[1],
 								// inPacket.getAddress(),unpacked[2])) ;
 								// In the case of an online signal the second element of the array is the
@@ -251,7 +255,7 @@ public abstract class DistributedDataController {
 								MainController.NO_GUI_debugPrint("Identified " + OFFLINE_SIG + " from "
 										+ inPacket.getAddress().toString() + "(\"" + unpacked[1] + "\")");
 								MainController.NO_GUI_debugPrint("userlist = " + userlist.toString());
-								UserID usr = null;
+								usr = null;
 								for (UserID user : userlist) {
 									if (user.getName().equals(unpacked[1]))
 										usr = user;
@@ -319,7 +323,8 @@ public abstract class DistributedDataController {
 	static private void UDPBroadcast(String sig, DatagramSocket dgramSocket) {
 		try {
 			InetAddress BROADCAST_ADDR = InetAddress.getByName("255.255.255.255");
-			UDPUnicast(BROADCAST_ADDR, sig, dgramSocket);
+			for(int i = 0 ; i < BROADCAST_REPETITION ; i++)
+				UDPUnicast(BROADCAST_ADDR, sig, dgramSocket);
 		} catch (Exception E_bc) {
 			E_bc.printStackTrace();
 		}
@@ -330,6 +335,7 @@ public abstract class DistributedDataController {
 		try {
 			DatagramPacket outPacket = new DatagramPacket(sig.getBytes(), sig.length(), dest_addr, DGRAM_PORT_RX);
 			// A packet containing only the signal to be broadcasted
+			
 			dgramSocket.send(outPacket); // Broadcast ID request on the local network
 		} catch (Exception E_bc) {
 			E_bc.printStackTrace();
