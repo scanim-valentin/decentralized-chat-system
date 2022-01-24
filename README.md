@@ -8,24 +8,31 @@ La connexion ainsi que déconnexion et le changement de pseudo,le choix d'un ide
 
 Pour l'utilisation de ce programme, il n'y a pas de connaissance à avoir en informatique.
 
-#NOTICE D'UTILISATION DU CHAT SYSTEME
+# NOTICE D'UTILISATION DU CHAT SYSTEME FRONT END
 
-Pour envoyer un message : 
+Pour se connecter au système de chat :
+Sur la fenetre de connexion:
+
+	1. Entre votre nom d'utilisateur
+	2. Selectionner la connexion à la base de donnée ou non
+	3. Si non appuyer sur connexion pour lancer l'agent
+	3. Si oui cocher si vous voulez vous incrire "Sign up" ou s'identifier "Sign in" 
+	4. Entre votre ID et votre mot de passe
 
 Ouvrir une conversation avec un autre utilisateur :
+Pour envoyer un message :
 
 	1. Selectionner un contact dans liste des utilisateurs
 	2. Ecrire votre message dans la zone de texte
 	3. Cliquer sur "Send" pour établir la connexion et envoyer le message
  	
 Pour envoyer un fichier :
-
 Se rendre dans la fenetre de conservation avec un autre utilisateur :
 
 	1. Selectionner un contact dans liste des utilisateurs
 	2. Cliquer sur "Send file"
 	3. Choisir le fichier à envoyer
-	4. Cliquer sur ouvrir
+	4. Cliquer sur ouvrir pour envoyer le fichier
  
 Pour changer de pseudo :
 
@@ -33,15 +40,22 @@ Pour changer de pseudo :
 	2. Entrer un nouveau pseudo valide
 	3. Cliquer sur "Change name"
   
-Pour se déconncter :
+Pour se déconnecter :
 
-	1. Cliquer sur "Disconnct" pour retourner à la page de connexion
+	1. Cliquer sur "Disconnect" pour retourner à la page de connexion
   
 Pour fermer l'application de chat :
  
 	1. Cliquer sur Exit dans la fenêtre de connexion
   
  Si vous avez besoin de plus d'aide, appeler le service informatique au 3838.
+
+
+ 
+# NOTICE D'UTILISATION DU CHAT SYSTEME EN BACK END
+
+Il faut lancer le launcher avec un argument quelconque 
+
 
 
 
