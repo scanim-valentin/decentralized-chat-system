@@ -211,23 +211,25 @@ public abstract class ChattingSessionController {
 			while (active) {
 				try {
 					MainController.NO_GUI_debugPrint("Listenning . . .");
-					input_msg = this.input.readLine();
-
-					if (input_msg == null) {
-						active = false;
-						MainController.NO_GUI_debugPrint("Disconnected");
-						this.input.close();
-						this.output.close();
-						this.socket.close();
-					} else {
-						MainController.NO_GUI_debugPrint("Received: " + input_msg);
-						this.conversation += input_msg+"\n" ;
-						//MainController.debugPrint(input_msg);
-						if(!MainController.debug_mode)
-							if(ChatWindow.currentUser.equals(this.other_user))
-								ChatWindow.refreshMessages();
+					
+					if(this.socket != null) {
+							input_msg = this.input.readLine();
+	
+						if (input_msg == null) {
+							active = false;
+							MainController.NO_GUI_debugPrint("Disconnected");
+							this.input.close();
+							this.output.close();
+							this.socket.close();
+						} else {
+							MainController.NO_GUI_debugPrint("Received: " + input_msg);
+							this.conversation += input_msg+"\n" ;
+							//MainController.debugPrint(input_msg);
+							if(!MainController.debug_mode)
+								if(ChatWindow.currentUser.equals(this.other_user))
+									ChatWindow.refreshMessages();
+						}
 					}
-
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

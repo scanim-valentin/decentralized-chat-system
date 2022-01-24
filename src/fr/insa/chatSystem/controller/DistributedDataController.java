@@ -110,7 +110,7 @@ public abstract class DistributedDataController {
 
 	// PARTIE PRIVEES
 	
-	static private int BROADCAST_REPETITION = 5 ; 
+	static private int BROADCAST_REPETITION = 1 ; 
 	
 	static private List<UserID> userlist = new ArrayList<UserID>(); // List of users to fill with other UsersID
 

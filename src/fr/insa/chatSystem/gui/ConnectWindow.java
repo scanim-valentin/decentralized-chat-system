@@ -107,9 +107,11 @@ public class ConnectWindow extends JFrame {
 						result R = MainController.useDatabaseSignIn(url,database,password_db,username,id,password);
 						switch (R) {
 							case INVALID_CONTENT:
+								//ZoneResponse.setText("Username contains illegal character " + DistributedDataController.getIllegalContent());
 								break;
 
 							case ALREADY_EXISTS:
+								//ZoneResponse.setText("Username already exists in userlist!");
 								break;
 
 							case INVALID_DB_AUTH:
