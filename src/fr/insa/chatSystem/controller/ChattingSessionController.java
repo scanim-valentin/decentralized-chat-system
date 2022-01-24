@@ -173,8 +173,9 @@ public abstract class ChattingSessionController {
 				MainController.NO_GUI_debugPrint("Sent " + msg.toString());
 				//Adding message to conversation
 				this.conversation += msg.toString() ; 
-				if( !MainController.debug_mode && ChatWindow.currentUser.equals(this.other_user))
-					ChatWindow.refreshMessages();
+				if(ChatWindow.currentUser != null)
+					if( !MainController.debug_mode && ChatWindow.currentUser.equals(this.other_user))
+						ChatWindow.refreshMessages();
 				this.output.println(msg);
 
 			} catch (Exception e) {
