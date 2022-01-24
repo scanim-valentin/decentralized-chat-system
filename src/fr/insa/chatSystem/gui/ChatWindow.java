@@ -125,7 +125,7 @@ public class ChatWindow extends JFrame {
 
 		JButton btnChangeName = new JButton("Change Name");
 		btnChangeName.setFont(new Font("Lucida Grande", Font.BOLD, 12));
-		btnChangeName.setBounds(180, 12, 131, 29);
+		btnChangeName.setBounds(180, 12, 143, 29);
 		btnChangeName.setForeground(new Color(51, 204, 0));
 		contentPane.add(btnChangeName);
 		btnChangeName.addActionListener(new ActionListener() {
@@ -215,7 +215,7 @@ public class ChatWindow extends JFrame {
 		nameUser.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(nameUser);
 		nameUser.setText(username);
-		currentUserLbl.setBounds(323, 11, 205, 29);
+		currentUserLbl.setBounds(336, 12, 205, 29);
 		contentPane.add(currentUserLbl);
 
 		// Display the widow
