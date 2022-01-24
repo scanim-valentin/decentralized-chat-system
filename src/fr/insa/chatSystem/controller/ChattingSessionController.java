@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public abstract class ChattingSessionController {
 	// Retourne SESSION_DOES_NOT_EXIST si la session de chat n'existe pas
 	// Retourne SUCCESS si la session s'est bien fermee
 	public static result closeSession(String username) {
-				
+
 		UserID id = DistributedDataController.getIDByName(username);
 		if (id == null) {
 			return result.INVALID_USERNAME;
@@ -37,7 +36,7 @@ public abstract class ChattingSessionController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		MainController.NO_GUI_debugPrint("Removed "+username+" from active chat session list"+chatlist) ; 
+		MainController.NO_GUI_debugPrint("Removed " + username + " from active chat session list" + chatlist);
 		return result.SUCCESS;
 	}
 
@@ -61,8 +60,7 @@ public abstract class ChattingSessionController {
 		session.send(message_content);
 		return result.SUCCESS;
 	}
-	
-	
+
 	// Cree une nouvelle session de chat avec l'utilisateur "other_user"
 	// Retourne ALREADY_EXISTS si la session existe deja
 	// Retourne INCORRECT_USERNAME si le nom d'utilisateur est incorect
@@ -88,7 +86,7 @@ public abstract class ChattingSessionController {
 			return result.INVALID_USERNAME;
 		}
 	}
-	
+
 	public static String getConversation(String username) {
 		UserID id = DistributedDataController.getIDByName(username);
 		ChattingSession session = getSessionByID(id);
@@ -121,9 +119,9 @@ public abstract class ChattingSessionController {
 
 	private static class ChattingSession extends Thread {
 
-		private String conversation = "Conversation :" ; 
+		private String conversation = "Conversation :";
 		private UserID other_user; // Other participant to the conversation
-		
+
 		private Socket socket = null;
 		private PrintWriter output = null;
 		BufferedReader input = null;
@@ -152,9 +150,9 @@ public abstract class ChattingSessionController {
 			this.start();
 			MainController.NO_GUI_debugPrint("Started thread");
 		}
-		
+
 		public String getConversation() {
-			return conversation ; 
+			return conversation;
 		}
 
 		// Will send a dated message and begin the TCP connection if it is the first
@@ -163,7 +161,7 @@ public abstract class ChattingSessionController {
 			try {
 
 				if (socket == null) {
-					System.out.println("OTHER USER "+other_user+" CHAT LIST "+getChatList().toString()) ; 
+					System.out.println("OTHER USER " + other_user + " CHAT LIST " + getChatList().toString());
 					this.socket = new Socket(other_user.getAddress(), CHAT_PORT);
 					MainController.NO_GUI_debugPrint("Created socket to chat with " + other_user.toString());
 					this.output = new PrintWriter(this.socket.getOutputStream(), true);
@@ -172,10 +170,10 @@ public abstract class ChattingSessionController {
 				}
 				Message msg = new Message(M, MainController.username);
 				MainController.NO_GUI_debugPrint("Sent " + msg.toString());
-				//Adding message to conversation
-				this.conversation += msg.toString() ; 
-				if(ChatWindow.currentUser != null)
-					if( !MainController.debug_mode && ChatWindow.currentUser.equals(this.other_user))
+				// Adding message to conversation
+				this.conversation += msg.toString();
+				if (ChatWindow.currentUser != null)
+					if (!MainController.debug_mode && ChatWindow.currentUser.equals(this.other_user))
 						ChatWindow.refreshMessages();
 				this.output.println(msg);
 
@@ -213,10 +211,10 @@ public abstract class ChattingSessionController {
 			while (active) {
 				try {
 					MainController.NO_GUI_debugPrint("Listenning . . .");
-					
-					if(this.socket != null) {
-							input_msg = this.input.readLine();
-	
+
+					if (this.socket != null) {
+						input_msg = this.input.readLine();
+
 						if (input_msg == null) {
 							active = false;
 							MainController.NO_GUI_debugPrint("Disconnected");
@@ -225,10 +223,10 @@ public abstract class ChattingSessionController {
 							this.socket.close();
 						} else {
 							MainController.NO_GUI_debugPrint("Received: " + input_msg);
-							this.conversation += input_msg+"\n" ;
-							//MainController.debugPrint(input_msg);
-							if(!MainController.debug_mode)
-								if(ChatWindow.currentUser.equals(this.other_user))
+							this.conversation += input_msg + "\n";
+							// MainController.debugPrint(input_msg);
+							if (!MainController.debug_mode)
+								if (ChatWindow.currentUser.equals(this.other_user))
 									ChatWindow.refreshMessages();
 						}
 					}
@@ -238,7 +236,9 @@ public abstract class ChattingSessionController {
 			}
 		}
 	}
-	private static CSM_Deamon csm_deamon ; 
+
+	private static CSM_Deamon csm_deamon;
+
 	public static void start_deamon() {
 		MainController.NO_GUI_debugPrint("Starting deamon . . .");
 		csm_deamon = new CSM_Deamon("CSM_Deamon");
@@ -246,16 +246,16 @@ public abstract class ChattingSessionController {
 	}
 
 	private static ServerSocket chat_socket_generator = null;
+
 	static class CSM_Deamon extends Thread {
-		
-		
+
 		CSM_Deamon(String name) {
 			super(name);
 			try {
 				// Socket to receive incoming chat request
-					if(chat_socket_generator != null)
-						chat_socket_generator.close();
-					chat_socket_generator = new ServerSocket(CHAT_PORT);
+				if (chat_socket_generator != null)
+					chat_socket_generator.close();
+				chat_socket_generator = new ServerSocket(CHAT_PORT);
 			} catch (Exception E) {
 				E.printStackTrace();
 			}
@@ -286,22 +286,22 @@ public abstract class ChattingSessionController {
 				Socket new_sock;
 				MainController.NO_GUI_debugPrint("Listening on port " + CHAT_PORT);
 				while (true) {
-						new_sock = chat_socket_generator.accept();
-						MainController
-								.NO_GUI_debugPrint("Received chat request from " + new_sock.getInetAddress().toString());
-						MainController.NO_GUI_debugPrint("Looking for username . . .");
-						UserID usrid = DistributedDataController.getIDByIP(new_sock.getInetAddress());
-						if (usrid == null) {
-							MainController.NO_GUI_debugPrint(
-									"No user with address " + new_sock.getInetAddress() + " has been found ! Ignoring");
-						} else {
-							MainController.NO_GUI_debugPrint(
-									"Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
-							chatlist.add(new ChattingSession(usrid, new_sock, "Chat Thread " + chatlist.size()));
-						}
+					new_sock = chat_socket_generator.accept();
+					MainController
+							.NO_GUI_debugPrint("Received chat request from " + new_sock.getInetAddress().toString());
+					MainController.NO_GUI_debugPrint("Looking for username . . .");
+					UserID usrid = DistributedDataController.getIDByIP(new_sock.getInetAddress());
+					if (usrid == null) {
+						MainController.NO_GUI_debugPrint(
+								"No user with address " + new_sock.getInetAddress() + " has been found ! Ignoring");
+					} else {
+						MainController.NO_GUI_debugPrint(
+								"Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
+						chatlist.add(new ChattingSession(usrid, new_sock, "Chat Thread " + chatlist.size()));
 					}
+				}
 			} catch (IOException E_sock) {
-				//Ignore
+				// Ignore
 			}
 		}
 	}

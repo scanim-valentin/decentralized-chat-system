@@ -36,13 +36,13 @@ public class ChatWindow extends JFrame {
 
 	// Refreshes the list
 	static public void refreshList() {
-		int select = 0 ; 
-		if(remoteUserList != null)
-			select = remoteUserList.getSelectedIndex() ; 
+		int select = 0;
+		if (remoteUserList != null)
+			select = remoteUserList.getSelectedIndex();
 		model_list.clear();
 		for (UserID user : DistributedDataController.getUserList())
 			model_list.addElement(user);
-		if(remoteUserList != null)
+		if (remoteUserList != null)
 			remoteUserList.setSelectedIndex(select);
 	}
 
@@ -70,7 +70,7 @@ public class ChatWindow extends JFrame {
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie du fichier
-				// ChooseFile.SendFile();
+				ChooseFile.SendFile();
 			}
 		});
 
