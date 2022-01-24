@@ -172,8 +172,10 @@ public class ChatWindow extends JFrame {
 		remoteUserList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				currentUser = remoteUserList.getSelectedValue();
-				currentUserLbl.setText(currentUser.getName());
-				ChattingSessionController.newChat(currentUser.getName());
+				if(currentUser != null) {
+					currentUserLbl.setText(currentUser.getName());
+					ChattingSessionController.newChat(currentUser.getName());
+				}
 				refreshMessages();
 			}
 		});
