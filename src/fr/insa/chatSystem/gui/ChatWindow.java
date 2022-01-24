@@ -36,9 +36,11 @@ public class ChatWindow extends JFrame {
 
 	// Refreshes the list
 	static public void refreshList() {
+		int select = remoteUserList.getSelectedIndex() ; 
 		model_list.clear();
 		for (UserID user : DistributedDataController.getUserList())
 			model_list.addElement(user);
+		remoteUserList.setSelectedIndex(select);
 	}
 
 	static public void refreshMessages() {

@@ -287,7 +287,8 @@ public abstract class DistributedDataController {
 										"Identified " + NEW_NAME_SIG + " from " + inPacket.getAddress().toString()
 												+ "(prev. \"" + unpacked[1] + "\", now \"" + unpacked[2] + "\")");
 								updateUserList(unpacked[1], unpacked[2]);
-								ChatWindow.refreshList() ; 
+								if(!MainController.debug_mode)
+									ChatWindow.refreshList() ;  
 								break;
 							}
 						} else {
