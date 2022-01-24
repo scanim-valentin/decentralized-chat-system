@@ -104,7 +104,7 @@ public class ConnectWindow extends JFrame {
 					
 					if(rdbtnSignIn.isSelected()) {
 						String id = textFieldID.getText();
-						result R = MainController.useDatabaseSignIn(url,database,password_db,username,d,password);
+						result R = MainController.useDatabaseSignIn(url,database,password_db,username,id,password);
 						switch (R) {
 							case INVALID_CONTENT:
 								break;
@@ -121,7 +121,7 @@ public class ConnectWindow extends JFrame {
 								// Open le chat window
 								new ChatWindow(username, null);
 								break;
-								break;
+								
 
 						}
 					}else {
