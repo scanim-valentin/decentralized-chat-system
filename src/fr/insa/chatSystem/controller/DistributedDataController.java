@@ -71,7 +71,7 @@ public abstract class DistributedDataController {
 				if (MainController.username.isEmpty()) {
 					MainController.username = username;
 					DistributedDataController.notifyConnection();
-				} else {
+		} else {
 					DistributedDataController.notifyNewName(username);
 					MainController.username = username;
 				}
@@ -158,7 +158,7 @@ public abstract class DistributedDataController {
 				if (MainController.addr == null) {
 					dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX); // Socket to receive notifications
 					dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX); // Socket to send notifications
-				} else {
+				} else {					
 					dgramSocket_RX = new DatagramSocket(DGRAM_PORT_RX, MainController.addr); // Socket to receive
 																								// notifications
 					dgramSocket_TX = new DatagramSocket(DGRAM_PORT_TX, MainController.addr); // Socket to send
@@ -242,7 +242,8 @@ public abstract class DistributedDataController {
 								// In the case of an online signal the second element of the array is the
 								// username of the sender
 								MainController.NO_GUI_debugPrint("Added name in userlist : " + userlist.toString());
-								ChatWindow.refreshList() ; 
+								if(!MainController.debug_mode)
+									ChatWindow.refreshList() ; 
 								// To be added to the list
 								break;
 
@@ -257,12 +258,15 @@ public abstract class DistributedDataController {
 								}
 								if (usr != null)
 									userlist.remove(usr);
+							
+								ChattingSessionController.closeSession(unpacked[1]) ; 
 								// In the case of an offline signal the second element of the array is the
 								// username of the sender
 
 								MainController.NO_GUI_debugPrint("Removed name in userlist : " + userlist.toString());
 								// To be removed from the list
-								ChatWindow.refreshList() ; 
+								if(!MainController.debug_mode)
+									ChatWindow.refreshList() ; 
 								break;
 
 							case NEW_NAME_SIG:
