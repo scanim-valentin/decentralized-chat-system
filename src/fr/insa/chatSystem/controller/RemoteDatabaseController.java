@@ -13,9 +13,9 @@ public abstract class RemoteDatabaseController {
 
 	static private String user_id = null;
 
-	static private String DB_URL = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/tp_servlet_004";
-	static private String DB_PASSWORD = "ish6uo2U";
-	static private String DB_USER = "tp_servlet_004";
+	static public String DB_URL = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/tp_servlet_004";
+	static public String DB_PASSWORD = "ish6uo2U";
+	static public String DB_USER = "tp_servlet_004";
 
 	static private Connection connection = null;
 	static private Statement statement = null;

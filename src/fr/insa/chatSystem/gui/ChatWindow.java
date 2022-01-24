@@ -81,25 +81,25 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnSend);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String content = null;
 				// Envoie "message_content" a l'utilisateur de nom "username"
 				// ChattingSessionController.sendMessage(username, textArea.getText());
 				// Envoie de message
 				if(currentUser != null) {
 					switch(ChattingSessionController.sendMessage(currentUser.getName(),message_field.getText())) {
 					case INVALID_CONTENT : 
-						message_field.setBackground(Color.RED);
-						break ; 
-					case SUCCESS :
-						message_field.setBackground(Color.WHITE);
+						message_field.setBackground(Color.BLUE);
 						break ; 
 					case SESSION_DOES_NOT_EXIST :
-						message_field.setBackground(Color.YELLOW);
+						message_field.setBackground(Color.RED);
 						break ; 
 					case INVALID_USERNAME :
-						message_field.setBackground(Color.PINK);
+						message_field.setBackground(Color.GREEN);
+						break ; 
+					default :
+						message_field.setText("") ; 
 						break ; 
 					}
+					
 				}
 			}
 		});
