@@ -208,8 +208,9 @@ public abstract class ChattingSessionController {
 			});
 			String input_msg;
 			boolean active = true;
+			try {
 			while (active) {
-				try {
+				
 					MainController.NO_GUI_debugPrint("Listenning . . .");
 
 					if (this.socket != null) {
@@ -230,11 +231,12 @@ public abstract class ChattingSessionController {
 									ChatWindow.refreshMessages();
 						}
 					}
+			}
 				} catch (IOException e) {
-					e.printStackTrace();
+					//Ignore
 				}
 			}
-		}
+		
 	}
 
 	private static CSM_Deamon csm_deamon;
