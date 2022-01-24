@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 
 import fr.insa.chatSystem.controller.ChattingSessionController;
 import fr.insa.chatSystem.controller.DistributedDataController;
+import fr.insa.chatSystem.controller.MainController;
 import fr.insa.chatSystem.controller.MainController.result;
 import fr.insa.chatSystem.controller.RemoteDatabaseController;
 
@@ -42,7 +43,8 @@ public class ConnectWindow extends JFrame {
 	public JTextField textFieldPassword;
 	public JRadioButton rdbtnSignIn = new JRadioButton("Sign In");
 	public JRadioButton rdbtnSignUp = new JRadioButton("Sign Up");
-	
+	public JCheckBox chckbxUseCentralizedHistory = new JCheckBox("Use centralized history database");
+	private JLabel ZoneResponse;
 	
 	
 
@@ -93,30 +95,64 @@ public class ConnectWindow extends JFrame {
 		ButtonConnexion.setHorizontalAlignment(SwingConstants.LEFT);
 		ButtonConnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username = textFieldUsername.getText();
-				// Fonction de vérification du username
-				result R = DistributedDataController.setUsername(username);
-				switch (R) {
-				case INVALID_CONTENT:
-					//ZoneResponse.setText("Empty field !");
-					break;
+				if(chckbxUseCentralizedHistory.isSelected()) {
+					String username = textFieldUsername.getText();
+					String database = textFieldDatabase.getText();
+					String url = textFieldURL.getText();
+					String password_db = textFieldPasswordDB.getText();
+					String password = textFieldPassword.getText();
+					
+					if(rdbtnSignIn.isSelected()) {
+						String id = textFieldID.getText();
+						result R = MainController.useDatabaseSignIn(url,database,password_db,username,d,password);
+						switch (R) {
+							case INVALID_CONTENT:
+								break;
 
-				case ALREADY_EXISTS:
-					//ZoneResponse.setText("Username already exists !");
-					break;
+							case ALREADY_EXISTS:
+								break;
 
-				default:
-					//ZoneResponse.setText("Username OK !");
-					// Attendre 2sec pour voir le message OK pour le pseudo
-					// MainController.wait(2000);
+							case INVALID_DB_AUTH:
+								break;
 
-					// Close frame
-					frame.dispose();
-					ChattingSessionController.start_deamon(); 
-					// Open le chat window
-					new ChatWindow(username, null);
-					break;
-				}
+							default:
+								frame.dispose();
+								ChattingSessionController.start_deamon(); 
+								// Open le chat window
+								new ChatWindow(username, null);
+								break;
+								break;
+
+						}
+					}else {
+						
+					}
+				}else {
+					String username = textFieldUsername.getText();
+					// Fonction de vérification du username
+					result R = DistributedDataController.setUsername(username);
+					switch (R) {
+					case INVALID_CONTENT:
+						ZoneResponse.setText("Empty field !");
+						break;
+	
+					case ALREADY_EXISTS:
+						ZoneResponse.setText("Username already exists !");
+						break;
+	
+					default:
+						ZoneResponse.setText("Username OK !");
+						// Attendre 2sec pour voir le message OK pour le pseudo
+						// MainController.wait(2000);
+	
+						// Close frame
+						frame.dispose();
+						ChattingSessionController.start_deamon(); 
+						// Open le chat window
+						new ChatWindow(username, null);
+						break;
+					}
+					}
 			}
 		});
 
@@ -144,7 +180,6 @@ public class ConnectWindow extends JFrame {
 		frame.getContentPane().add(LabelLogin);
 		
 		//Activation du mode base de donnée si checked
-		JCheckBox chckbxUseCentralizedHistory = new JCheckBox("Use centralized history database");
 		chckbxUseCentralizedHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnSignUp.setEnabled(!rdbtnSignUp.isEnabled());
@@ -242,6 +277,13 @@ public class ConnectWindow extends JFrame {
 		rdbtnSignUp.setSelected(true);
 		rdbtnSignUp.setBounds(231, 218, 149, 23);
 		frame.getContentPane().add(rdbtnSignUp);
+		
+		ZoneResponse = new JLabel("This software will work as intended.");
+		ZoneResponse.setForeground(Color.RED);
+		ZoneResponse.setHorizontalAlignment(SwingConstants.CENTER);
+		ZoneResponse.setFont(new Font("Dialog", Font.BOLD, 13));
+		ZoneResponse.setBounds(18, 117, 420, 26);
+		frame.getContentPane().add(ZoneResponse);
 		// Display the window
 		frame.setVisible(true);
 	}
