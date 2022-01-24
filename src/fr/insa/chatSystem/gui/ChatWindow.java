@@ -117,10 +117,8 @@ public class ChatWindow extends JFrame {
 		btnDisco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ConnectWindow(username);
-				// Demande de déconnexion
-				ChattingSessionController.closeSession(username);
 				// Notifie les autres utilisateur d'une connection
-				DistributedDataController.notifyDisconnection();
+				System.exit(0);
 				window.dispose();
 			}
 		});

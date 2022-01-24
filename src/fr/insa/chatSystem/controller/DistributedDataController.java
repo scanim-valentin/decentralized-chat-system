@@ -181,9 +181,7 @@ public abstract class DistributedDataController {
 					try {
 						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
 						dgramSocket_RX.close();
-						System.out.println("RX socket is shut down!");
 						dgramSocket_TX.close();
-						System.out.println("TX socket is shut down!");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -295,8 +293,9 @@ public abstract class DistributedDataController {
 							MainController.NO_GUI_debugPrint("Identified sender as localhost ("
 									+ InetAddress.getLocalHost() + ") , ignoring packet");
 						}
-					} catch (Exception E_rec) {
-						E_rec.printStackTrace();
+					} 
+					catch (SocketException E_rec) {
+						//Ignore
 					}
 				}
 			} catch (Exception E_sock) {

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -237,21 +238,24 @@ public abstract class ChattingSessionController {
 			}
 		}
 	}
-
+	private static CSM_Deamon csm_deamon ; 
 	public static void start_deamon() {
 		MainController.NO_GUI_debugPrint("Starting deamon . . .");
-		CSM_Deamon csm_deamon = new CSM_Deamon("CSM_Deamon");
+		csm_deamon = new CSM_Deamon("CSM_Deamon");
 		csm_deamon.start();
 	}
 
+	private static ServerSocket chat_socket_generator = null;
 	static class CSM_Deamon extends Thread {
-		ServerSocket chat_socket_generator;
-
+		
+		
 		CSM_Deamon(String name) {
 			super(name);
 			try {
 				// Socket to receive incoming chat request
-				chat_socket_generator = new ServerSocket(CHAT_PORT);
+					if(chat_socket_generator != null)
+						chat_socket_generator.close();
+					chat_socket_generator = new ServerSocket(CHAT_PORT);
 			} catch (Exception E) {
 				E.printStackTrace();
 			}
@@ -263,12 +267,8 @@ public abstract class ChattingSessionController {
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				public void run() {
 					try {
-						// Shutting down deamon socket
-						DistributedDataController.notifyDisconnection(); // Notifying every user in the local network
-						chat_socket_generator.close();
-						MainController.NO_GUI_debugPrint("Chat socket generator is shut down!");
-
 						// Shutting down sockets for each chatting session
+						chat_socket_generator.close();
 						for (ChattingSession session : chatlist) {
 							session.socket.close();
 							MainController.NO_GUI_debugPrint(
@@ -286,22 +286,22 @@ public abstract class ChattingSessionController {
 				Socket new_sock;
 				MainController.NO_GUI_debugPrint("Listening on port " + CHAT_PORT);
 				while (true) {
-					new_sock = chat_socket_generator.accept();
-					MainController
-							.NO_GUI_debugPrint("Received chat request from " + new_sock.getInetAddress().toString());
-					MainController.NO_GUI_debugPrint("Looking for username . . .");
-					UserID usrid = DistributedDataController.getIDByIP(new_sock.getInetAddress());
-					if (usrid == null) {
-						MainController.NO_GUI_debugPrint(
-								"No user with address " + new_sock.getInetAddress() + " has been found ! Ignoring");
-					} else {
-						MainController.NO_GUI_debugPrint(
-								"Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
-						chatlist.add(new ChattingSession(usrid, new_sock, "Chat Thread " + chatlist.size()));
+						new_sock = chat_socket_generator.accept();
+						MainController
+								.NO_GUI_debugPrint("Received chat request from " + new_sock.getInetAddress().toString());
+						MainController.NO_GUI_debugPrint("Looking for username . . .");
+						UserID usrid = DistributedDataController.getIDByIP(new_sock.getInetAddress());
+						if (usrid == null) {
+							MainController.NO_GUI_debugPrint(
+									"No user with address " + new_sock.getInetAddress() + " has been found ! Ignoring");
+						} else {
+							MainController.NO_GUI_debugPrint(
+									"Found user " + usrid.getName() + " for address " + new_sock.getInetAddress());
+							chatlist.add(new ChattingSession(usrid, new_sock, "Chat Thread " + chatlist.size()));
+						}
 					}
-				}
-			} catch (Exception E_sock) {
-				E_sock.printStackTrace();
+			} catch (IOException E_sock) {
+				//Ignore
 			}
 		}
 	}
