@@ -42,7 +42,7 @@ public class ConnectWindow extends JFrame {
 	public JRadioButton rdbtnSignIn = new JRadioButton("Sign In");
 	public JRadioButton rdbtnSignUp = new JRadioButton("Sign Up");
 	public JCheckBox chckbxUseCentralizedHistory = new JCheckBox("Use centralized history database");
-	private JLabel ZoneResponse;
+	public JLabel ZoneResponse;
 
 	/**
 	 * Create the application
@@ -123,6 +123,28 @@ public class ConnectWindow extends JFrame {
 
 						}
 					} else {
+						result R = MainController.useDatabaseSignUp(url, database, password_db, username, password);
+						switch (R) {
+						case INVALID_CONTENT:
+							ZoneResponse.setText("Username contains illegal character " + DistributedDataController.getIllegalContent());
+							break;
+
+						case ALREADY_EXISTS:
+							ZoneResponse.setText("Username already exists in userlist!");
+							break;
+
+						case INVALID_DB_AUTH:
+							ZoneResponse.setText("Invalid auth");
+							break;
+
+						default:
+							frame.dispose();
+							ChattingSessionController.start_deamon();
+							// Open le chat window
+							new ChatWindow(username, null);
+							break;
+
+						}
 
 					}
 				} else {
@@ -131,11 +153,11 @@ public class ConnectWindow extends JFrame {
 					result R = DistributedDataController.setUsername(username);
 					switch (R) {
 					case INVALID_CONTENT:
-						ZoneResponse.setText("Empty field !");
+						ZoneResponse.setText("Username contains illegal character " + DistributedDataController.getIllegalContent());
 						break;
 
 					case ALREADY_EXISTS:
-						ZoneResponse.setText("Username already exists !");
+						ZoneResponse.setText("Username already exists in userlist!");
 						break;
 
 					default:
