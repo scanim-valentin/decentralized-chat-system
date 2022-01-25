@@ -3,6 +3,8 @@ package fr.insa.chatSystem.File;
 import java.io.*;
 import java.net.*;
 
+import fr.insa.chatSystem.controller.MainController;
+
 //Côté recepteur
 public class TCPReceive extends Thread {
 
@@ -20,7 +22,7 @@ public class TCPReceive extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("The file's ready to be received : " + fileOutput);
+		MainController.NO_GUI_debugPrint("The file's ready to be received : " + fileOutput);
 		byte[] aByte = new byte[1];
 		int bytesRead;
 
@@ -54,8 +56,8 @@ public class TCPReceive extends Thread {
 				bos.flush();
 				bos.close();
 				serverSocket.close();
-				System.out.println("File received : " + fileOutput);
-				System.out.println("The thread TCP receive closed.");
+				MainController.NO_GUI_debugPrint("File received : " + fileOutput);
+				MainController.NO_GUI_debugPrint("The thread TCP receive closed.");
 			} catch (IOException ex) {
 				// Do exception handling
 			}
