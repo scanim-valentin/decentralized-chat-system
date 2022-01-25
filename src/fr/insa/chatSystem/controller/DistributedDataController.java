@@ -168,12 +168,9 @@ public abstract class DistributedDataController {
 				}
 			} catch (Exception E) {
 				E.printStackTrace();
-				while (true)
-					;
 			}
 		}
 
-		@SuppressWarnings("incomplete-switch")
 		public void run() {
 
 			// Closes sockets when the user closes the agent
@@ -267,6 +264,8 @@ public abstract class DistributedDataController {
 										break;
 									case SESSION_DOES_NOT_EXIST:
 										MainController.NO_GUI_debugPrint("SESSION DOES NOT EXIST " + unpacked[1]);
+										break;
+									default:
 										break;
 									}
 									userlist.remove(usr);

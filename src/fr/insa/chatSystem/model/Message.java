@@ -3,6 +3,7 @@ package fr.insa.chatSystem.model;
 import java.sql.Timestamp;
 
 public class Message {
+
 	private String sender;
 	private String textMessage;
 	Timestamp timestamp = new Timestamp(System.currentTimeMillis());

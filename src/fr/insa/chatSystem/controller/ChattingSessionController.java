@@ -1,23 +1,15 @@
 package fr.insa.chatSystem.controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
-import fr.insa.chatSystem.model.Message;
-import fr.insa.chatSystem.model.UserID;
+import fr.insa.chatSystem.model.*;
 import fr.insa.chatSystem.controller.MainController.result;
 import fr.insa.chatSystem.gui.ChatWindow;
 import fr.insa.chatSystem.File.*;
 
-public abstract class ChattingSessionController {
+public abstract class ChattingSessionController<UDPSender> {
 	// METHODES PUBLIQUES AVEC INTERFACE
 
 	// Termine la session de chat avec l'utilisateur de nom "username"
@@ -67,6 +59,7 @@ public abstract class ChattingSessionController {
 
 	final static int portTCP = 4000;
 
+	// Envoyer de fichier
 	public static void sendFile(File file, InetAddress hostname) {
 		MainController.debugPrint("Thread TCP Send created.");
 		TCPSend send = new TCPSend(file, portTCP, hostname);
@@ -74,6 +67,7 @@ public abstract class ChattingSessionController {
 		MainController.debugPrint("The file sended : " + file.getName());
 	}
 
+	// Reception de fichier
 	public static void receiveFile(String file_name) throws IOException {
 		MainController.debugPrint("The Thread TCP Receive created.");
 		TCPReceive receive = new TCPReceive(portTCP, file_name);
