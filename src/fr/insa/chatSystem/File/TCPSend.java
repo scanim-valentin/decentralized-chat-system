@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import fr.insa.chatSystem.controller.MainController;
+
 //Coté Emetteur
 public class TCPSend extends Thread {
 
@@ -30,7 +32,7 @@ public class TCPSend extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				System.out.println("The file is ready to send :" + fileToSend.getName());
+				MainController.debugPrint("The file is ready to send :" + fileToSend.getName());
 				this.connectionSocket = new Socket(IPServer, clientPort);
 				this.outToClient = new BufferedOutputStream(connectionSocket.getOutputStream());
 			} catch (IOException ex) {
@@ -38,21 +40,24 @@ public class TCPSend extends Thread {
 			}
 
 			if (outToClient != null) {
-				File myFile = this.fileToSend;
-				if (myFile.exists()) {
-					System.out.println("File exists: " + fileToSend.getName());
+
+				File theFile = this.fileToSend;
+
+				if (theFile.exists()) {
+					MainController.debugPrint("File exists: " + fileToSend.getName());
 				} else {
-					System.out.println("File doesn't exists.");
+					MainController.debugPrint("File doesn't exists.");
 					System.exit(1);
 				}
-				byte[] mybytearray = new byte[(int) myFile.length()];
+
+				byte[] mybytearray = new byte[(int) theFile.length()];
 				FileInputStream fis = null;
 
 				try {
-					fis = new FileInputStream(myFile);
+					fis = new FileInputStream(theFile);
 				} catch (FileNotFoundException ex) {
-					// Do exception handling
 				}
+
 				BufferedInputStream bis = new BufferedInputStream(fis);
 
 				try {
@@ -61,11 +66,10 @@ public class TCPSend extends Thread {
 					outToClient.flush();
 					outToClient.close();
 					connectionSocket.close();
-					System.out.println("File sended : " + fileToSend.getName());
-					System.out.println("The thread TCP send closed.");
+					MainController.debugPrint("File sended : " + fileToSend.getName());
+					MainController.debugPrint("The thread TCP send closed.");
 					return;
 				} catch (IOException ex) {
-					// Do exception handling
 				}
 			}
 		}

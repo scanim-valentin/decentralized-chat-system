@@ -26,7 +26,7 @@ public class ChooseFile {
 		if (res == JFileChooser.APPROVE_OPTION) {
 			File file = choose.getSelectedFile();
 			// Option à prendre et faire du tftp avec le remoteUser si OK
-			MainController.NO_GUI_debugPrint("You have chosen : " + file.getAbsolutePath());
+			MainController.debugPrint("You have chosen : " + file.getAbsolutePath());
 			// Vérifie si le receveur est présent
 			if (currentUser != null) {
 				ChattingSessionController.sendFile(file, currentUser.getAddress());

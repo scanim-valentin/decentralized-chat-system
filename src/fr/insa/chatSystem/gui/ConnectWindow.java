@@ -122,7 +122,6 @@ public class ConnectWindow extends JFrame {
 							try {
 								new ChatWindow(username, null);
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							break;
@@ -151,7 +150,6 @@ public class ConnectWindow extends JFrame {
 							try {
 								new ChatWindow(username, null);
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							break;
@@ -175,6 +173,7 @@ public class ConnectWindow extends JFrame {
 
 					default:
 						ZoneResponse.setText("Username OK !");
+
 						// Attendre 2sec pour voir le message OK pour le pseudo
 						// MainController.wait(2000);
 
@@ -185,7 +184,6 @@ public class ConnectWindow extends JFrame {
 						try {
 							new ChatWindow(username, null);
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						break;
@@ -322,6 +320,7 @@ public class ConnectWindow extends JFrame {
 		ZoneResponse.setFont(new Font("Dialog", Font.BOLD, 13));
 		ZoneResponse.setBounds(18, 117, 420, 26);
 		frame.getContentPane().add(ZoneResponse);
+
 		// Display the window
 		frame.setVisible(true);
 	}

@@ -22,7 +22,7 @@ public class TCPReceive extends Thread {
 
 	@Override
 	public void run() {
-		MainController.NO_GUI_debugPrint("The file's ready to be received : " + fileOutput);
+		MainController.debugPrint("The file's ready to be received : " + fileOutput);
 		byte[] aByte = new byte[1];
 		int bytesRead;
 
@@ -33,7 +33,6 @@ public class TCPReceive extends Thread {
 			connectionSocket = serverSocket.accept();
 			is = connectionSocket.getInputStream();
 		} catch (IOException ex) {
-			// Do exception handling
 		}
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -56,10 +55,9 @@ public class TCPReceive extends Thread {
 				bos.flush();
 				bos.close();
 				serverSocket.close();
-				MainController.NO_GUI_debugPrint("File received : " + fileOutput);
-				MainController.NO_GUI_debugPrint("The thread TCP receive closed.");
+				MainController.debugPrint("File received : " + fileOutput);
+				MainController.debugPrint("The thread TCP receive closed.");
 			} catch (IOException ex) {
-				// Do exception handling
 			}
 		}
 	}

@@ -68,14 +68,14 @@ public abstract class ChattingSessionController {
 	final static int portTCP = 4000;
 
 	public static void sendFile(File file, InetAddress hostname) {
-		MainController.NO_GUI_debugPrint("Thread TCP Send created.");
+		MainController.debugPrint("Thread TCP Send created.");
 		TCPSend send = new TCPSend(file, portTCP, hostname);
 		send.start();
-		MainController.NO_GUI_debugPrint("The file sended : " + file.getName());
+		MainController.debugPrint("The file sended : " + file.getName());
 	}
 
 	public static void receiveFile(String file_name) throws IOException {
-		MainController.NO_GUI_debugPrint("The Thread TCP Receive created.");
+		MainController.debugPrint("The Thread TCP Receive created.");
 		TCPReceive receive = new TCPReceive(portTCP, file_name);
 		receive.start();
 	}
