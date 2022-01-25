@@ -6,21 +6,22 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 
 //Coté Emetteur
 public class TCPSend extends Thread {
 
 	private final int clientPort; // IP du Client
-	private final String IPServer; // IP du Serveur
+	private final InetAddress IPServer; // IP du Serveur
 	private final File fileToSend; // Fichier à envoyer
 	private Socket connectionSocket;// Port de connexion vide
 	private BufferedOutputStream outToClient; //
 
-	public TCPSend(File fileTx, int port, String IP) {
+	public TCPSend(File fileTx, int port, InetAddress hostname) {
 		clientPort = port;
 		fileToSend = fileTx;
-		IPServer = IP;
+		IPServer = hostname;
 		connectionSocket = null;
 		outToClient = null;
 	}

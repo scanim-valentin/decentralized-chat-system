@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,25 +35,7 @@ public class ChatWindow extends JFrame {
 	 * Create the frame.
 	 */
 
-	// Refreshes the list
-	static public void refreshList() {
-		int select = 0;
-		if (remoteUserList != null)
-			select = remoteUserList.getSelectedIndex();
-		if(model_list != null)
-			model_list.clear();
-		for (UserID user : DistributedDataController.getUserList())
-			model_list.addElement(user);
-		if (remoteUserList != null)
-			remoteUserList.setSelectedIndex(select);
-	}
-
-	static public void refreshMessages() {
-		if(currentUser != null)
-			history_messages.setText(ChattingSessionController.getConversation(currentUser.getName()));
-	}
-
-	public ChatWindow(String username, String message_content) {
+	public ChatWindow(String username, String message_content) throws IOException {
 
 		JFrame window = new JFrame();
 		window.setResizable(false); // ne pas changer la taille de la fenetre
@@ -72,7 +55,7 @@ public class ChatWindow extends JFrame {
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie du fichier
-				ChooseFile.SendFile();
+				ChooseFile.chooseFile();
 			}
 		});
 
@@ -173,7 +156,7 @@ public class ChatWindow extends JFrame {
 		remoteUserList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				currentUser = remoteUserList.getSelectedValue();
-				if(currentUser != null) {
+				if (currentUser != null) {
 					currentUserLbl.setText(currentUser.getName());
 					ChattingSessionController.newChat(currentUser.getName());
 				}
@@ -230,6 +213,30 @@ public class ChatWindow extends JFrame {
 
 		// Retourne la liste des session de chat
 		ChattingSessionController.getChatList();
+
+		String file_content = null;
+		// lancement de l'écoute de reception de fichier au port 4000
+		ChattingSessionController.receiveFile(file_content);
+
+	}
+
+	// Refreshes the list
+	static public void refreshList() {
+		int select = 0;
+		if (remoteUserList != null)
+			select = remoteUserList.getSelectedIndex();
+		if (model_list != null)
+			model_list.clear();
+		for (UserID user : DistributedDataController.getUserList())
+			model_list.addElement(user);
+		if (remoteUserList != null)
+			remoteUserList.setSelectedIndex(select);
+	}
+
+	// Actualiseer les messages
+	static public void refreshMessages() {
+		if (currentUser != null)
+			history_messages.setText(ChattingSessionController.getConversation(currentUser.getName()));
 	}
 
 }

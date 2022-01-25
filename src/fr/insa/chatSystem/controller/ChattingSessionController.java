@@ -1,9 +1,11 @@
 package fr.insa.chatSystem.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import fr.insa.chatSystem.model.Message;
 import fr.insa.chatSystem.model.UserID;
 import fr.insa.chatSystem.controller.MainController.result;
 import fr.insa.chatSystem.gui.ChatWindow;
+import fr.insa.chatSystem.File.*;
 
 public abstract class ChattingSessionController {
 	// METHODES PUBLIQUES AVEC INTERFACE
@@ -21,6 +24,7 @@ public abstract class ChattingSessionController {
 	// Retourne INCORRECT_USERNAME si le nom n'est pas valide
 	// Retourne SESSION_DOES_NOT_EXIST si la session de chat n'existe pas
 	// Retourne SUCCESS si la session s'est bien fermee
+
 	public static result closeSession(String username) {
 
 		UserID id = DistributedDataController.getIDByName(username);
@@ -59,6 +63,21 @@ public abstract class ChattingSessionController {
 		}
 		session.send(message_content);
 		return result.SUCCESS;
+	}
+
+	final static int portTCP = 4000;
+
+	public static void sendFile(File file, InetAddress hostname) {
+		MainController.NO_GUI_debugPrint("Thread TCP Send created.");
+		TCPSend send = new TCPSend(file, portTCP, hostname);
+		send.start();
+		MainController.NO_GUI_debugPrint("The file sended : " + file.getName());
+	}
+
+	public static void receiveFile(String file_name) throws IOException {
+		MainController.NO_GUI_debugPrint("The Thread TCP Receive created.");
+		TCPReceive receive = new TCPReceive(portTCP, file_name);
+		receive.start();
 	}
 
 	// Cree une nouvelle session de chat avec l'utilisateur "other_user"
@@ -209,8 +228,8 @@ public abstract class ChattingSessionController {
 			String input_msg;
 			boolean active = true;
 			try {
-			while (active) {
-				
+				while (active) {
+
 					MainController.NO_GUI_debugPrint("Listenning . . .");
 
 					if (this.socket != null) {
@@ -231,12 +250,12 @@ public abstract class ChattingSessionController {
 									ChatWindow.refreshMessages();
 						}
 					}
-			}
-				} catch (IOException e) {
-					//Ignore
 				}
+			} catch (IOException e) {
+				// Ignore
 			}
-		
+		}
+
 	}
 
 	private static CSM_Deamon csm_deamon;

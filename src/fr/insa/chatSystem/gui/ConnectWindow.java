@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -118,7 +119,12 @@ public class ConnectWindow extends JFrame {
 							frame.dispose();
 							ChattingSessionController.start_deamon();
 							// Open le chat window
-							new ChatWindow(username, null);
+							try {
+								new ChatWindow(username, null);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							break;
 
 						}
@@ -126,7 +132,8 @@ public class ConnectWindow extends JFrame {
 						result R = MainController.useDatabaseSignUp(url, database, password_db, username, password);
 						switch (R) {
 						case INVALID_CONTENT:
-							ZoneResponse.setText("Username contains illegal character " + DistributedDataController.getIllegalContent());
+							ZoneResponse.setText("Username contains illegal character "
+									+ DistributedDataController.getIllegalContent());
 							break;
 
 						case ALREADY_EXISTS:
@@ -141,7 +148,12 @@ public class ConnectWindow extends JFrame {
 							frame.dispose();
 							ChattingSessionController.start_deamon();
 							// Open le chat window
-							new ChatWindow(username, null);
+							try {
+								new ChatWindow(username, null);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							break;
 
 						}
@@ -153,7 +165,8 @@ public class ConnectWindow extends JFrame {
 					result R = DistributedDataController.setUsername(username);
 					switch (R) {
 					case INVALID_CONTENT:
-						ZoneResponse.setText("Username contains illegal character " + DistributedDataController.getIllegalContent());
+						ZoneResponse.setText(
+								"Username contains illegal character " + DistributedDataController.getIllegalContent());
 						break;
 
 					case ALREADY_EXISTS:
@@ -169,7 +182,12 @@ public class ConnectWindow extends JFrame {
 						frame.dispose();
 						ChattingSessionController.start_deamon();
 						// Open le chat window
-						new ChatWindow(username, null);
+						try {
+							new ChatWindow(username, null);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						break;
 					}
 				}
