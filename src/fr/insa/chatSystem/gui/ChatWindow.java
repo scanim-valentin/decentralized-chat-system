@@ -106,8 +106,10 @@ public class ChatWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				new ConnectWindow(username);
 				// Notifie les autres utilisateur d'une connection
-				System.exit(0);
 				window.dispose();
+				// Termine la session de chat avec l'utilisateur de nom "username"
+				ChattingSessionController.closeSession(username);
+
 			}
 		});
 

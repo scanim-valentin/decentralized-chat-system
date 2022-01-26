@@ -11,7 +11,6 @@ import java.net.Socket;
 
 import fr.insa.chatSystem.controller.MainController;
 
-//Coté Emetteur
 public class TCPSend extends Thread {
 
 	private final int clientPort; // IP du Client
@@ -36,7 +35,6 @@ public class TCPSend extends Thread {
 				this.connectionSocket = new Socket(IPServer, clientPort);
 				this.outToClient = new BufferedOutputStream(connectionSocket.getOutputStream());
 			} catch (IOException ex) {
-				// Do exception handling
 			}
 
 			if (outToClient != null) {

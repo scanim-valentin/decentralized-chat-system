@@ -29,10 +29,12 @@ public abstract class ChattingSessionController<UDPSender> {
 		}
 		try {
 			session.socket.close();
+			MainController.debugPrint("Fermeture du socket.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		MainController.NO_GUI_debugPrint("Removed " + username + " from active chat session list" + chatlist);
+		MainController.debugPrint("Removed " + username + " from active chat session list" + chatlist);
 		return result.SUCCESS;
 	}
 

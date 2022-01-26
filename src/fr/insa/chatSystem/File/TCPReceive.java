@@ -5,7 +5,6 @@ import java.net.*;
 
 import fr.insa.chatSystem.controller.MainController;
 
-//Côté recepteur
 public class TCPReceive extends Thread {
 
 	private final int serverPort; // IP du Server
@@ -25,7 +24,6 @@ public class TCPReceive extends Thread {
 		MainController.debugPrint("The file's ready to be received : " + fileOutput);
 		byte[] aByte = new byte[1];
 		int bytesRead;
-
 		InputStream is = null;
 
 		try {

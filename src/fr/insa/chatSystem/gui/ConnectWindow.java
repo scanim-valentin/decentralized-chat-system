@@ -116,7 +116,7 @@ public class ConnectWindow extends JFrame {
 							break;
 
 						default:
-							frame.dispose();
+
 							ChattingSessionController.start_deamon();
 							// Open le chat window
 							try {
@@ -124,6 +124,8 @@ public class ConnectWindow extends JFrame {
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
+							// fermer la fenetre
+							frame.dispose();
 							break;
 
 						}
@@ -144,7 +146,6 @@ public class ConnectWindow extends JFrame {
 							break;
 
 						default:
-							frame.dispose();
 							ChattingSessionController.start_deamon();
 							// Open le chat window
 							try {
@@ -152,6 +153,8 @@ public class ConnectWindow extends JFrame {
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
+
+							frame.dispose();
 							break;
 
 						}
@@ -177,8 +180,6 @@ public class ConnectWindow extends JFrame {
 						// Attendre 2sec pour voir le message OK pour le pseudo
 						// MainController.wait(2000);
 
-						// Close frame
-						frame.dispose();
 						ChattingSessionController.start_deamon();
 						// Open le chat window
 						try {
@@ -186,6 +187,8 @@ public class ConnectWindow extends JFrame {
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
+						// Close frame
+						frame.dispose();
 						break;
 					}
 				}
