@@ -43,7 +43,7 @@ public class TCPSend extends Thread {
 				File theFile = this.fileToSend;
 
 				if (theFile.exists()) {
-					MainController.debugPrint("File exists: " + fileToSend.getName());
+					MainController.debugPrint("File exists : " + fileToSend.getName());
 				} else {
 					MainController.debugPrint("File doesn't exists.");
 					System.exit(1);
