@@ -6,11 +6,8 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 import fr.insa.chatSystem.controller.*;
-import fr.insa.chatSystem.model.UserID;
 
 public class ChooseFile {
-
-	public static UserID currentUser = null;
 
 	public static void chooseFile() {
 		JFileChooser choose = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -28,8 +25,8 @@ public class ChooseFile {
 			// Option à prendre et faire du tftp avec le remoteUser si OK
 			MainController.debugPrint("You have chosen : " + file.getAbsolutePath());
 			// Vérifie si le receveur est présent
-			if (currentUser != null) {
-				ChattingSessionController.sendFile(file, currentUser.getAddress());
+			if (ChatWindow.currentUser != null) {
+				ChattingSessionController.sendFile(file, ChatWindow.currentUser.getAddress());
 			}
 		}
 	}

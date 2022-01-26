@@ -256,6 +256,7 @@ public abstract class ChattingSessionController<UDPSender> {
 
 	public static void start_deamon() {
 		MainController.NO_GUI_debugPrint("Starting deamon . . .");
+		MainController.debugPrint("Starting deamon . . .");
 		csm_deamon = new CSM_Deamon("CSM_Deamon");
 		csm_deamon.start();
 	}
