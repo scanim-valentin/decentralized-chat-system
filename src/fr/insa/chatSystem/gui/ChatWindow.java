@@ -65,7 +65,7 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnSend);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Envoie de message
+				// Envoie de message si on a selectionné un utilisateur connecté
 				if (currentUser != null) {
 					switch (ChattingSessionController.sendMessage(currentUser.getName(), message_field.getText())) {
 					case INVALID_CONTENT:
