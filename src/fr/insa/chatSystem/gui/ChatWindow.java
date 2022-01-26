@@ -26,6 +26,7 @@ public class ChatWindow extends JFrame {
 	private static JButton btnSend;
 	private static JTextArea message_field;
 	public static JLabel nameUser;
+	public static String file_content = null;
 	public static JList<UserID> remoteUserList;
 	public static UserID currentUser = null;
 	public static DefaultListModel<UserID> model_list = new DefaultListModel<UserID>();
@@ -34,14 +35,13 @@ public class ChatWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-
 	public ChatWindow(String username, String message_content) throws IOException {
 
 		JFrame window = new JFrame();
 		window.setResizable(false); // ne pas changer la taille de la fenetre
 		window.setTitle("Chat System V1.0");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setBounds(100, 100, 716, 509);
+		window.setBounds(100, 100, 720, 510);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,8 +65,6 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnSend);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Envoie "message_content" a l'utilisateur de nom "username"
-				// ChattingSessionController.sendMessage(username, textArea.getText());
 				// Envoie de message
 				if (currentUser != null) {
 					switch (ChattingSessionController.sendMessage(currentUser.getName(), message_field.getText())) {
@@ -83,7 +81,6 @@ public class ChatWindow extends JFrame {
 						message_field.setText("");
 						break;
 					}
-
 				}
 			}
 		});
@@ -104,11 +101,12 @@ public class ChatWindow extends JFrame {
 		contentPane.add(btnDisco);
 		btnDisco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// page du debut
 				new ConnectWindow(username);
-				// Notifie les autres utilisateur d'une connection
-				window.dispose();
 				// Termine la session de chat avec l'utilisateur de nom "username"
 				ChattingSessionController.closeSession(username);
+				// Notifie les autres utilisateur d'une connection et ferme la fenetre
+				window.dispose();
 
 			}
 		});
@@ -144,10 +142,7 @@ public class ChatWindow extends JFrame {
 		scrollPane_1.setAutoscrolls(true);
 		contentPane.add(scrollPane_1);
 
-		// JList<UserID> remoteUserList = new JList<UserID>(remote_users_list);
-
 		remoteUserList = new JList<UserID>(model_list);
-
 		remoteUserList.setSelectionBackground(SystemColor.controlHighlight);
 		scrollPane_1.setViewportView(remoteUserList);
 		remoteUserList.setFocusCycleRoot(true);
@@ -205,8 +200,8 @@ public class ChatWindow extends JFrame {
 		nameUser = new JLabel("");
 		nameUser.setBounds(16, 388, 157, 35);
 		nameUser.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		contentPane.add(nameUser);
 		nameUser.setText(username);
+		contentPane.add(nameUser);
 		currentUserLbl.setBounds(336, 12, 205, 29);
 		contentPane.add(currentUserLbl);
 
@@ -216,10 +211,8 @@ public class ChatWindow extends JFrame {
 		// Retourne la liste des session de chat
 		ChattingSessionController.getChatList();
 
-		String file_content = null;
 		// lancement de l'écoute de reception de fichier au port 4000
 		ChattingSessionController.receiveFile(file_content);
-
 	}
 
 	// Refreshes the list

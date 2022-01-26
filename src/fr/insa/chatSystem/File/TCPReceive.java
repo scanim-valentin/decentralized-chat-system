@@ -21,12 +21,12 @@ public class TCPReceive extends Thread {
 
 	@Override
 	public void run() {
-		MainController.debugPrint("The file's ready to be received : " + fileOutput);
 		byte[] aByte = new byte[1];
 		int bytesRead;
 		InputStream is = null;
 
 		try {
+			// MainController.debugPrint("The file's ready to be received : " + fileOutput);
 			serverSocket = new ServerSocket(serverPort);
 			connectionSocket = serverSocket.accept();
 			is = connectionSocket.getInputStream();

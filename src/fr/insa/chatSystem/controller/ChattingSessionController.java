@@ -9,7 +9,7 @@ import fr.insa.chatSystem.controller.MainController.result;
 import fr.insa.chatSystem.gui.ChatWindow;
 import fr.insa.chatSystem.File.*;
 
-public abstract class ChattingSessionController<UDPSender> {
+public abstract class ChattingSessionController {
 	// METHODES PUBLIQUES AVEC INTERFACE
 
 	// Termine la session de chat avec l'utilisateur de nom "username"

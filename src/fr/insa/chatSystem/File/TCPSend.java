@@ -31,9 +31,10 @@ public class TCPSend extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				MainController.debugPrint("The file is ready to send :" + fileToSend.getName());
 				this.connectionSocket = new Socket(IPServer, clientPort);
 				this.outToClient = new BufferedOutputStream(connectionSocket.getOutputStream());
+				// MainController.debugPrint("The file is ready to send :" +
+				// fileToSend.getName());
 			} catch (IOException ex) {
 			}
 
