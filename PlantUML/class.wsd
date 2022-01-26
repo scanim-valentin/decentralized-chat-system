@@ -1,74 +1,102 @@
 @startuml class
-abstract class main {
-    -boolean verifyUnicity(String name)
-    -void waitForConnectionRequest()
-    -void receiveNotification(Notification notif)
-    -void main()
+abstract class JFrame
+
+class gui.ChangeNameWindow{
+    + textFieldUsername : JTextField
+    + ButtonChange : JButton
+}
+class gui.ChatWindow{
+    + remoteUserList : JList<UserID>
+    + ButtonChangeName : JButton
+    + ButtonSend : JButton
+    + ButtonSendFile : JButton
+    + ButtonExit : JButton
+    + message_history : JTextArea
+    + message : JTextArea
+}
+class gui.ConnectWindow{
+
+    + textFieldUsername : JTextField
+    + textFieldURL : JTextField
+    + textFieldDatabase : JTextField
+    + textFieldPasswordDB : JTextField
+    + textFieldID : JTextField
+    + textFieldPassword : JTextField
+    + chckbxUseCentralizedHistory : JCheckBox
+    + rdbtnSignIn : JRadioButton
+    + rdbtnSignUp : JRadioButton
+    + ButtonExit : JButton
+    + ButtonConnect : JButton
 }
 
-abstract class UIManager {
-    +void openUI()
-    +void inputDialogBox(String Login)
-    +void openChattingSession(userID User)
-    +void closeChattingSession(userID User)
-    +void addMessage(message Message)
-    +void addHistory(message[] Messages)
-}
-
-abstract class DistributedDataManager {
+abstract class controller.DistributedDataController{
+    - ddc_deamon : DDC_deamon
+    - user_list : ArrayList<UserID>
     -void sendUPDBroadcast(String )
+    +void start_deamon()
     +UserList getConnectedUserList()
     +void notifyUsers()
-    +void notifyNewName(userID User,string Login)
+    +void notifyNewName(UserID User,string Login)
 }
 
-abstract class  RemoteDatabaseManager{
+abstract class  controller.RemoteDatabaseController{
     - database_ip_address : String 
     -void sendSQLRequest(String SQL_request)
-    +message[] retrieveHistory(userID User)
-    +void updateHistory(userID User, message Message)
+    +message[] retrieveHistory(UserID User)
+    +void updateHistory(UserID User, message Message)
 }
 
-class ChattingSession{
-    - user_ip_address : String 
-    - user_id : userID
-    - username : String
-    -Date getTime()
-    -void sendMessage(message Message)
-    -Message receiveMessage()
-    -void sendFile(string Path)
-    -void receiveFile()
-    +void close()
+abstract class controller.ChattingSessionController{
+    - csc_deamon : CSC_deamon
+    - chat_list : ArrayList<ChattingSession>
+    +void start_deamon()
+    +result newChat(String name)
+    +result closeChat(String name)
+    +ArrayList<ChattingSession> getChatList()
+    +result sendMessage(String content, String name)
 }
 
-class Message{
-    time : Date
+abstract class controller.MainController{
+    +username : String
+    +unique_id : String
+    +result useDatabaseSignUp(String db_URL, String db_name, \nString db_password, String Name, String Password)
+    +result useDatabaseSignIn(String db_URL, String db_name, \nString db_password, String Name, String id, String Password)
+}
+
+enum controller.result {
+	SUCCESS
+    ALREADY_EXISTS
+    INVALID_USERNAME
+    SESSION_DOES_NOT_EXIST
+    INVALID_CONTENT
+    INVALID_DB_AUTH
+}
+
+class controller.ChattingSession {
+    - other_user : UserID
+    - socket : Socket
+    + void send(String content)
+    + void run()
+}
+
+class model.Message{
+    time : TimeStamp
     content : String
+    sender : String
 }
 
-class UserList{
-    user_list : UserList
-    username : String
-    map : Map<userID, String> 
-}
-
-class userID{
-    ID : int
+class model.UserID{
+    -username : String
+    -database_id : String
+    -IP : InetAddress
+    +String getUsername()
+    +String getDB_ID()
+    +String setDB_ID()
+    +InetAddress getIP()
 } 
 
+class Launcher()
 
 
-DistributedDataManager "1" <- main
-UIManager "1" <- main
-ChattingSession "0..*" <-- main
-UIManager <- ChattingSession
-UserList -> "0..*" userID
-main --> userID
-ChattingSession -> userID
-main --> UserList
-ChattingSession -> UserList
-ChattingSession -> Message
-ChattingSession "0..*" -> RemoteDatabaseManager
-main -> Message
 
 @enduml
