@@ -25,9 +25,10 @@ public class ChooseFile {
 			// Option à prendre et faire du tftp avec le remoteUser si OK
 			MainController.NO_GUI_debugPrint("You have chosen : " + file.getAbsolutePath());
 			// Vérifie si le receveur est présent
-			if (ChatWindow.currentUser != null) {
-				ChattingSessionController.sendFile(file, ChatWindow.currentUser.getAddress());
-			}
+			// if (ChatWindow.currentUser != null) {
+			// ChattingSessionController.sendFile(file,
+			// ChatWindow.currentUser.getAddress());
+			// }
 		}
 	}
 }
