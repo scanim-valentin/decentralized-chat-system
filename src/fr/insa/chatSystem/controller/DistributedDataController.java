@@ -242,7 +242,7 @@ public abstract class DistributedDataController {
 								// In the case of an online signal the second element of the array is the
 								// username of the sender
 								MainController.NO_GUI_debugPrint("Added name in userlist : " + userlist.toString());
-								if (!MainController.debug_mode)
+								if (!MainController.no_gui)
 									ChatWindow.refreshList();
 								// To be added to the list
 								break;
@@ -276,7 +276,7 @@ public abstract class DistributedDataController {
 
 								MainController.NO_GUI_debugPrint("Removed name in userlist : " + userlist.toString());
 								// To be removed from the list
-								if (!MainController.debug_mode)
+								if (!MainController.no_gui)
 									ChatWindow.refreshList();
 								break;
 
@@ -285,7 +285,7 @@ public abstract class DistributedDataController {
 										"Identified " + NEW_NAME_SIG + " from " + inPacket.getAddress().toString()
 												+ "(prev. \"" + unpacked[1] + "\", now \"" + unpacked[2] + "\")");
 								updateUserList(unpacked[1], unpacked[2]);
-								if (!MainController.debug_mode)
+								if (!MainController.no_gui)
 									ChatWindow.refreshList();
 								break;
 							}

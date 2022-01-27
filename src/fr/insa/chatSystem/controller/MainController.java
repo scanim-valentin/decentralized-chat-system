@@ -78,6 +78,8 @@ public class MainController {
 	// PARTIE DEBUG - NE PAS SUPPRIMER
 
 	static public Boolean debug_mode = false;
+	static public Boolean no_gui = false;
+	
 	static public InetAddress addr = null; // When testing on a single computer (with virtual interfaces), this field is
 											// the local address in use by this agent
 
@@ -376,8 +378,10 @@ public class MainController {
 			DistributedDataController.start_deamon();
 			// Ouvrir la premiere page
 			new ConnectWindow(username);
-		}else
+		}else {
+			no_gui = true ;
 			MainController.NO_GUI_agent(args);
+		}
 	}
 	
 	// UNE FONCTION POUR AFFICHER DU DEBUG AVEC DES DETAILS
