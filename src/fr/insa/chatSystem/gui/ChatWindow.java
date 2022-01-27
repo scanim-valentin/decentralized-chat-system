@@ -55,7 +55,7 @@ public class ChatWindow extends JFrame {
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie du fichier
-				//ChooseFile.chooseFile();
+				ChooseFile.chooseFile();
 			}
 		});
 
