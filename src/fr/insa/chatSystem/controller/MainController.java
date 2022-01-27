@@ -1,5 +1,6 @@
 package fr.insa.chatSystem.controller;
 
+import fr.insa.chatSystem.gui.ConnectWindow;
 import fr.insa.chatSystem.model.Message;
 
 import java.io.BufferedReader;
@@ -368,7 +369,17 @@ public class MainController {
 		NO_GUI_debugPrint("Goodbye.");
 		System.exit(0);
 	}
-
+	
+	static public void debug(String[] args) {
+		debug_mode = true ; 
+		if (args[0].equals("gui_debug")) {
+			DistributedDataController.start_deamon();
+			// Ouvrir la premiere page
+			new ConnectWindow(username);
+		}else
+			MainController.NO_GUI_agent(args);
+	}
+	
 	// UNE FONCTION POUR AFFICHER DU DEBUG AVEC DES DETAILS
 	// NE PAS SUPPRIMER
 	static public void NO_GUI_debugPrint(String str) {
@@ -380,11 +391,5 @@ public class MainController {
 		}
 	}
 	
-	static public void debugPrint(String str) {
-		// dgram.split("\\" + SEP)
-		String[] info_file = Thread.currentThread().getStackTrace()[2].getFileName().split("\\.java");
-		System.out.println("[" + Thread.currentThread().getName() + "] " + info_file[0] + " : " + str);
-
-	}
 
 }

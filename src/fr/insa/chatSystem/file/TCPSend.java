@@ -1,4 +1,4 @@
-package fr.insa.chatSystem.File;
+package fr.insa.chatSystem.file;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -43,9 +43,9 @@ public class TCPSend extends Thread {
 				File theFile = this.fileToSend;
 
 				if (theFile.exists()) {
-					MainController.debugPrint("File exists : " + fileToSend.getName());
+					MainController.NO_GUI_debugPrint("File exists : " + fileToSend.getName());
 				} else {
-					MainController.debugPrint("File doesn't exists.");
+					MainController.NO_GUI_debugPrint("File doesn't exists.");
 					System.exit(1);
 				}
 
@@ -65,8 +65,8 @@ public class TCPSend extends Thread {
 					outToClient.flush();
 					outToClient.close();
 					connectionSocket.close();
-					MainController.debugPrint("File sended : " + fileToSend.getName());
-					MainController.debugPrint("The thread TCP send closed.");
+					MainController.NO_GUI_debugPrint("File sended : " + fileToSend.getName());
+					MainController.NO_GUI_debugPrint("The thread TCP send closed.");
 					return;
 				} catch (IOException ex) {
 				}

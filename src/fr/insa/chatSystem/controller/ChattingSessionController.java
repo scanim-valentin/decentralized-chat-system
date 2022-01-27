@@ -6,8 +6,10 @@ import java.util.*;
 
 import fr.insa.chatSystem.model.*;
 import fr.insa.chatSystem.controller.MainController.result;
+import fr.insa.chatSystem.file.TCPReceive;
+import fr.insa.chatSystem.file.TCPSend;
 import fr.insa.chatSystem.gui.ChatWindow;
-import fr.insa.chatSystem.File.*;
+//import fr.insa.chatSystem.File.*;
 
 public abstract class ChattingSessionController {
 	// METHODES PUBLIQUES AVEC INTERFACE
@@ -29,12 +31,12 @@ public abstract class ChattingSessionController {
 		}
 		try {
 			session.socket.close();
-			MainController.debugPrint("Fermeture du socket.");
+			MainController.NO_GUI_debugPrint("Fermeture du socket.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		MainController.NO_GUI_debugPrint("Removed " + username + " from active chat session list" + chatlist);
-		MainController.debugPrint("Removed " + username + " from active chat session list" + chatlist);
+		MainController.NO_GUI_debugPrint("Removed " + username + " from active chat session list" + chatlist);
 		return result.SUCCESS;
 	}
 
@@ -58,24 +60,24 @@ public abstract class ChattingSessionController {
 		session.send(message_content);
 		return result.SUCCESS;
 	}
-
-	final static int portTCP = 4000;
+	
+	final static int FILE_PORT = 4000;
 
 	// Envoyer de fichier
 	public static void sendFile(File file, InetAddress hostname) {
-		MainController.debugPrint("Thread TCP Send created.");
-		TCPSend send = new TCPSend(file, portTCP, hostname);
+		MainController.NO_GUI_debugPrint("Thread TCP Send created.");
+		TCPSend send = new TCPSend(file, FILE_PORT, hostname);
 		send.start();
-		MainController.debugPrint("The file sended : " + file.getName());
+		MainController.NO_GUI_debugPrint("The file sended : " + file.getName());
 	}
 
 	// Reception de fichier
 	public static void receiveFile(String file_name) throws IOException {
-		MainController.debugPrint("The Thread TCP Receive created.");
-		TCPReceive receive = new TCPReceive(portTCP, file_name);
+		MainController.NO_GUI_debugPrint("The Thread TCP Receive created.");
+		TCPReceive receive = new TCPReceive(FILE_PORT, file_name);
 		receive.start();
 	}
-
+	
 	// Cree une nouvelle session de chat avec l'utilisateur "other_user"
 	// Retourne ALREADY_EXISTS si la session existe deja
 	// Retourne INCORRECT_USERNAME si le nom d'utilisateur est incorect
@@ -133,12 +135,19 @@ public abstract class ChattingSessionController {
 	}
 
 	private static class ChattingSession extends Thread {
-
-		private String conversation = "Conversation :";
+		
+		//The full conversation (concatenation of messages) between the user and the other participant
+		private String conversation = "Conversation :\n";
+		
 		private UserID other_user; // Other participant to the conversation
-
+		
+		//Socket used to connect to the other participant's agent
 		private Socket socket = null;
+		
+		//To send strings
 		private PrintWriter output = null;
+		
+		//To receive strings
 		BufferedReader input = null;
 
 		// Constructor to be used when the agent's user wants the launch a new chatting
@@ -254,20 +263,20 @@ public abstract class ChattingSessionController {
 
 	}
 
-	private static CSM_Deamon csm_deamon;
+	private static CSC_deamon CSC_deamon;
 
 	public static void start_deamon() {
 		MainController.NO_GUI_debugPrint("Starting deamon . . .");
-		MainController.debugPrint("Starting deamon . . .");
-		csm_deamon = new CSM_Deamon("CSM_Deamon");
-		csm_deamon.start();
+		MainController.NO_GUI_debugPrint("Starting deamon . . .");
+		CSC_deamon = new CSC_deamon("CSC_deamon");
+		CSC_deamon.start();
 	}
 
 	private static ServerSocket chat_socket_generator = null;
 
-	static class CSM_Deamon extends Thread {
+	static class CSC_deamon extends Thread {
 
-		CSM_Deamon(String name) {
+		CSC_deamon(String name) {
 			super(name);
 			try {
 				// Socket to receive incoming chat request

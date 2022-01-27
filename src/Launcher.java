@@ -17,6 +17,6 @@ public class Launcher {
 
 		else// If arguments are provided, debug execution
 			// Lancement du mode Back End
-			MainController.NO_GUI_agent(args);
+			MainController.debug(args) ; 
 	}
 }

@@ -1,11 +1,11 @@
 @startuml class
 abstract class JFrame
 
-class gui.ChangeNameWindow{
+class ChangeNameWindow{
     + textFieldUsername : JTextField
     + ButtonChange : JButton
 }
-class gui.ChatWindow{
+class ChatWindow{
     + remoteUserList : JList<UserID>
     + ButtonChangeName : JButton
     + ButtonSend : JButton
@@ -14,7 +14,7 @@ class gui.ChatWindow{
     + message_history : JTextArea
     + message : JTextArea
 }
-class gui.ConnectWindow{
+class ConnectWindow{
 
     + textFieldUsername : JTextField
     + textFieldURL : JTextField
@@ -29,7 +29,11 @@ class gui.ConnectWindow{
     + ButtonConnect : JButton
 }
 
-abstract class controller.DistributedDataController{
+class DDC_deamon{
+    + void run()
+}
+
+abstract class DistributedDataController{
     - ddc_deamon : DDC_deamon
     - user_list : ArrayList<UserID>
     -void sendUPDBroadcast(String )
@@ -39,14 +43,32 @@ abstract class controller.DistributedDataController{
     +void notifyNewName(UserID User,string Login)
 }
 
-abstract class  controller.RemoteDatabaseController{
+abstract class  RemoteDatabaseController{
     - database_ip_address : String 
     -void sendSQLRequest(String SQL_request)
     +message[] retrieveHistory(UserID User)
     +void updateHistory(UserID User, message Message)
 }
 
-abstract class controller.ChattingSessionController{
+
+class CSC_deamon{
+    + void run()
+}
+
+
+class ChattingSession{
+    - conversation : String
+    - other_user : UserID
+    - socket : Socket
+    - output : PrintWriter
+    - input : BufferedReader
+    + void send(String M)
+    + void run()
+    + String getConversation()
+    + UserID getID()
+}
+
+abstract class ChattingSessionController{
     - csc_deamon : CSC_deamon
     - chat_list : ArrayList<ChattingSession>
     +void start_deamon()
@@ -56,14 +78,14 @@ abstract class controller.ChattingSessionController{
     +result sendMessage(String content, String name)
 }
 
-abstract class controller.MainController{
+abstract class MainController{
     +username : String
     +unique_id : String
     +result useDatabaseSignUp(String db_URL, String db_name, \nString db_password, String Name, String Password)
     +result useDatabaseSignIn(String db_URL, String db_name, \nString db_password, String Name, String id, String Password)
 }
 
-enum controller.result {
+enum result {
 	SUCCESS
     ALREADY_EXISTS
     INVALID_USERNAME
@@ -72,20 +94,20 @@ enum controller.result {
     INVALID_DB_AUTH
 }
 
-class controller.ChattingSession {
+class ChattingSession {
     - other_user : UserID
     - socket : Socket
     + void send(String content)
     + void run()
 }
 
-class model.Message{
+class Message{
     time : TimeStamp
     content : String
     sender : String
 }
 
-class model.UserID{
+class UserID{
     -username : String
     -database_id : String
     -IP : InetAddress
@@ -97,6 +119,9 @@ class model.UserID{
 
 class Launcher()
 
+DDC_deamon -|> Thread
+CSC_deamon -|> Thread
+ChattingSession -|> Thread
 
 
 @enduml

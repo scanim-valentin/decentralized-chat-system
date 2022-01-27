@@ -55,7 +55,7 @@ public class ChatWindow extends JFrame {
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Envoie du fichier
-				ChooseFile.chooseFile();
+				//ChooseFile.chooseFile();
 			}
 		});
 
@@ -212,7 +212,7 @@ public class ChatWindow extends JFrame {
 		ChattingSessionController.getChatList();
 
 		// lancement de l'écoute de reception de fichier au port 4000
-		ChattingSessionController.receiveFile(file_content);
+		/* ChattingSessionController.receiveFile(file_content); */
 	}
 
 	// Refreshes the list

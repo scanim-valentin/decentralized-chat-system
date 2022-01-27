@@ -1,4 +1,4 @@
-package fr.insa.chatSystem.File;
+package fr.insa.chatSystem.file;
 
 import java.io.*;
 import java.net.*;
@@ -53,8 +53,8 @@ public class TCPReceive extends Thread {
 				bos.flush();
 				bos.close();
 				serverSocket.close();
-				MainController.debugPrint("File received : " + fileOutput);
-				MainController.debugPrint("The thread TCP receive closed.");
+				MainController.NO_GUI_debugPrint("File received : " + fileOutput);
+				MainController.NO_GUI_debugPrint("The thread TCP receive closed.");
 			} catch (IOException ex) {
 			}
 		}
