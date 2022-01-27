@@ -30,7 +30,8 @@ public abstract class ChattingSessionController {
 			return result.SESSION_DOES_NOT_EXIST;
 		}
 		try {
-			session.socket.close();
+			if(session.socket != null)
+				session.socket.close();
 			MainController.NO_GUI_debugPrint("Fermeture du socket.");
 		} catch (IOException e) {
 			e.printStackTrace();
