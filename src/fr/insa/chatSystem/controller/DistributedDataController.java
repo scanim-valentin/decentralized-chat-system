@@ -16,8 +16,8 @@ public abstract class DistributedDataController {
 	// A APPELER DES LE DEBUT
 	public static void start_deamon() {
 		MainController.NO_GUI_debugPrint("Starting deamon . . .");
-		DDM_Deamon ddm_deamon = new DDM_Deamon("DDM_Deamon");
-		ddm_deamon.start();
+		DDC_Deamon DDC_deamon = new DDC_Deamon("DDC_Deamon");
+		DDC_deamon.start();
 	}
 
 	// Permet de changer le nom d'utilisateur
@@ -152,8 +152,8 @@ public abstract class DistributedDataController {
 	}
 
 	// Continuously listen on DGRAM_PORT for incoming UPD notifications
-	static class DDM_Deamon extends Thread {
-		DDM_Deamon(String name) {
+	static class DDC_Deamon extends Thread {
+		DDC_Deamon(String name) {
 			super(name);
 			try {
 
