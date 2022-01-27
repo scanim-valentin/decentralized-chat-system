@@ -36,8 +36,13 @@ public abstract class ChattingSessionController {
 			e.printStackTrace();
 		}
 		MainController.NO_GUI_debugPrint("Removed " + username + " from active chat session list" + chatlist);
-		MainController.NO_GUI_debugPrint("Removed " + username + " from active chat session list" + chatlist);
 		return result.SUCCESS;
+	}
+	
+	public static void closeAllSessions() {
+		MainController.NO_GUI_debugPrint("Closing all chatting sessions . . .");
+		for(ChattingSession chat : chatlist)
+			closeSession(chat.getID().getName()) ;
 	}
 
 	// Envoie "message_content" a l'utilisateur de nom "username"
