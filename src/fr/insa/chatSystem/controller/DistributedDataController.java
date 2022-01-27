@@ -70,9 +70,9 @@ public abstract class DistributedDataController {
 				// Notifying everyone on the local network
 				if (MainController.username.isEmpty()) {
 					MainController.username = username;
-					 notifyConnection();
+					notifyConnection();
 				} else {
-					 notifyNewName(username);
+					notifyNewName(username);
 					MainController.username = username;
 				}
 			}
@@ -345,7 +345,6 @@ public abstract class DistributedDataController {
 		UDPBroadcast(ID_REQUEST_SIG, dgramSocket);
 	}
 
-<<<<<<< HEAD
 	@SuppressWarnings("unused")
 	static private void UDPBroadcast_NotifyConnection(final String Name, final DatagramSocket dgramSocket) {
 		String[] unpacked = { ONLINE_SIG, Name };
@@ -364,6 +363,4 @@ public abstract class DistributedDataController {
 		String[] unpacked = { NEW_NAME_SIG, currentName, newName };
 		UDPBroadcast(pack(unpacked), dgramSocket);
 	}
-=======
->>>>>>> branch 'main' of https://github.com/scanim-valentin/decentralized-chat-system
 }
