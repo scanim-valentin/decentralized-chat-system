@@ -6,8 +6,8 @@ import java.util.*;
 
 import fr.insa.chatSystem.model.*;
 import fr.insa.chatSystem.controller.MainController.result;
-import fr.insa.chatSystem.file.TCPReceive;
-import fr.insa.chatSystem.file.TCPSend;
+import fr.insa.chatSystem.file.FileReceive;
+import fr.insa.chatSystem.file.FIleSend;
 import fr.insa.chatSystem.gui.ChatWindow;
 //import fr.insa.chatSystem.File.*;
 
@@ -43,6 +43,12 @@ public abstract class ChattingSessionController {
 		MainController.NO_GUI_debugPrint("Closing all chatting sessions . . .");
 		for(ChattingSession chat : chatlist)
 			closeSession(chat.getID().getName()) ;
+		try {
+			chat_socket_generator.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// Envoie "message_content" a l'utilisateur de nom "username"
@@ -71,7 +77,7 @@ public abstract class ChattingSessionController {
 	// Envoyer de fichier
 	public static void sendFile(File file, InetAddress hostname) {
 		MainController.NO_GUI_debugPrint("Thread TCP Send created.");
-		TCPSend send = new TCPSend(file, FILE_PORT, hostname);
+		FIleSend send = new FIleSend(file, FILE_PORT, hostname);
 		send.start();
 		MainController.NO_GUI_debugPrint("The file sended : " + file.getName());
 	}
@@ -79,7 +85,7 @@ public abstract class ChattingSessionController {
 	// Reception de fichier
 	public static void receiveFile(String file_name) throws IOException {
 		MainController.NO_GUI_debugPrint("The Thread TCP Receive created.");
-		TCPReceive receive = new TCPReceive(FILE_PORT, file_name);
+		FileReceive receive = new FileReceive(FILE_PORT, file_name);
 		receive.start();
 	}
 	

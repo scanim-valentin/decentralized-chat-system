@@ -5,14 +5,14 @@ import java.net.*;
 
 import fr.insa.chatSystem.controller.MainController;
 
-public class TCPReceive extends Thread {
+public class FileReceive extends Thread {
 
 	private final int serverPort; // IP du Server
 	private final String fileOutput; // Lien du fichier à envoyer
 	private ServerSocket serverSocket; // Connexion server au Port
 	private Socket connectionSocket; // Port de connexion
 
-	public TCPReceive(int port, String fileRx) throws IOException {
+	public FileReceive(int port, String fileRx) throws IOException {
 		serverPort = port;
 		fileOutput = fileRx;
 		serverSocket = null;

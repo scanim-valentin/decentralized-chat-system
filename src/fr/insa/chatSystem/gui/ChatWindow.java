@@ -202,7 +202,10 @@ public class ChatWindow extends JFrame {
 		nameUser = new JLabel("");
 		nameUser.setBounds(16, 388, 157, 35);
 		nameUser.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		nameUser.setText(username);
+		if(RemoteDatabaseController.getDB_ID() != null)
+			nameUser.setText(username+" (ID = "+RemoteDatabaseController.getDB_ID()+")");
+		else
+			nameUser.setText(username);
 		contentPane.add(nameUser);
 		currentUserLbl.setBounds(336, 12, 205, 29);
 		contentPane.add(currentUserLbl);
