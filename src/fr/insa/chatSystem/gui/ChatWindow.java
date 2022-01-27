@@ -104,7 +104,9 @@ public class ChatWindow extends JFrame {
 				// page du debut
 				new ConnectWindow(username);
 				// Termine la session de chat avec l'utilisateur de nom "username"
-				ChattingSessionController.closeSession(username);
+				ChattingSessionController.closeAllSessions();
+				// On notifie tout le monde de la déconnexion 
+				DistributedDataController.notifyDisconnection();
 				// Notifie les autres utilisateur d'une connection et ferme la fenetre
 				window.dispose();
 
