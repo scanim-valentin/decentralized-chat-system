@@ -17,8 +17,9 @@ Sur la fenetre de connexion:
 	2. Selectionner la connexion à la base de donnée ou non
 	3. Si non appuyer sur connexion pour lancer l'agent
 	3. Si oui cocher si vous voulez vous incrire "Sign up" ou s'identifier "Sign in" 
-	4. Entre votre ID et votre mot de passe
-
+	4. - Dans le cas d'une connexion : Entrez votre ID et votre mot de passe
+	   - Dans le cas d'une inscription : Choisissez un mot de passe. Votre identifiant unique (un entier) sera renseigné sur la fenêtre de chat
+	
 Ouvrir une conversation avec un autre utilisateur :
 Pour envoyer un message :
 
