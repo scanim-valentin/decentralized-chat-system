@@ -71,15 +71,6 @@ Network -> chatAgent : Receive Messsage M4 from User3
   db -> chatAgent -- : history_user3
 chatAgent -> User -- : Shows UI :\n Updated chat\nwith history and new message
 
-== User1 sends a file to User3 ==
-User -> chatAgent ++ : Sends File F1
-chatAgent -> Network : FTPRequest(User3)\nto User3
-Network -> chatAgent : FTPAccept()\nfrom User3
-chatAgent -> Network : FTPSendFile(User3,F1)
-chatAgent -> Clock ++ : getTime()
-Clock -> chatAgent -- : current_time
-chatAgent -> Network : sendMessage(User3,M4))
-chatAgent -> db -- : updateHistory(User3,M4)
 == User1 closes the agent ==
 
 User -> chatAgent ++ : Closes Agent

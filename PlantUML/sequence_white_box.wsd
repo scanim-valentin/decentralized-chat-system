@@ -1,128 +1,97 @@
 @startuml sequence_white_box
 actor User1 as User
 box "Chat Agent"
-  participant  "UI Manager" as UI
-  participant "Main Class\n(and other classes)" as chatAgent
+  participant  "JFrames" as UI
+  participant "Main Controller" as MC
+  participant "Launcher" as launcher
   participant "Chatting Session 1" as chat1
   participant "Chatting Session 2" as chat2
-  participant "Distributed\nData\nManager" as distributedManager
-  participant "Remote\nDatabase\nManager" as databaseManager
+  participant "Chatting\nSession\nController" as CSC
+  participant "Distributed\nData\nController" as DDC
+  participant "Remote\nDatabase\nController" as RDC
 end box
 
 actor "Clock" as Clock
-actor "Network\n(User2,User3,...,UserN)" as Network
-actor "Remote Database\n(User*User*History)" as db
+actor "Network" as Network
+actor "Remote Database" as db
 
 == User1 opens the agent ==
-User -> chatAgent ++ : Opens Agent
-  chatAgent -> distributedManager **
-  chatAgent -> databaseManager ** 
-  UI <- chatAgent ** 
-  chatAgent -> chatAgent : isUsernameValid = False\nuser_list = null
+User -> Launcher ++ : Opens Agent
+  Launcher -> DDC : start_deamon()
+  Launcher -> UI : new ConnectWindow()
+  DDC -> Network ++: Request via\nUDP broadcast
   
-
-
+  Network -> DDC : User2_ID, ethernet address
+  Network -> DDC : . . . 
+  Network -> DDC : UserN_ID
+  
+  DDC -> UI -- : user_list 
+  
 == Login phase ==
 
-loop if !isUsernameValid
-  chatAgent -> UI -- : inputDialogBox(login)
-  User -> UI : Logins attempt as "name"
-  UI -> chatAgent : eventLogin("name")
+  User -> UI : Login attempt as "name"
+  
+  alt setUsername("name") == SUCCESS
 
-  chatAgent -> distributedManager ++ : verifyUnicity()
-  distributedManager -> Network : Request via\nUDP broadcast
+    DDC -> Network : Notification\nvia UDP broadcast
+    UI <- UI : new ChatWindow()
   
-  Network -> distributedManager : User2_ID, ethernet address
-  Network -> distributedManager : . . . 
-  Network -> distributedManager : UserN_ID
-  
-  distributedManager -> chatAgent -- : user_list 
-  
-  alt user_list.find("name") == false
+  else setUsername("name") == INVALID_CONTENT
 
-    chatAgent -> chatAgent : isUsernameValid = True
-    chatAgent -> distributedManager : notifyConnection("name")
-    distributedManager -> Network : Notification\nvia UDP broadcast
-    UI <- chatAgent : display(user_list)
+    UI <- UI : Error Message:\n"Name contains illegal character"
   
-  else user_list.find("name") == true
+  else setUsername("name") == ALREADY_TAKEN
 
-      UI <- chatAgent : errorMessage("Name Already Taken")
+      UI <- UI : Error Message:\n"Name Already Taken"
 
   end
 
-end
-
 == User1 wants to chat with (connected) User2 ==
 
-User -> UI : Starts Chatting Session\nwith User2
-  UI -> chatAgent : eventNewChat(User2)
-  chatAgent -> chat1 ** : create(User2)
+User -> UI : Select User2 in user list
+  UI -> RDC : newChat("user2")
+  RDC -> chat1 ** 
+  chat1 -> RDC ++ : retrieveHistory(User2)
+    RDC -> db : SQL request
+    db -> RDC : history_user2
+  RDC -> chat1 -- : conversation+=history_user2
 
-  chat1 -> databaseManager ++ : retrieveHistory(User2)
-    databaseManager -> db : SQL request
-    db -> databaseManager : history_user2
-  databaseManager -> chat1 -- : history_user2
+chat1 -> UI -- : refresh_messages()
 
-  chat1 -> UI : openChattingSession(User2)
-chat1 -> UI -- : display(history_user2)
-
-User -> UI : Sends Message M1
-UI -> chat1 : eventSendMessage(M1)
+User -> UI : Sends Message "hello"
+UI -> CSC : sendMessage("hello","user2")
+CSC -> chat1 : send("hello")
 chat1 -> Clock : getTime()
-Clock -> chat1 : current_time
+Clock -> chat1 : new TimeStamp()
 
-chat1 -> Network : Request (TCP) connection\nwith User2
+chat1 -> Network : Establish (TCP) connection\nwith User2
 chat1 -> Network : sendMessage(User2,M1)
 
-chat1 -> databaseManager : updateHistory(User2,M1)
-    databaseManager -> db : SQL request
+chat1 -> RDC : updateHistory(User2,M1)
+    RDC -> db : SQL request
 chat1 -> UI -- : addMessage(M1)
 
 Network -> chat1 ++ : receiveMessage(User2,M2)
 chat1 -> UI -- : addMessage(M2)
 
-User -> UI : Closes Chatting Session
-UI -> chatAgent : eventClose(chat1)
-chat1 -> chat1 : 
-chatAgent -> chat1 !! : close()
-chatAgent -> UI : closeChattingSession(User2)
-
 == User1 receives a message from User3 ==
 
-Network -> chatAgent : Incoming TCP connection request\nfrom User3
-  chatAgent -> chat2 ** : create(User3)
-    chat2 -> databaseManager ++ : retrieveHistory(User3)
-    databaseManager -> db : SQL request
-    db -> databaseManager : history_user3
-  databaseManager -> chat2 -- : history_user3
+Network -> RDC : Incoming TCP connection request\nfrom User3
+  RDC -> chat2 ** : newChat(User3)
+    chat2 -> RDC ++ : retrieveHistory(User3)
+    RDC -> db : SQL request
+    db -> RDC : history_user3
+  RDC -> chat2 -- : history_user3
   chat2 -> Network : Accept TCP connection with User3 
-  chat2 -> UI : openChattingSession(User3)
-  chat2 -> UI : display(history_user3)
-  Network -> chat2 : receiveMessage(User3,M3)
-chat2 -> UI -- : addMessage(M3)
+  RDC -> chat2  : conversation+=history_user2
+  chat2 -> UI : refresh_messages()
+  Network -> chat2 ++: receiveMessage(User3,M3)
+  chat2 -> UI -- : refresh_messages()
 
-== User1 sends a file to User3 ==
-User -> chat2 ++ : Sends File F1
-chat2 -> Network : File transfert request\nto User3
-Network -> chat2 : File transfert accept\nfrom User3
-chat2 -> Network : sendFile(User3,F1)
-chat2 -> Clock ++ : getTime()
-Clock -> chat2 -- : current_time
-chat2 -> Network : sendMessage(User3,M4)\n(M4 is file name, size and date it was sent)
-chat2 -> databaseManager -- : updateHistory(User3,M4)
-  databaseManager -> db : SQL request
 == User1 closes the agent ==
 
 User -> UI : Closes Agent
-UI -> chatAgent : eventClose()
-chatAgent -> chat2 : close()
-chat2 -> Network : End (TCP) connection\nwith User3
-chat2 -> chat2 !!
-chatAgent -> distributedManager : notifyUsers()
-distributedManager -> Network : Notify via\nUDP broadcast
-chatAgent -> distributedManager !!
-chatAgent -> databaseManager !!
-chatAgent -> UI !!
-chatAgent -> chatAgent !! : close()
+CSC -> CSC : Closing sockets and deamon
+DDM -> DDM : Closing deamon
+
 @enduml
