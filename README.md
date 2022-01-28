@@ -26,7 +26,7 @@ Pour envoyer un message :
 	2. Ecrire votre message dans la zone de texte
 	3. Cliquer sur "Send" pour établir la connexion et envoyer le message
  	
-Pour envoyer un fichier :
+Pour envoyer un fichier (NON FONCTIONNEL) :
 Se rendre dans la fenetre de conservation avec un autre utilisateur :
 
 	1. Selectionner un contact dans liste des utilisateurs
