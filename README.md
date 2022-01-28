@@ -8,7 +8,7 @@ La connexion ainsi que déconnexion et le changement de pseudo,le choix d'un ide
 
 Pour l'utilisation de ce programme, il n'y a pas de connaissance à avoir en informatique.
 
-# NOTICE D'UTILISATION DU CHAT SYSTEME FRONT END
+# NOTICE D'UTILISATION DU CHAT SYSTEME EN MODE NORMAL
 
 Pour se connecter au système de chat :
 Sur la fenetre de connexion:
@@ -52,9 +52,12 @@ Pour fermer l'application de chat :
 
 
  
-# NOTICE D'UTILISATION DU CHAT SYSTEME EN BACK END
+# NOTICE D'UTILISATION DU CHAT SYSTEME EN MODE DEBUG
 
-Il faut lancer le launcher avec un argument quelconque 
+Afin de pouvoir travailler en parallèle sur le backend (Valentin) et le frontend (Lauric), il existe un mode de lancement entièrement textuel dans un terminal.
+Il suffit de lancer le programme avec un argument quelconque ("arg" par exemple). Les commandes sont disponibles avec la commande "help".
+
+Par ailleurs, il est possible de lancer l'agent en mode graphique tout en aillant des détails sur l'exécution. Pour cela, il faut lancer le programme avec l'argument "gui_debug".
 
 
 
