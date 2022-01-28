@@ -7,7 +7,8 @@ import java.util.*;
 import fr.insa.chatSystem.model.*;
 import fr.insa.chatSystem.controller.MainController.result;
 import fr.insa.chatSystem.file.FileReceive;
-import fr.insa.chatSystem.file.FIleSend;
+import fr.insa.chatSystem.file.FileSend;
+import fr.insa.chatSystem.file.FileSend;
 import fr.insa.chatSystem.gui.ChatWindow;
 //import fr.insa.chatSystem.File.*;
 
@@ -78,7 +79,7 @@ public abstract class ChattingSessionController {
 	// Envoyer de fichier
 	public static void sendFile(File file, InetAddress hostname) {
 		MainController.NO_GUI_debugPrint("Thread TCP Send created.");
-		FIleSend send = new FIleSend(file, FILE_PORT, hostname);
+		FileSend send = new FileSend(file, FILE_PORT, hostname);
 		send.start();
 		MainController.NO_GUI_debugPrint("The file sended : " + file.getName());
 	}

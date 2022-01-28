@@ -11,7 +11,7 @@ import java.net.Socket;
 
 import fr.insa.chatSystem.controller.MainController;
 
-public class FIleSend extends Thread {
+public class FileSend extends Thread {
 
 	private final int clientPort; // IP du Client
 	private final InetAddress IPServer; // IP du Serveur
@@ -19,7 +19,7 @@ public class FIleSend extends Thread {
 	private Socket connectionSocket;// Port de connexion vide
 	private BufferedOutputStream outToClient; //
 
-	public FIleSend(File fileTx, int port, InetAddress hostname) {
+	public FileSend(File fileTx, int port, InetAddress hostname) {
 		clientPort = port;
 		fileToSend = fileTx;
 		IPServer = hostname;
