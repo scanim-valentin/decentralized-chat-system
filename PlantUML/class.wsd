@@ -85,15 +85,6 @@ abstract class MainController{
     +result useDatabaseSignIn(String db_URL, String db_name, \nString db_password, String Name, String id, String Password)
 }
 
-enum result {
-	SUCCESS
-    ALREADY_EXISTS
-    INVALID_USERNAME
-    SESSION_DOES_NOT_EXIST
-    INVALID_CONTENT
-    INVALID_DB_AUTH
-}
-
 class ChattingSession {
     - other_user : UserID
     - socket : Socket
@@ -117,11 +108,27 @@ class UserID{
     +InetAddress getIP()
 } 
 
-class Launcher()
+class Launcher
 
-DDC_deamon -|> Thread
-CSC_deamon -|> Thread
-ChattingSession -|> Thread
+
+
+ChatWindow -r-|> JFrame
+ChangeNameWindow -u-|> JFrame
+ConnectWindow -d-|> JFrame
+
+Launcher -u- "1" ConnectWindow
+
+DDC_deamon -l-|> Thread
+CSC_deamon -r-|> Thread
+ChattingSession -d-|> Thread
+
+ChattingSessionController - "1" CSC_deamon
+ChattingSessionController -- "0..*" ChattingSession
+
+DistributedDataController -u- "1" DDC_deamon
+
+DistributedDataController - MainController
+RemoteDatabaseController -d- MainController
 
 
 @enduml
