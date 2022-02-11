@@ -8,9 +8,7 @@ import fr.insa.chatSystem.model.*;
 import fr.insa.chatSystem.controller.MainController.result;
 import fr.insa.chatSystem.file.FileReceive;
 import fr.insa.chatSystem.file.FileSend;
-import fr.insa.chatSystem.file.FileSend;
 import fr.insa.chatSystem.gui.ChatWindow;
-//import fr.insa.chatSystem.File.*;
 
 public abstract class ChattingSessionController {
 	// METHODES PUBLIQUES AVEC INTERFACE
@@ -31,7 +29,7 @@ public abstract class ChattingSessionController {
 			return result.SESSION_DOES_NOT_EXIST;
 		}
 		try {
-			if(session.socket != null)
+			if (session.socket != null)
 				session.socket.close();
 			MainController.NO_GUI_debugPrint("Fermeture du socket.");
 		} catch (IOException e) {
@@ -40,15 +38,14 @@ public abstract class ChattingSessionController {
 		MainController.NO_GUI_debugPrint("Removed " + username + " from active chat session list" + chatlist);
 		return result.SUCCESS;
 	}
-	
+
 	public static void closeAllSessions() {
 		MainController.NO_GUI_debugPrint("Closing all chatting sessions . . .");
-		for(ChattingSession chat : chatlist)
-			closeSession(chat.getID().getName()) ;
+		for (ChattingSession chat : chatlist)
+			closeSession(chat.getID().getName());
 		try {
 			chat_socket_generator.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -73,7 +70,7 @@ public abstract class ChattingSessionController {
 		session.send(message_content);
 		return result.SUCCESS;
 	}
-	
+
 	final static int FILE_PORT = 4000;
 
 	// Envoyer de fichier
@@ -90,7 +87,7 @@ public abstract class ChattingSessionController {
 		FileReceive receive = new FileReceive(FILE_PORT, file_name);
 		receive.start();
 	}
-	
+
 	// Cree une nouvelle session de chat avec l'utilisateur "other_user"
 	// Retourne ALREADY_EXISTS si la session existe deja
 	// Retourne INCORRECT_USERNAME si le nom d'utilisateur est incorect
@@ -148,19 +145,20 @@ public abstract class ChattingSessionController {
 	}
 
 	private static class ChattingSession extends Thread {
-		
-		//The full conversation (concatenation of messages) between the user and the other participant
+
+		// The full conversation (concatenation of messages) between the user and the
+		// other participant
 		private String conversation = "Conversation :\n";
-		
+
 		private UserID other_user; // Other participant to the conversation
-		
-		//Socket used to connect to the other participant's agent
+
+		// Socket used to connect to the other participant's agent
 		private Socket socket = null;
-		
-		//To send strings
+
+		// To send strings
 		private PrintWriter output = null;
-		
-		//To receive strings
+
+		// To receive strings
 		BufferedReader input = null;
 
 		// Constructor to be used when the agent's user wants the launch a new chatting
